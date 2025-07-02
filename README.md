@@ -1,16 +1,23 @@
 # tastify
 
-Food app
+We are going to practice the Agile Development process through this module by
+building a Food App. Learners will work as a team and solve problems through
+discussion.
 
-## Getting Started
+## Features to Build
+- Authentication: Users can sign up using email or social login and log in to their
+accounts.
+- User Profile: Users can create and update their profile with basic information.
+- Home Page: Displays featured recipes, categories, and popular items.
+- Recipe Details: Shows recipe image, ingredients, instructions, and nutrition info.
+- Upload Recipe: Users can add their recipes with name, image, and steps.
+- Edit Recipe: Users can edit recipes they uploaded.
+- Delete Recipe: Users can delete their recipe posts.
+- Search Recipes: Users can search for recipes by name or category.
+- Wishlist/Favourites: Users can save recipes to a favourites list.
+- Blog Section: Read articles related to food, cooking tips, and healthy eating.
+- Blog Post Page: Full blog article view with related content suggestions.
+- Contact Page: Users can send messages or feedback through a contact form.
+- Light/Dark Mode: Switch between light and dark themes.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+figma: <a href="https://www.figma.com/design/jzNSKXN5lFN3ZeBxPIEm9p/Tastify?node-id=0-1&t=T8wn1dqrzmGuy2pM-1" target="_blank">Tastify App UI</a>
