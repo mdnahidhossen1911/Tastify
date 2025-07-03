@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
-
 import 'app_routes.dart';
 
 class TastifyApp extends StatelessWidget {
