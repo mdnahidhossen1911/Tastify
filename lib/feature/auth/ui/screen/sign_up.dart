@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/feature/auth/ui/screen/forgot_password_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
-  static String name = 'loginScreen';
+  static String name = 'signUpScreen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,23 +21,29 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Text(
-                "Welcome to",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 40),
-              ),
-              Text(
-                "Testify",
+                "Sign Up",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 40,
                   color: Color.fromRGBO(253, 96, 17, 1),
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                "A smart space to explore, share, and manage your favorite recipes.",
-              ),
               SizedBox(height: 12),
+              Text(
+                "Name",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+              SizedBox(height: 3),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "username",
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),SizedBox(height: 12),
               Text(
                 "Email",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
@@ -67,22 +71,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   filled: true,
                   fillColor: Colors.white,
                 ),
+              ),SizedBox(height: 12),
+              Text(
+                "Confirm Password",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
-              SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context, ForgotPasswordScreen.name);
-                  },
-                  child: Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color.fromRGBO(253, 96, 17, 1),
-                    ),
-                  ),
+              SizedBox(height: 3),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "*****************",
+                  suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
               SizedBox(height: 32),
@@ -93,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () {},
                     child: Text(
-                      "Login",
+                      "Sign Up",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -108,21 +109,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 24),
               Center(
-
-                child: Row(
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: Colors.black),),
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pushNamed(context, SignUpScreen.name);
-                        },
-                        child: Text("Sign Up",
-                            style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
-                          ),
-                      )
-                  ],
+                child: RichText(
+                  text: TextSpan(
+                    text: "Already have an account? ",
+                    style: TextStyle(color: Colors.black),
+                    children: [
+                      TextSpan(
+                        text: "Login",
+                        style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 24),
@@ -145,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("_______________"),
-                  Text("Sign in with"),
+                  Text("Sign up with"),
                   Text("_______________")
                 ],
               ),
