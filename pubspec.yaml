@@ -41,6 +41,9 @@ dependencies:
   uuid: ^4.5.1
   crypto: ^3.0.6
   logger: ^2.6.0
+  google_sign_in: ^6.0.2
+
+
 
 dev_dependencies:
   flutter_test:
