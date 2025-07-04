@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -92,7 +93,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: double.infinity,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ///Need to put profile page Navigation
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
+                    ),
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
@@ -101,26 +107,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
-                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 24),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: "Already have an account? ",
-                    style: TextStyle(color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: "Login",
-                        style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
-                      ),
-                    ],
-                  ),
-                ),
+              SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account? ",
+                    style: TextStyle(color: Colors.black),),
+                  TextButton(
+                    onPressed: (){
+                      Navigator.pushNamed(context, LoginScreen.name);
+                    },
+                    child: Text("Login",
+                      style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
+                    ),
+                  )
+                ],
               ),
               SizedBox(height: 24),
               // Center(

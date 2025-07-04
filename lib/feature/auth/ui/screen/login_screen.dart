@@ -92,6 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
+                    ),
                     child: Text(
                       "Login",
                       style: TextStyle(
@@ -100,30 +103,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
-                    ),
                   ),
                 ),
               ),
               SizedBox(height: 24),
-              Center(
-
-                child: Row(
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: Colors.black),),
-                      TextButton(
-                        onPressed: (){
-                          Navigator.pushNamed(context, SignUpScreen.name);
-                        },
-                        child: Text("Sign Up",
-                            style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
-                          ),
-                      )
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account? ",
+                    style: TextStyle(color: Colors.black),),
+                    TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, SignUpScreen.name);
+                      },
+                      child: Text("Sign Up",
+                          style: TextStyle(color: Color.fromRGBO(253, 96, 17, 1)),
+                        ),
+                    )
+                ],
               ),
               SizedBox(height: 24),
               // Center(

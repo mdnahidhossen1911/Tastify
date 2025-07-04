@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
@@ -54,6 +53,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, OtpVerifyScreen.name);
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
+                    ),
                     child: Text(
                       "Next",
                       style: TextStyle(
@@ -61,9 +63,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
                     ),
                   ),
                 ),

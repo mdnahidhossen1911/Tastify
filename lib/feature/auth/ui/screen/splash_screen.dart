@@ -4,7 +4,7 @@ import 'package:tastify/feature/auth/ui/widgets/app_logo.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   static String name = '/';
 

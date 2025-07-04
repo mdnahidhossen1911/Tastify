@@ -65,6 +65,9 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
+                    ),
                     child: Text(
                       "Confirm",
                       style: TextStyle(
@@ -72,9 +75,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
                     ),
                   ),
                 ),

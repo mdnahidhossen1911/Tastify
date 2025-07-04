@@ -51,7 +51,6 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 //controller: textEditingController,
 
                 beforeTextPaste: (text) {
-                  print("Allowing to paste $text");
                   //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                   //but you can show anything you want here, like your pop up saying wrong paste format or etc
                   return true;
@@ -66,6 +65,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, SetPasswordScreen.name);
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
+                    ),
                     child: Text(
                       "Verify",
                       style: TextStyle(
@@ -73,9 +75,6 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(253, 96, 17, 1),
                     ),
                   ),
                 ),
