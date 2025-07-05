@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
-import 'package:tastify/feature/auth/ui/widgets/app_logo.dart';
+import 'package:tastify/feature/common/ui/widget/app_logo.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,20 +28,25 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenBackground(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            AppLogo(),
-            Spacer(),
-            SizedBox(
-                width: 100,
-                child: LinearProgressIndicator(
-                  backgroundColor: Colors.white,
-                  color: Colors.orange,
-                )),
-            SizedBox(height: 50,)
-          ],
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Spacer(),
+              AppLogo(),
+              Spacer(),
+              SizedBox(
+                  width: 120,
+                  child: LinearProgressIndicator(
+                    backgroundColor: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    minHeight: 6,
+                    color: Colors.orange,
+                  ),
+              ),
+              SizedBox(height: 50)
+            ],
+          ),
         ),
       ),
     );
