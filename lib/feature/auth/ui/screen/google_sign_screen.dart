@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/feature/auth/ui/controller/forgot_password_controller.dart';
+import 'package:tastify/feature/auth/ui/controller/google_sign_controller.dart';
+import 'package:tastify/feature/profile/ui/controller/update_profile_controller.dart';
 
 class GoogleSignScreen extends StatefulWidget {
   const GoogleSignScreen({super.key});
@@ -19,12 +20,8 @@ class _GoogleSignScreenState extends State<GoogleSignScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Google sign'),),
       body: Center(child: ElevatedButton(onPressed: () {
-        ForgotPasswordController().chackEmail(email: 'nahidhossen.mail@gmail.com');
-        ForgotPasswordController()
-            .changePassword(
-            email: 'nahidhossen.mail@gmail.com',
-            pass:  'pass'
-        );
+       UpdateProfileController().updatePhoto('nahid.jpg');
+
       }, child: Text('sign in')),),
     );
   }
