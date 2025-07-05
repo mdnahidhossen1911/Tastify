@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
-import 'package:tastify/feature/auth/ui/screen/forgot_password_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
+import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
-  static String name = 'loginScreen';
+  static String name = 'signUpScreen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,75 +26,84 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 96),
+                  SizedBox(height: 62),
                   Text(
-                    "Welcome to",
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 40,height: 1),
-                  ),
-                  Text(
-                    "Tastify",
+                    "Sign Up",
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 40,
                       color: AppColor.themeColor,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 16),
                   Text(
-                    "A smart space to explore, share, and manage your favorite recipes.",
-                    style: TextStyle(fontSize: 12),
+                    "Name",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 3),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "username",
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 12),
                   Text(
                     "Email",
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 3),
                   TextFormField(
-                    decoration: InputDecoration(hintText: "username@example.com"),
+                    decoration: InputDecoration(
+                      hintText: "username@example.com",
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 12),
                   Text(
                     "Password",
-                    style: TextStyle(fontWeight:FontWeight.w600, fontSize: 14),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 3),
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: "*****************",
-                      suffixIcon: Icon(Icons.remove_red_eye_outlined,color: Colors.grey,),
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, ForgotPasswordScreen.name);
-                      },
-                      child: Text(
-                        "Forgot password?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14,
-                          color: AppColor.themeColor,
-                        ),
-                      ),
+                  SizedBox(height: 12),
+                  Text(
+                    "Confirm Password",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                  ),
+                  SizedBox(height: 3),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "*****************",
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 32),
+                  SizedBox(height: 26),
                   Center(
                     child: SizedBox(
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ///Need to put profile page Navigation
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColor.themeColor,
                           elevation: 0,
                         ),
                         child: Text(
-                          "Login",
+                          "Sign Up",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -110,15 +118,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account?  ",
+                        "Already have an account?  ",
                         style: TextStyle(color: Colors.black),
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, SignUpScreen.name);
+                          Navigator.pushNamed(context, LoginScreen.name);
                         },
                         child: Text(
-                          "Sign Up",
+                          "Login",
                           style: TextStyle(
                             color: AppColor.themeColor,
                             fontWeight: FontWeight.w800,
