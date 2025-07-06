@@ -5,6 +5,7 @@ import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -22,6 +23,9 @@ class AppRoutes {
       route = const SetPasswordScreen();
     }else if (settings.name == OtpVerifyScreen.name) {
       route = const OtpVerifyScreen();
+    }
+    else if(settings.name==MainBottomNavBar.name){
+      route =const MainBottomNavBar();
     }
     return MaterialPageRoute(
       builder: (context) {
