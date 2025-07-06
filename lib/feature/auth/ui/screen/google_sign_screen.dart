@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/feature/category/controller/category_controller.dart';
+import 'package:tastify/feature/home/ui/controller/carousel_image_controller.dart';
 
 class GoogleSignScreen extends StatefulWidget {
   const GoogleSignScreen({super.key});
@@ -19,7 +19,8 @@ class _GoogleSignScreenState extends State<GoogleSignScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Google sign'),),
       body: Center(child: ElevatedButton(onPressed: () async {
-       final data = await  CategoryController.categorys();
+
+       final data = await CarouselImageController.getImage();
        print(data.responseData);
 
       }, child: Text('sign in')),),
