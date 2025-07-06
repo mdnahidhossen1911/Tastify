@@ -1,12 +1,11 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tastify/core/app_logger.dart';
+import 'package:tastify/core/supabase.dart';
 
 
 class GoogleSignController {
-  final SupabaseClient supabase = Supabase.instance.client;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
+     final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
       'profile',

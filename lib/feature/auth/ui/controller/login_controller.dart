@@ -1,11 +1,10 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/secure_password.dart';
 import 'package:tastify/core/app_logger.dart';
+import 'package:tastify/core/supabase.dart';
 
 class LoginController {
-  final SupabaseClient supabase = Supabase.instance.client;
-
+   
   Future<NetworkResponse> loginUser({
     required String email,
     required String password,

@@ -1,12 +1,11 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tastify/core/secure_password.dart';
+import 'package:tastify/core/supabase.dart';
 import 'package:tastify/feature/auth/data/model/user_model.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/app_logger.dart';
 
 class SignupController {
-  final SupabaseClient supabase = Supabase.instance.client;
-
+   
   Future<NetworkResponse> registerUser(UserModel user) async {
 
     try {

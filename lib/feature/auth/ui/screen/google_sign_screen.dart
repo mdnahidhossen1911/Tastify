@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/feature/auth/ui/controller/google_sign_controller.dart';
-import 'package:tastify/feature/profile/ui/controller/update_profile_controller.dart';
+import 'package:tastify/feature/category/controller/category_controller.dart';
 
 class GoogleSignScreen extends StatefulWidget {
   const GoogleSignScreen({super.key});
@@ -19,8 +18,9 @@ class _GoogleSignScreenState extends State<GoogleSignScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Google sign'),),
-      body: Center(child: ElevatedButton(onPressed: () {
-       UpdateProfileController().updatePhoto('nahid.jpg');
+      body: Center(child: ElevatedButton(onPressed: () async {
+       final data = await  CategoryController.categorys();
+       print(data.responseData);
 
       }, child: Text('sign in')),),
     );

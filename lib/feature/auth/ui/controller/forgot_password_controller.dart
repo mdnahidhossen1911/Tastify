@@ -1,10 +1,9 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/secure_password.dart';
+import 'package:tastify/core/supabase.dart';
 
 class ForgotPasswordController {
-  final SupabaseClient supabase = Supabase.instance.client;
 
   Future<NetworkResponse> chackEmail({required String email}) async {
     try {

@@ -1,9 +1,8 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tastify/core/app_logger.dart';
+import 'package:tastify/core/supabase.dart';
 
 class UpdateProfileController {
-  final SupabaseClient supabase = Supabase.instance.client;
-
+   
   Future<bool> updateName(String name) async {
     try {
       final userData = await supabase
