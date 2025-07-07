@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tastify/feature/blog/ui/screens/blog_screen.dart';
 import 'package:tastify/feature/favourite/ui/screens/favourite_screen.dart';
 import 'package:tastify/feature/home/ui/screens/home.dart';
+import 'package:tastify/feature/profile/ui/screens/profile_screen.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   const MainBottomNavBar({super.key});
@@ -15,9 +17,9 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   int _selectedIndex=0;
   List<Widget> _screens=[
     Home(),
-    Home(),
+    BlogScreen(),
     FavouriteScreen(),
-    Home(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

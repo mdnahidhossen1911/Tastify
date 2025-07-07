@@ -20,7 +20,11 @@ class TastifyApp extends StatelessWidget {
           titleSmall: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.orange
-          )
+          ),
+          titleLarge: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold
+          ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(

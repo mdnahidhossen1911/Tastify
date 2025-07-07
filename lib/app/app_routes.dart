@@ -6,6 +6,7 @@ import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
+import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -26,6 +27,9 @@ class AppRoutes {
     }
     else if(settings.name==MainBottomNavBar.name){
       route =const MainBottomNavBar();
+    }
+    else if(settings.name==CategoryListScreen.name){
+      route= const CategoryListScreen();
     }
     return MaterialPageRoute(
       builder: (context) {

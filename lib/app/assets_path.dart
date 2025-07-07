@@ -8,4 +8,5 @@ class AssetsPath {
   static const String popularFishImageJPG = '$_imagePath/burger.jpg';
   static const String snackImagePNG = '$_imagePath/snack.png';
   static const String timerImagePNG = '$_imagePath/timer.png';
+  static const String profileImagePNG = '$_imagePath/avatar.png';
 }

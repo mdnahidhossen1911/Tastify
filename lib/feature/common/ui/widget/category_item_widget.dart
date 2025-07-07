@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 
-class Homecategorywidget extends StatelessWidget {
-  const Homecategorywidget({super.key});
+class CategoryItemWidget extends StatelessWidget {
+  const CategoryItemWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

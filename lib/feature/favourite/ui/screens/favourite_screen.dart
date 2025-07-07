@@ -11,14 +11,12 @@ class FavouriteScreen extends StatefulWidget {
 class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme=Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Favourite',style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold
-        ),),
+        title: Text('Favourite',style: textTheme.titleLarge),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

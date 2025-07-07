@@ -2,10 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
-import 'package:tastify/feature/home/ui/widgets/home_category_widget.dart';
+import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/home_carousel_slider.dart';
 import 'package:tastify/feature/home/ui/widgets/home_popular_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/section_header.dart';
+import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
             children: [
               HomeCarouselSlider(),
               SizedBox(height: 16,),
-              SectionHeader(title: 'Category',seeAll: (){},),
+              SectionHeader(title: 'Category',seeAll: (){Navigator.pushReplacementNamed(context, CategoryListScreen.name);},),
               SizedBox(height: 16,),
               _buildCategorySection(),
               SizedBox(height: 16,),
@@ -109,7 +110,7 @@ class _HomeState extends State<Home> {
           itemBuilder: (context,index){
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Homecategorywidget()
+              child: CategoryItemWidget()
             );
           },
 
