@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/core/network_response.dart';
-import 'package:tastify/feature/recipe/ui/controller/recipe_controller.dart';
+import 'package:tastify/feature/favourite/ui/controller/favourite_controller.dart';
 
 class GoogleSignScreen extends StatefulWidget {
   const GoogleSignScreen({super.key});
@@ -19,12 +19,23 @@ class _GoogleSignScreenState extends State<GoogleSignScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Google sign'),),
-      body: Center(child: ElevatedButton(onPressed: () async {
+      body: Center(child: Column(
+        children: [
+          ElevatedButton(onPressed: () async {
 
-       NetworkResponse data = await RecipeController.getAllRecipes('00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd');
-       print(data.responseData);
+           NetworkResponse data = await FavouriteController.getFavouriteRecipes('00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd');
+           print(data.responseData);
 
-      }, child: Text('sign in')),),
+          }, child: Text('sign in')),
+
+          ElevatedButton(onPressed: () async {
+
+            NetworkResponse data = await FavouriteController.toggleFavourite('7dd47dcf-26f3-4261-a282-0e78bf8472b1','00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd');
+            print(data.responseData);
+
+          }, child: Text('toggle')),
+        ],
+      ),),
     );
   }
 }
