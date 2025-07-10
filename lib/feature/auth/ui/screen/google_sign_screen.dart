@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/core/network_response.dart';
+import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/favourite/ui/controller/favourite_controller.dart';
 
 class GoogleSignScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _GoogleSignScreenState extends State<GoogleSignScreen> {
 
           ElevatedButton(onPressed: () async {
 
-            NetworkResponse data = await FavouriteController.toggleFavourite('7dd47dcf-26f3-4261-a282-0e78bf8472b1','00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd');
+            NetworkResponse data = await CategoryController.getRecipesByCategory('', '54207fee-1d13-41f6-9f8a-72bbca54e18d');
             print(data.responseData);
 
           }, child: Text('toggle')),
