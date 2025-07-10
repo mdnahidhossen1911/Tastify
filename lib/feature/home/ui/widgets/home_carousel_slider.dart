@@ -36,7 +36,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(image: AssetImage(AssetsPath.carouselImagePNG))
                     ),
-                    child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+
                 );
               },
             );

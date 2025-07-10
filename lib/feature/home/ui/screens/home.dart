@@ -1,12 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/home_carousel_slider.dart';
 import 'package:tastify/feature/home/ui/widgets/home_popular_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/section_header.dart';
+import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,14 +34,24 @@ class _HomeState extends State<Home> {
             Image.asset(AssetsPath.appLogoPNG,width: 140,height: 80,),
             Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.orange.withOpacity(0.2),
-                  child: Icon(Icons.add,size: 30,color: Colors.deepOrange,),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, AddRecipeScreen.name);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.orange.withOpacity(0.2),
+                    child: Icon(Icons.add,size: 30,color: AppColor.themeColor,),
+                  ),
                 ),
                 SizedBox(width: 8,),
                 CircleAvatar(
                   backgroundColor: Colors.orange.withOpacity(0.2),
-                  child: Icon(Icons.search,size:30,color: Colors.deepOrange,),
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.pushNamed(context, SearchListScreen.name);
+                    },
+                    icon: Icon(Icons.search,size: 30,color: AppColor.themeColor,),
+                  )
                 ),
               ],
             )
@@ -54,10 +69,10 @@ class _HomeState extends State<Home> {
               SizedBox(height: 16,),
               _buildCategorySection(),
               SizedBox(height: 16,),
-              SectionHeader(title: 'Popular', seeAll: (){}),
+              SectionHeader(title: 'Popular', seeAll: (){Navigator.pushReplacementNamed(context, PopularListScreen.name);}),
               _buildPopularSection(),
               SizedBox(height: 16,),
-              SectionHeader(title: 'Featured Recipe', seeAll: (){}),
+              SectionHeader(title: 'Featured Recipe', seeAll: (){Navigator.pushReplacementNamed(context, FeaturedRecipeListScreen.name);}),
               SizedBox(height: 16,),
               _buildFeaturedRecipe()
 

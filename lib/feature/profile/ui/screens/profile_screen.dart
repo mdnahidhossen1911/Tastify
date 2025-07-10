@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
+import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -63,31 +65,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.restaurant_menu,size: 30,color: AppColor.themeColor,),
-                        SizedBox(width: 10,),
-                        Text('My Recipe',style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),)
-                      ],
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.pushReplacementNamed(context, MyRecipeScreen.name);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.restaurant_menu,size: 30,color: AppColor.themeColor,),
+                          SizedBox(width: 10,),
+                          Text('My Recipe',style: TextStyle(
+                              color: AppColor.themeColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),)
+                        ],
+                      ),
                     ),
                   ),
                   Divider(color: Colors.orange.shade50,),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.restaurant,size: 30,color: AppColor.themeColor,),
-                        SizedBox(width: 10,),
-                        Text('Recipe Feedback',style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),)
-                      ],
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, RecipeFeedback.name);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.restaurant,size: 30,color: AppColor.themeColor,),
+                          SizedBox(width: 10,),
+                          Text('Recipe Feedback',style: TextStyle(
+                              color: AppColor.themeColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),)
+                        ],
+                      ),
                     ),
                   ),
                   Divider(color: Colors.orange.shade50,),
