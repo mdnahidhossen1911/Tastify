@@ -6,6 +6,8 @@ import 'package:tastify/feature/favourite/ui/controller/favourite_controller.dar
 class GoogleSignScreen extends StatefulWidget {
   const GoogleSignScreen({super.key});
 
+  static const String name = '/google_sign_screen';
+
   @override
   State<GoogleSignScreen> createState() => _GoogleSignScreenState();
 }
