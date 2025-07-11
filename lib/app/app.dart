@@ -12,6 +12,20 @@ class TastifyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: Colors.deepOrange,
+        textTheme: TextTheme(
+          titleMedium: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          titleSmall: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.orange
+          ),
+          titleLarge: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold
+          ),
+        ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(
               color: Color(0xffb0b0b0),
@@ -32,6 +46,25 @@ class TastifyApp extends StatelessWidget {
           ),
           filled: true,
           fillColor: Colors.white,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          indicatorColor: Colors.transparent, // ❌ No background color
+          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return const TextStyle(color: Colors.deepOrange); // ✅ Selected color
+              }
+              return const TextStyle(color: Colors.grey); // ❌ Unselected color
+            },
+          ),
+          iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return const IconThemeData(color: Colors.deepOrange); // ✅ Selected color
+              }
+              return const IconThemeData(color: Colors.grey); // ❌ Unselected color
+            },
+          ),
         )
       ),
       onGenerateRoute: AppRoutes.onGenerateRoute,

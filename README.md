@@ -1,4 +1,4 @@
-# tastify
+# tastify 
 
 We are going to practice the Agile Development process through this module by
 building a Food App. Learners will work as a team and solve problems through
