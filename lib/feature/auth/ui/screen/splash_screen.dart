@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
-import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/common/ui/widget/app_logo.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
@@ -23,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> moveToNextScreen() async{
     await Future.delayed(Duration(seconds: 3));
-    Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+    Navigator.pushReplacementNamed(context, LoginScreen.name);
   }
   @override
   Widget build(BuildContext context) {

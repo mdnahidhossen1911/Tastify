@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/feature/auth/ui/controller/google_sign_controller.dart';
 import 'package:tastify/feature/auth/ui/screen/forgot_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
@@ -148,7 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 55,
                       child: ElevatedButton.icon(
                         icon: Image.asset(AssetsPath.googleLogoPNG, width: 24),
-                        onPressed: () {},
+                        onPressed: () {
+                          GoogleSignController().signInWithGoogle();
+                        },
 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
