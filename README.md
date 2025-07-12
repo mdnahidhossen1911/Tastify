@@ -7,7 +7,6 @@ discussion.
 ## Features to Build
 - Authentication: Users can sign up using email or social login and log in to their
 accounts.
-  accounts.
 - User Profile: Users can create and update their profile with basic information.
 - Home Page: Displays featured recipes, categories, and popular items.
 - Recipe Details: Shows recipe image, ingredients, instructions, and nutrition info.
