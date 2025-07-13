@@ -15,12 +15,13 @@ class MainBottomNavBar extends StatefulWidget {
 
 class _MainBottomNavBarState extends State<MainBottomNavBar> {
   int _selectedIndex=0;
-  List<Widget> _screens=[
+  final List<Widget> _screens=[
     Home(),
     BlogScreen(),
     FavouriteScreen(),
     ProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,7 +33,7 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
           Divider(
             height: 1,
             thickness: 1,
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withOpacity(0.04),
           ),
           NavigationBar(
             selectedIndex: _selectedIndex,
@@ -42,10 +43,10 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
               setState(() {});
             },
             destinations: [
-              NavigationDestination(icon: Icon(Icons.home), label: 'home'),
+              NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
               NavigationDestination(icon: Icon(Icons.newspaper), label: 'Blog'),
               NavigationDestination(icon: Icon(Icons.favorite_outlined), label: 'Favourite'),
-              NavigationDestination(icon: Icon(Icons.account_box_outlined), label: 'Profile'),
+              NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
             ],
             backgroundColor: Colors.white,
             //indicatorColor: Colors.orange,

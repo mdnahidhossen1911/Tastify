@@ -12,7 +12,8 @@ class FoodRecipeWidget extends StatelessWidget {
         Navigator.pushNamed(context, RecipeDetailsScreen.name);
       },
       child: Container(
-        height: 140,
+        height: 110,
+        margin: EdgeInsets.symmetric(horizontal: 16),
         width: double.maxFinite,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,13 +22,13 @@ class FoodRecipeWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),  // adjust the radius as you like
               child: Image.asset(
                 AssetsPath.popularFishImageJPG,
-                height: 140,
-                width: 140,
+                height: 110,
+                width: 158,
                 fit: BoxFit.cover,
               ),
             ),
 
-            SizedBox(width: 8,),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,30 +37,32 @@ class FoodRecipeWidget extends StatelessWidget {
                     'Big and Juicy Wagyu Beef Cheeseburger',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8,),
                   SizedBox(
-                    width: 150,
+                    width: 86,
+                    height: 28,
                     child: ElevatedButton(
                       onPressed: (){},
                       style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4)
+                          padding: EdgeInsets.symmetric(horizontal: 4),
+                        elevation: 0,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CircleAvatar(
-                            radius: 16,
+                            radius: 10,
                             backgroundColor: Colors.white,
-                            child: Icon(Icons.favorite,size: 17,color: Colors.deepOrange,),
+                            child: Icon(Icons.favorite,size: 14,color: Colors.deepOrange,),
                           ),
                           SizedBox(width: 5,),
-                          Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.bold),),
-
+                          Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontSize: 10,fontWeight: FontWeight.bold),),
+                          SizedBox(width: 8)
                         ],
                       ),
                     ),
@@ -72,13 +75,13 @@ class FoodRecipeWidget extends StatelessWidget {
                       backgroundImage: AssetImage(AssetsPath.popularFishImageJPG),
                       backgroundColor: Colors.transparent,
                     ),*/
-                      Icon(Icons.timer,size: 20,color: Colors.black,),
+                      Icon(Icons.timer,size: 16,color: Colors.black,),
                       SizedBox(width: 4),
-                      Text('30 Minutes', style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
+                      Text('30 Minutes', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                       SizedBox(width: 16),
-                      Icon(Icons.restaurant, size: 20, color: Colors.black),
+                      Icon(Icons.restaurant, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text('Breakfast', style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
+                      Text('Breakfast', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],

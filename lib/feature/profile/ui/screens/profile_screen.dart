@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
-import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 
@@ -150,22 +151,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Divider(color: Colors.orange.shade50,),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.logout,size: 30,color: AppColor.themeColor,),
-                            SizedBox(width: 10,),
-                            Text('Logout',style: TextStyle(
-                                color: AppColor.themeColor,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),)
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios,size: 30,color: AppColor.themeColor,)
-                      ],
+                    child: GestureDetector(
+                      onTap: () {
+                        AuthController.logOut();
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.name, (route) => false);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.logout,size: 30,color: AppColor.themeColor,),
+                              SizedBox(width: 10,),
+                              Text('Logout',style: TextStyle(
+                                  color: AppColor.themeColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),)
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios,size: 30,color: AppColor.themeColor,)
+                        ],
+                      ),
                     ),
                   ),
                 ],

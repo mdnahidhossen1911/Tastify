@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 
 class PopularListScreen extends StatefulWidget {

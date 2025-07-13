@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
-import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 
 class SearchListScreen extends StatefulWidget {

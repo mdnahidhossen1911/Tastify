@@ -14,7 +14,6 @@ import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.da
 import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/google_sign_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -59,8 +58,6 @@ class AppRoutes {
     }
     else if(settings.name==AddRecipeScreen.name){
       route= const AddRecipeScreen();
-    }else if (settings.name == GoogleSignScreen.name) {
-      route = const GoogleSignScreen();
     }
     return MaterialPageRoute(
       builder: (context) {

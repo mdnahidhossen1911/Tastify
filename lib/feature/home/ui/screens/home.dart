@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
@@ -21,17 +20,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedSlider=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        forceMaterialTransparency: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(AssetsPath.appLogoPNG,width: 140,height: 80,),
+            Image.asset(AssetsPath.appLogoPNG,height: 36,),
             Row(
               children: [
                 GestureDetector(
@@ -39,18 +38,20 @@ class _HomeState extends State<Home> {
                     Navigator.pushNamed(context, AddRecipeScreen.name);
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.orange.withOpacity(0.2),
-                    child: Icon(Icons.add,size: 30,color: AppColor.themeColor,),
+                    radius: 18,
+                    backgroundColor: Colors.orange.withOpacity(0.15),
+                    child: Icon(Icons.add,size: 26,color: AppColor.themeColor,),
                   ),
                 ),
-                SizedBox(width: 8,),
+                SizedBox(width: 12,),
                 CircleAvatar(
-                  backgroundColor: Colors.orange.withOpacity(0.2),
+                  radius: 18,
+                  backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: (){
                       Navigator.pushNamed(context, SearchListScreen.name);
                     },
-                    icon: Icon(Icons.search,size: 30,color: AppColor.themeColor,),
+                    icon: Icon(Icons.search,size: 22,color: AppColor.themeColor,),
                   )
                 ),
               ],
@@ -59,28 +60,21 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            children: [
-              HomeCarouselSlider(),
-              SizedBox(height: 16,),
-              SectionHeader(title: 'Category',seeAll: (){Navigator.pushReplacementNamed(context, CategoryListScreen.name);},),
-              SizedBox(height: 16,),
-              _buildCategorySection(),
-              SizedBox(height: 16,),
-              SectionHeader(title: 'Popular', seeAll: (){Navigator.pushReplacementNamed(context, PopularListScreen.name);}),
-              _buildPopularSection(),
-              SizedBox(height: 16,),
-              SectionHeader(title: 'Featured Recipe', seeAll: (){Navigator.pushReplacementNamed(context, FeaturedRecipeListScreen.name);}),
-              SizedBox(height: 16,),
-              _buildFeaturedRecipe()
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            HomeCarouselSlider(),
+            SizedBox(height: 8),
+            SectionHeader(title: 'Category',seeAll: (){Navigator.pushReplacementNamed(context, CategoryListScreen.name);},),
+            _buildCategorySection(),
+            SizedBox(height: 8,),
+            SectionHeader(title: 'Popular', seeAll: (){Navigator.pushReplacementNamed(context, PopularListScreen.name);}),
+            _buildPopularSection(),
+            SizedBox(height: 8,),
+            SectionHeader(title: 'Featured Recipe', seeAll: (){Navigator.pushReplacementNamed(context, FeaturedRecipeListScreen.name);}),
+            _buildFeaturedRecipe()
 
-
-        
-        
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -91,9 +85,10 @@ class _HomeState extends State<Home> {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: 5,
+      padding: EdgeInsets.only(bottom: 20),
       itemBuilder: (context,index){
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: FoodRecipeWidget(),
         );
       },
@@ -102,10 +97,11 @@ class _HomeState extends State<Home> {
 
   Widget _buildPopularSection() {
     return SizedBox(
-      height: 300,
+      height: 196,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 5,
+        padding: EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (context,index){
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -118,10 +114,11 @@ class _HomeState extends State<Home> {
 
   Widget _buildCategorySection() {
     return SizedBox(
-        height: 145,
+        height: 100,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: 5,
+          padding: EdgeInsets.symmetric(horizontal: 10),
           itemBuilder: (context,index){
             return Padding(
               padding: const EdgeInsets.all(8.0),

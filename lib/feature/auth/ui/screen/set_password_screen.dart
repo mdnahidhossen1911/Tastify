@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class SetPasswordScreen extends StatefulWidget {

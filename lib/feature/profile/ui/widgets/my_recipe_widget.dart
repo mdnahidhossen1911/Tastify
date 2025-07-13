@@ -70,6 +70,6 @@ class MyRecipeWidget extends StatelessWidget {
         ],
       ),
 
-    );;
+    );
   }
 }

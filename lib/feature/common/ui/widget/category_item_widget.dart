@@ -7,8 +7,8 @@ class CategoryItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 140,
+      width: 81,
+      height: 87,
       decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -18,25 +18,22 @@ class CategoryItemWidget extends StatelessWidget {
               Color.fromRGBO(240, 240, 240, 1),
             ],
           ),
-          borderRadius: BorderRadius.circular(20)
+          borderRadius: BorderRadius.circular(12)
       ),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: Image.asset(AssetsPath.categoryMeatlImageJPG, // Replace with your image path
-                fit: BoxFit.contain,
-              ),
+            Image.asset(AssetsPath.categoryMeatlImageJPG,
+              width: 45,
+              height: 45,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 6),
             Text(
-              'Breakfast',
+              'Meet',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),

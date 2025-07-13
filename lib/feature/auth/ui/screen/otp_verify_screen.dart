@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
