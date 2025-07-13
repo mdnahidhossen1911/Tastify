@@ -1,11 +1,16 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/supabase.dart';
 
 
-class GoogleSignController {
+class GoogleSignController extends GetxController {
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
      final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -15,6 +20,10 @@ class GoogleSignController {
   );
 
   Future<NetworkResponse> signInWithGoogle() async {
+
+    _isLoading = true;
+    update();
+
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final userInfo;
@@ -43,6 +52,9 @@ class GoogleSignController {
         }
 
         signOut();
+        _isLoading = false;
+        update();
+
         return NetworkResponse(isSuccess: true,responseData: {
         'id': userInfo['id'],
         'name': userInfo['name'],
@@ -51,6 +63,8 @@ class GoogleSignController {
         });
 
       }else {
+        _isLoading = false;
+        update();
         return NetworkResponse(
           isSuccess: false,
           errorMessage: "Sign-in was cancelled by the user.",
@@ -59,6 +73,8 @@ class GoogleSignController {
     } catch (error,stack) {
       print("Google Sign-In Error: $error");
       print("network error : $stack");
+      _isLoading = false;
+      update();
       return NetworkResponse(
         errorMessage: error.toString(),
         isSuccess: false,

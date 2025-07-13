@@ -3,7 +3,7 @@ import 'package:tastify/feature/auth/ui/screen/forgot_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
+import 'package:tastify/feature/auth/ui/screen/sign_up_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
@@ -28,9 +28,11 @@ class AppRoutes {
     }else if (settings.name == ForgotPasswordScreen.name) {
       route = const ForgotPasswordScreen();
     }else if (settings.name == SetPasswordScreen.name) {
-      route = const SetPasswordScreen();
+      String email = settings.arguments as String;
+      route =  SetPasswordScreen(email: email);
     }else if (settings.name == OtpVerifyScreen.name) {
-      route = const OtpVerifyScreen();
+      String email = settings.arguments as String;
+      route =  OtpVerifyScreen(email: email);
     }
     else if(settings.name==MainBottomNavBar.name){
       route =const MainBottomNavBar();

@@ -5,9 +5,10 @@ import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
-  const OtpVerifyScreen({super.key});
+  OtpVerifyScreen({super.key, required this.email});
 
   static String name = 'otpVerifyScreen';
+  String? email;
 
   @override
   State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
@@ -72,7 +73,11 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                       height: 55,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, SetPasswordScreen.name);
+                          Navigator.pushNamed(
+                            context,
+                            SetPasswordScreen.name,
+                            arguments: widget.email,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColor.themeColor,

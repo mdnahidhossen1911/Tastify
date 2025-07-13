@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/core/network_response.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/core/utils/utils.dart';
 import 'package:tastify/feature/auth/data/model/auth_user_model.dart';
 import 'package:tastify/feature/auth/data/model/user_model.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/auth/ui/controller/google_sign_controller.dart';
 import 'package:tastify/feature/auth/ui/controller/signup_controller.dart';
-import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 
@@ -21,14 +23,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
-  GlobalKey <FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  final SignupController _signupController = SignupController();
+  final GoogleSignController _googleSignController = Get.find<GoogleSignController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       "Name",
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 14),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     SizedBox(height: 3),
                     TextFormField(
@@ -80,7 +85,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       "Email",
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 14),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     SizedBox(height: 3),
                     TextFormField(
@@ -96,8 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your email';
-                        } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(
-                            value)) {
+                        } else if (!RegExp(
+                          r'^[^@]+@[^@]+\.[^@]+',
+                        ).hasMatch(value)) {
                           return 'Please enter a valid email address';
                         }
                         return null;
@@ -107,7 +115,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       "Password",
                       style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w600),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     SizedBox(height: 3),
                     TextFormField(
@@ -132,7 +142,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       "Confirm Password",
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 14),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     SizedBox(height: 3),
                     TextFormField(
@@ -154,30 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     ),
                     SizedBox(height: 26),
-                    Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 55,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            ///Need to put profile page Navigation
-                            onClickSignUp();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColor.themeColor,
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    _buildSignUpButton(),
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, LoginScreen.name);
+                            Navigator.pop(context);
                           },
                           child: Text(
                             "Login",
@@ -215,32 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 55,
-                        child: ElevatedButton.icon(
-                          icon: Image.asset(
-                              AssetsPath.googleLogoPNG, width: 24),
-                          onPressed: () {},
-
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: BorderSide(
-                                color: Color(0xff565656), width: 0.6),
-                            elevation: 0,
-                          ),
-                          label: Text(
-                            "Continue with Goodle",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    _buildGoogleSignINButton(),
                   ],
                 ),
               ),
@@ -251,22 +215,130 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  GetBuilder<SignupController> _buildSignUpButton() {
+    return GetBuilder(
+      init: _signupController,
+      builder: (controller) {
+        return Visibility(
+          visible: !controller.isLoading,
+          replacement: circleProgress(),
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                onPressed: () {
+                  ///Need to put profile page Navigation
+                  onClickSignUp();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.themeColor,
+                  elevation: 0,
+                ),
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Center _buildGoogleSignINButton() {
+    return Center(
+      child: GetBuilder(
+        init: _googleSignController,
+        builder: (controller) {
+          return Visibility(
+            visible: !controller.isLoading,
+            replacement: circleProgress(),
+            child: SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton.icon(
+                icon: Image.asset(AssetsPath.googleLogoPNG, width: 24),
+                onPressed: () {
+                  googleSignIn();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Color(0xff565656), width: 0.6),
+                  elevation: 0,
+                ),
+                label: Text(
+                  "Continue with Goodle",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   onClickSignUp() async {
     if (formKey.currentState!.validate()) {
-        UserModel user = UserModel(
-          name: nameController.text.trim(),
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
+      UserModel user = UserModel(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
 
-        NetworkResponse response = await SignupController().registerUser(user);
-        if (response.isSuccess) {
-          await AuthController.saveData(response.responseData!['id'], AuthUserModel.fromJson(response.responseData!));
-          Utils.showToast("Sign Up ${response.responseData!['email']} successfully");
-          Navigator.pushNamedAndRemoveUntil(context, MainBottomNavBar.name, (route) => false);
-        } else {
-         Utils.showFlushBar(context, response.errorMessage);
-        }
+      NetworkResponse response = await _signupController.registerUser(user);
+      if (response.isSuccess) {
+        await AuthController.saveData(
+          response.responseData!['id'],
+          AuthUserModel.fromJson(response.responseData!),
+        );
+        Utils.showToast(
+          "Sign Up ${response.responseData!['email']} successfully",
+        );
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MainBottomNavBar.name,
+          (route) => false,
+        );
+      } else {
+        Utils.showFlushBar(context, response.errorMessage);
+      }
     }
+  }
+
+  googleSignIn() async {
+    NetworkResponse response = await _googleSignController.signInWithGoogle();
+    if (response.isSuccess) {
+      print("Google Sign-In Success: ${response.responseData}");
+      await AuthController.saveData(
+        response.responseData!['id'],
+        AuthUserModel.fromJson(response.responseData!),
+      );
+      Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+    } else {
+      print("Google Sign-In Error: ${response.errorMessage}");
+      Utils.showFlushBar(context, response.errorMessage);
+    }
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 }

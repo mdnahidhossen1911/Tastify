@@ -19,7 +19,7 @@ class FoodRecipeWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),  // adjust the radius as you like
+              borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 AssetsPath.popularFishImageJPG,
                 height: 110,

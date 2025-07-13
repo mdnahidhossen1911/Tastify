@@ -28,7 +28,7 @@ class HomePopularWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),  // adjust the radius as you like
+                  borderRadius: BorderRadius.circular(8),  // adjust the radius as you like
                   child: Image.asset(
                     AssetsPath.popularFishImageJPG,
                     height: 94,
@@ -53,7 +53,7 @@ class HomePopularWidget extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
