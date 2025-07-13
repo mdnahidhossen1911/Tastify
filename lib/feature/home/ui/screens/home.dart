@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/home_carousel_slider.dart';
@@ -12,6 +14,8 @@ import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.da
 import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
 
+import '../controller/carousel_image_controller.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
   static const String name='/home';
@@ -20,6 +24,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  List<Map<String, dynamic>> sliderImages =[];
+  CarouselImageController carouselImageController = Get.find<CarouselImageController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getSliderImages();
+    super.initState();
+  }
+
+  getSliderImages() async {
+    final response = await carouselImageController.getImage();
+    sliderImages = response.responseData!['data'] as List<Map<String, dynamic>>;
+    setState(() {});
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +85,13 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             SizedBox(height: 10),
-            HomeCarouselSlider(),
+            GetBuilder<CarouselImageController>(
+              builder: (controller) {
+                return controller.isLoading
+                    ? Center(child: circleProgress())
+                    : HomeCarouselSlider(sliderImages: sliderImages);
+              },
+            ),
             SizedBox(height: 8),
             SectionHeader(title: 'Category',seeAll: (){Navigator.pushReplacementNamed(context, CategoryListScreen.name);},),
             _buildCategorySection(),

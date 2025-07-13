@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 
 class HomeCarouselSlider extends StatefulWidget {
-  const HomeCarouselSlider({super.key});
+   HomeCarouselSlider({super.key, required this.sliderImages});
+
+  List<Map<String, dynamic>> sliderImages = [];
 
   @override
   State<HomeCarouselSlider> createState() => _HomeCarouselSliderState();
@@ -27,16 +29,17 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                   setState(() {});
                 }
             ),
-            items: [1,2,3,4,5].map((i) {
+            items: widget.sliderImages.map((image) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 2.0),
                       decoration: BoxDecoration(
-                          color: Colors.amber,
+                          color: Colors.orange,
                           borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(image: AssetImage(AssetsPath.carouselImagePNG),
+                          image: DecorationImage(image: NetworkImage(image['image'],
+                          ),
                           fit: BoxFit.fill,
                           )
                       ),
@@ -50,7 +53,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(int i=0;i<5;i++)
+              for(int i=0;i<widget.sliderImages.length;i++)
                 Container(
                   width: _selectedSlider==i ? 22: 8,
                   height: 8,
