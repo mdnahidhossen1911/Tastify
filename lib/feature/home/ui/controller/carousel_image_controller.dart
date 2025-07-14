@@ -8,6 +8,9 @@ class CarouselImageController extends GetxController{
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  List<Map<String, dynamic>> _carouselImages = [];
+  List<Map<String, dynamic>> get carouselImages => _carouselImages;
+
   Future<NetworkResponse> getImage() async {
 
     _isLoading = true;
@@ -20,6 +23,7 @@ class CarouselImageController extends GetxController{
       _isLoading = false;
       update();
 
+      _carouselImages = image;
       return NetworkResponse(isSuccess: true,responseData: {'data':image});
     }catch(e){
       appLogger.e(e);

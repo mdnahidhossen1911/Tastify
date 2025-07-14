@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tastify/feature/blog/ui/screens/blog_screen.dart';
+import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/favourite/ui/screens/favourite_screen.dart';
 import 'package:tastify/feature/home/ui/controller/carousel_image_controller.dart';
 import 'package:tastify/feature/home/ui/screens/home.dart';
@@ -29,6 +30,7 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   void initState() {
     // TODO: implement initState
     Get.find<CarouselImageController>().getImage();
+    Get.find<CategoryController>().getCategory();
     super.initState();
   }
 

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 
 class CategoryItemWidget extends StatelessWidget {
-  const CategoryItemWidget({super.key});
+  CategoryItemWidget({super.key, this.category});
+  Map<String,dynamic>? category;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +26,13 @@ class CategoryItemWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(AssetsPath.categoryMeatlImageJPG,
+            Image.network( category!['icon']??'',
               width: 45,
               height: 45,
             ),
             SizedBox(height: 6),
             Text(
-              'Meet',
+              category!['title'] ?? 'Category',
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
