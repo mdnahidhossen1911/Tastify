@@ -9,42 +9,107 @@ import 'package:tastify/core/utils/utils.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
-import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/recipe_controller.dart';
 
-class AddRecipeScreen extends StatefulWidget {
-  const AddRecipeScreen({super.key});
+class UpdateRecipeScreen extends StatefulWidget {
+  final RecipeModel recipe;
 
-  static const String name = '/add-recipe-screen';
+  const UpdateRecipeScreen({super.key, required this.recipe});
+
+  static const String name = '/update-recipe-screen';
 
   @override
-  State<AddRecipeScreen> createState() => _AddRecipeScreenState();
+  State<UpdateRecipeScreen> createState() => _UpdateRecipeScreenState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> {
+class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
   XFile? _pickedImage;
+  bool _isImageUpdated = false;
 
   final TextEditingController _recipeNameTEController = TextEditingController();
-  final TextEditingController _recipeDescriptionTEController =
-      TextEditingController();
-  final TextEditingController _recipePrepTimeTEController =
-      TextEditingController();
-  final TextEditingController _recipeCookTimeTEController =
-      TextEditingController();
+  final TextEditingController _recipeDescriptionTEController = TextEditingController();
+  final TextEditingController _recipePrepTimeTEController = TextEditingController();
+  final TextEditingController _recipeCookTimeTEController = TextEditingController();
 
-  final List<TextEditingController> ingredients = [TextEditingController()];
-  final List<TextEditingController> instructions = [TextEditingController()];
+  final List<TextEditingController> ingredients = [];
+  final List<TextEditingController> instructions = [];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final RecipeController recipeController = Get.find<RecipeController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   String? _selectedCategory;
   String? _selectedCategoryId;
 
-  List<Map<String, TextEditingController>> nutritionControllers = [
-    {"key": TextEditingController(), "value": TextEditingController()},
-  ];
+  List<Map<String, TextEditingController>> nutritionControllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeForm();
+  }
+
+  void _initializeForm() {
+    // Initialize basic fields
+    _recipeNameTEController.text = widget.recipe.title;
+    _recipeDescriptionTEController.text = widget.recipe.description!;
+    _recipePrepTimeTEController.text = widget.recipe.prepTime!;
+    _recipeCookTimeTEController.text = widget.recipe.cookTime!;
+
+    // Initialize category
+    _selectedCategoryId = widget.recipe.cid;
+    _selectedCategory = categoryController.categoryList.firstWhere(
+          (category) => category['id'] == widget.recipe.cid,
+      orElse: () => {'title': ''},
+    )['title'];
+
+    // Initialize ingredients
+    try {
+      List<dynamic> ingredientList = jsonDecode(widget.recipe.ingredients?? '[]');
+      for (var ingredient in ingredientList) {
+        ingredients.add(TextEditingController(text: ingredient));
+      }
+    } catch (e) {
+      ingredients.add(TextEditingController(text: widget.recipe.ingredients));
+    }
+
+    // Initialize instructions
+    try {
+      List<dynamic> instructionList = jsonDecode(widget.recipe.instructions?? '[]');
+      for (var instruction in instructionList) {
+        instructions.add(TextEditingController(text: instruction));
+      }
+    } catch (e) {
+      instructions.add(TextEditingController(text: widget.recipe.instructions));
+    }
+
+    // Initialize nutrition info
+    try {
+      List<dynamic> nutritionList = jsonDecode(widget.recipe.nutritionInfo?? '[]');
+      for (var nutrition in nutritionList) {
+        nutritionControllers.add({
+          "key": TextEditingController(text: nutrition["key"]),
+          "value": TextEditingController(text: nutrition["value"]),
+        });
+      }
+    } catch (e) {
+      nutritionControllers.add({
+        "key": TextEditingController(text: "Nutrition"),
+        "value": TextEditingController(text: widget.recipe.nutritionInfo),
+      });
+    }
+
+    // Ensure at least one field exists for ingredients, instructions, and nutrition
+    if (ingredients.isEmpty) ingredients.add(TextEditingController());
+    if (instructions.isEmpty) instructions.add(TextEditingController());
+    if (nutritionControllers.isEmpty) {
+      nutritionControllers.add({
+        "key": TextEditingController(),
+        "value": TextEditingController(),
+      });
+    }
+  }
 
   void addNutritionField() {
     setState(() {
@@ -77,37 +142,35 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Add Recipe',
+              'Update Recipe',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             GetBuilder<RecipeController>(
-              builder: (controller) {
-                return Visibility(
-                  visible: !controller.isLoading,
-                  replacement: circleProgress(),
-                  child: ElevatedButton(
-                    onPressed: () {
-
-                      if (_formKey.currentState!.validate()) {
-                        _uploadRecipe();
-                      }
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.themeColor,
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      'Add',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                builder: (controller) {
+                  return Visibility(
+                    visible: !controller.isLoading,
+                    replacement: circleProgress(),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _updateRecipe();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.themeColor,
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'Update',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }
+                  );
+                }
             ),
           ],
         ),
@@ -303,9 +366,13 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () {
-                        setState(() {
-                          instructions.removeAt(index);
-                        });
+                        if (instructions.length > 1) {
+                          setState(() {
+                            instructions.removeAt(index);
+                          });
+                        } else {
+                          Utils.showFlushBar(context, "At least one instruction is required");
+                        }
                       },
                     ),
                   ],
@@ -377,9 +444,13 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () {
-                        setState(() {
-                          ingredients.removeAt(index);
-                        });
+                        if (ingredients.length > 1) {
+                          setState(() {
+                            ingredients.removeAt(index);
+                          });
+                        } else {
+                          Utils.showFlushBar(context, "At least one ingredient is required");
+                        }
                       },
                     ),
                   ],
@@ -420,44 +491,42 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
           ),
           SizedBox(height: 5),
           GetBuilder<CategoryController>(
-            builder: (controller) {
-              return DropdownButtonFormField<String>(
-                value: _selectedCategory,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                hint: Text(
-                  'Select a Category',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-                items:
-                    controller.categoryList.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category['title'],
-                    child: Text(
-                      category['title'] ?? '',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
+              builder: (controller) {
+                return DropdownButtonFormField<String>(
+                  value: _selectedCategory,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  hint: Text(
+                    'Select a Category',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 15,
                     ),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedCategory = newValue;
-                    _selectedCategoryId = controller.categoryList.firstWhere(
-                      (category) => category['title'] == newValue,
-                      orElse: () => {'id': ''},
-                    )['id'];
-                  });
-                },
-                validator:
-                    (value) => value == null ? 'Please select a category' : null,
-              );
-            }
+                  ),
+                  items: controller.categoryList.map((category) {
+                    return DropdownMenuItem<String>(
+                      value: category['title'],
+                      child: Text(
+                        category['title'] ?? '',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedCategory = newValue;
+                      _selectedCategoryId = controller.categoryList.firstWhere(
+                            (category) => category['title'] == newValue,
+                        orElse: () => {'id': ''},
+                      )['id'];
+                    });
+                  },
+                  validator: (value) => value == null ? 'Please select a category' : null,
+                );
+              }
           ),
           SizedBox(height: 10),
           Row(
@@ -599,58 +668,70 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
         alignment: Alignment.center,
-        child:
-            _pickedImage == null
-                ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_photo_alternate,
-                      size: 30,
-                      color: AppColor.themeColor,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Add Image',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.themeColor,
-                      ),
-                    ),
-                  ],
-                )
-                : ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.file(
-                    File(_pickedImage!.path),
-                    width: double.infinity,
-                    height: 190,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+        child: _pickedImage != null
+            ? ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.file(
+            File(_pickedImage!.path),
+            width: double.infinity,
+            height: 190,
+            fit: BoxFit.cover,
+          ),
+        )
+            : widget.recipe.photo!.isNotEmpty
+            ? ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.memory(
+            base64Decode(widget.recipe.photo!),
+            width: double.infinity,
+            height: 190,
+            fit: BoxFit.cover,
+          ),
+        )
+            : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_photo_alternate,
+              size: 30,
+              color: AppColor.themeColor,
+            ),
+            SizedBox(width: 8),
+            Text(
+              'Add Image',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColor.themeColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Future<void> _pickImage() async {
     ImagePicker picker = ImagePicker();
-    XFile? image = await picker.pickImage(source: ImageSource.gallery,
-        maxHeight: 200, imageQuality: 80);
+    XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 200,
+      imageQuality: 80,
+    );
     if (image != null) {
       _pickedImage = image;
+      _isImageUpdated = true;
       setState(() {});
     }
   }
 
-
-  _uploadRecipe() async{
+  Future<void> _updateRecipe() async {
     String recipeName = _recipeNameTEController.text;
     String recipeDescription = _recipeDescriptionTEController.text;
     String prepTime = _recipePrepTimeTEController.text;
     String cookTime = _recipeCookTimeTEController.text;
     String uid = AuthController.uid!;
-    late String imageString;
+    String imageString = widget.recipe.photo!;
 
     final ingredientList = ingredients
         .map((controller) => controller.text.trim())
@@ -673,22 +754,19 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       }
     }
 
-    if (_pickedImage != null) {
+    if (_isImageUpdated && _pickedImage != null) {
       final bytes = await _pickedImage?.readAsBytes();
       imageString = base64Encode(bytes!);
-    }else{
-      Utils.showFlushBar(context, "Please select an image");
-      return;
     }
 
-    if(instructionList.isEmpty || ingredientList.isEmpty || nutritionInfo.isEmpty) {
+    if (instructionList.isEmpty || ingredientList.isEmpty || nutritionInfo.isEmpty) {
       Utils.showFlushBar(context, "Please fill all fields");
       return;
     }
 
-
-    RecipeModel  model = RecipeModel(
-      userId:uid,
+    RecipeModel model = RecipeModel(
+      id: widget.recipe.id,
+      userId: uid,
       title: recipeName,
       description: recipeDescription,
       prepTime: prepTime,
@@ -700,16 +778,12 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       nutritionInfo: nutritionInfo.toString(),
     );
 
-    final response = await recipeController.addRecipe(model);
-    if(response.isSuccess) {
-      Utils.showToast("Recipe added successfully");
-      Get.find<GetRecipeController>().getAllRecipes(AuthController.uid!);
+    final response = await recipeController.updateRecipe(widget.recipe.id!, model);
+    if (response.isSuccess) {
+      Utils.showToast("Recipe updated successfully");
       Navigator.pop(context);
     } else {
       Utils.showFlushBar(context, response.errorMessage);
     }
-
-
   }
-
 }

@@ -15,21 +15,24 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.white,
         title: Text('Favourite',style: textTheme.titleLarge),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context,index){
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: FoodRecipeWidget(),
-            );
-          },
-        ),
+      body: SafeArea(
+        child: SizedBox()
+
+
+        // ListView.builder(
+        //   shrinkWrap: true,
+        //   itemCount: 10,
+        //   itemBuilder: (context,index){
+        //     return Padding(
+        //       padding: EdgeInsets.symmetric(vertical: 10),
+        //       child: FoodRecipeWidget(),
+        //     );
+        //   },
+        // ),
       ),
     );
   }

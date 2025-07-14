@@ -1,15 +1,16 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
-  const FoodRecipeWidget({super.key});
+  const FoodRecipeWidget({super.key, required this.recipeDetails});
+  final Map<String,dynamic> recipeDetails ;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, RecipeDetailsScreen.name);
+      onTap: () {
+        Navigator.pushNamed(context, RecipeDetailsScreen.name, arguments: recipeDetails);
       },
       child: Container(
         height: 110,
@@ -20,8 +21,8 @@ class FoodRecipeWidget extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                AssetsPath.popularFishImageJPG,
+              child: Image.memory(
+                base64Decode(recipeDetails['photo'] ?? ''),
                 height: 110,
                 width: 158,
                 fit: BoxFit.cover,
@@ -34,7 +35,7 @@ class FoodRecipeWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Big and Juicy Wagyu Beef Cheeseburger',
+                    recipeDetails['title'] ?? 'name',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -70,18 +71,13 @@ class FoodRecipeWidget extends StatelessWidget {
                   SizedBox(height: 8,),
                   Row(
                     children: [
-                      /*CircleAvatar(
-                      radius: 10,
-                      backgroundImage: AssetImage(AssetsPath.popularFishImageJPG),
-                      backgroundColor: Colors.transparent,
-                    ),*/
                       Icon(Icons.timer,size: 16,color: Colors.black,),
                       SizedBox(width: 4),
-                      Text('30 Minutes', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
+                      Text(recipeDetails['prep_time'], style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                       SizedBox(width: 16),
                       Icon(Icons.restaurant, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text('Breakfast', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
+                      Text(recipeDetails['category_name'], style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],

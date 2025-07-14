@@ -56,7 +56,8 @@ class AppRoutes {
       route= const RecipeFeedback();
     }
     else if(settings.name==RecipeDetailsScreen.name){
-      route= const RecipeDetailsScreen();
+      final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+      route=  RecipeDetailsScreen(recipeDetails: args,);
     }
     else if(settings.name==AddRecipeScreen.name){
       route= const AddRecipeScreen();

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/blog/ui/screens/blog_screen.dart';
 import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/favourite/ui/screens/favourite_screen.dart';
 import 'package:tastify/feature/home/ui/controller/carousel_image_controller.dart';
 import 'package:tastify/feature/home/ui/screens/home.dart';
 import 'package:tastify/feature/profile/ui/screens/profile_screen.dart';
+import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
+import 'package:tastify/feature/recipe/ui/controller/recipe_controller.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   const MainBottomNavBar({super.key});
@@ -31,6 +34,7 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
     // TODO: implement initState
     Get.find<CarouselImageController>().getImage();
     Get.find<CategoryController>().getCategory();
+    Get.find<GetRecipeController>().getAllRecipes(AuthController.uid??'');
     super.initState();
   }
 
@@ -51,7 +55,6 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
             selectedIndex: _selectedIndex,
             onDestinationSelected: (index){
               _selectedIndex=index;
-              print(_selectedIndex);
               setState(() {});
             },
             destinations: [
