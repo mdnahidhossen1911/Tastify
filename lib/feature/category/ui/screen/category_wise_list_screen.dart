@@ -17,7 +17,7 @@ class CategoryWiseListScreen extends StatefulWidget {
 
 class _CategoryWiseListScreenState extends State<CategoryWiseListScreen> {
   final GetRecipeByCategoryController getRecipeByCategoryController =
-      Get.find<GetRecipeByCategoryController>();
+      GetRecipeByCategoryController();
 
   @override
   void initState() {
