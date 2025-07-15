@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/supabase.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/favourite/ui/controller/favourite_toggle_controller.dart';
 
 class GetRecipeController extends GetxController {
 
@@ -50,6 +52,16 @@ class GetRecipeController extends GetxController {
       update();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
+    }
+  }
+
+  Future<void> updateToggle(String RID) async {
+    for (Map<String, dynamic> recipe in _recipes) {
+      if (recipe['id'] == RID) {
+        recipe['favourites'] = !(recipe['favourites'] == true);
+        update(['fav-$RID']);
+        break;
+      }
     }
   }
 

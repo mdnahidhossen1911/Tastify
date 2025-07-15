@@ -17,6 +17,7 @@ import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.da
 import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
 
+import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../controller/carousel_image_controller.dart';
 
 class Home extends StatefulWidget {
@@ -148,6 +149,9 @@ class _HomeState extends State<Home> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: FoodRecipeWidget(
+                    onTap: () {
+                      FavouriteToggleController.toggleFavourite(controller.recipes[index]['id'], AuthController.uid!);
+                    },
                     recipeDetails: controller.recipes[index],
                   ),
                 );

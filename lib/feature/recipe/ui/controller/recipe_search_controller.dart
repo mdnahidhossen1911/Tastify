@@ -48,4 +48,14 @@ class RecipeSearchController extends GetxController{
     }
   }
 
+  Future<void> updateToggle(String RID) async {
+    for (Map<String, dynamic> recipe in _recipes) {
+      if (recipe['id'] == RID) {
+        recipe['favourites'] = !(recipe['favourites'] == true);
+        update(['fav-$RID']);
+        break;
+      }
+    }
+  }
+
 }

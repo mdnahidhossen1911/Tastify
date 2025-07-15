@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
-  const FoodRecipeWidget({super.key, required this.recipeDetails});
+  const FoodRecipeWidget({super.key, required this.recipeDetails, required this.onTap});
   final Map<String,dynamic> recipeDetails ;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -47,39 +50,47 @@ class FoodRecipeWidget extends StatelessWidget {
                   SizedBox(
                     width: 86,
                     height: 28,
-                    child: ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                        elevation: 0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.white,
-                            child: recipeDetails['favourites'] == true
-                                ? Icon(
-                              Icons.favorite,
-                              size: 14,
-                              color: Colors.deepOrange,
-                            )
-                                : Icon(
-                              Icons.favorite,
-                              size: 14,
-                              color: Colors.black26,
-                            ),
+                    child: GetBuilder<GetRecipeController>(
+                      id: 'fav-${recipeDetails['id']}',
+                      builder: (controller) {
+                        final isFav = recipeDetails['favourites'] == true;
+                        return ElevatedButton(
+                          onPressed: onTap,
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                            elevation: 0,
                           ),
-                          SizedBox(width: 5,),
-                          Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontSize: 10,fontWeight: FontWeight.bold),),
-                          SizedBox(width: 8)
-                        ],
-                      ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.white,
+                                child: isFav == true
+                                    ? Icon(
+                                  Icons.favorite,
+                                  size: 14,
+                                  color: Colors.deepOrange,
+                                )
+                                    : Icon(
+                                  Icons.favorite,
+                                  size: 14,
+                                  color: Colors.black26,
+                                ),
+                              ),
+                              SizedBox(width: 5,),
+                              Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontSize: 10,fontWeight: FontWeight.bold),),
+                              SizedBox(width: 8)
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: 8,),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.timer,size: 16,color: Colors.black,),
                       SizedBox(width: 4),

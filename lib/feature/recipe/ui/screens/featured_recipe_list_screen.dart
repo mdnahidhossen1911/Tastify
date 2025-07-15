@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 
+import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
+
 class FeaturedRecipeListScreen extends StatefulWidget {
   const FeaturedRecipeListScreen({super.key});
 
@@ -34,7 +37,11 @@ class _FeaturedRecipeListScreenState extends State<FeaturedRecipeListScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: FoodRecipeWidget(recipeDetails: controller.recipes[index],),
+                    child: FoodRecipeWidget(recipeDetails: controller.recipes[index],
+                    onTap: () {
+                      FavouriteToggleController.toggleFavourite(controller.recipes[index]['id'], AuthController.uid!);
+                    },
+                    ),
                   );
                 },
               );

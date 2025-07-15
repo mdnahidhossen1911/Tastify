@@ -1,12 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/favourite/ui/controller/favourite_toggle_controller.dart';
+import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class HomePopularWidget extends StatelessWidget {
-  HomePopularWidget({super.key, required this.popularItem});
+  HomePopularWidget({
+    super.key,
+    required this.popularItem,
+  });
 
-  Map<String, dynamic> popularItem;
+  final Map<String, dynamic> popularItem;
 
   @override
   Widget build(BuildContext context) {
@@ -50,24 +57,25 @@ class HomePopularWidget extends StatelessWidget {
                 Positioned(
                   top: 5,
                   right: 20,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 16,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon:
-                          popularItem['favourites'] == true
-                              ? Icon(
-                                Icons.favorite,
-                                size: 17,
-                                color: Colors.deepOrange,
-                              )
-                              : Icon(
-                                Icons.favorite,
-                                size: 17,
-                                color: Colors.black26,
-                              ),
-                    ),
+                  child: GetBuilder<GetRecipeController>(
+                    id: 'fav-${popularItem['id']}',
+                    builder: (controller) {
+                      final isFav = popularItem['favourites'] == true;
+                      return CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 16,
+                        child: IconButton(
+                          onPressed: () {
+                            FavouriteToggleController.toggleFavourite(popularItem['id'], AuthController.uid!);
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            size: 17,
+                            color: isFav ? Colors.deepOrange : Colors.grey,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
