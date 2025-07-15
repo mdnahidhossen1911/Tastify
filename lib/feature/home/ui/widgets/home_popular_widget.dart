@@ -1,16 +1,22 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class HomePopularWidget extends StatelessWidget {
   HomePopularWidget({super.key, required this.popularItem});
-  Map<String, dynamic> popularItem ;
+
+  Map<String, dynamic> popularItem;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RecipeDetailsScreen.name, arguments: popularItem);
+        Navigator.pushNamed(
+          context,
+          RecipeDetailsScreen.name,
+          arguments: popularItem,
+        );
       },
       child: Container(
         width: 196,
@@ -19,10 +25,7 @@ class HomePopularWidget extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Color(0xfffff0e8),
-            ],
+            colors: [Colors.white, Color(0xfffff0e8)],
           ),
         ),
         child: Column(
@@ -34,7 +37,8 @@ class HomePopularWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),  // adjust the radius as you like
+                    borderRadius: BorderRadius.circular(8),
+                    // adjust the radius as you like
                     child: Image.memory(
                       base64Decode(popularItem['photo'] ?? ''),
                       height: 94,
@@ -42,7 +46,6 @@ class HomePopularWidget extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-
                 ),
                 Positioned(
                   top: 5,
@@ -51,8 +54,19 @@ class HomePopularWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 16,
                     child: IconButton(
-                      onPressed: (){},
-                      icon: Icon(Icons.favorite,size: 17,color: Colors.deepOrange,),
+                      onPressed: () {},
+                      icon:
+                          popularItem['favourites'] == true
+                              ? Icon(
+                                Icons.favorite,
+                                size: 17,
+                                color: Colors.deepOrange,
+                              )
+                              : Icon(
+                                Icons.favorite,
+                                size: 17,
+                                color: Colors.black26,
+                              ),
                     ),
                   ),
                 ),
@@ -66,24 +80,34 @@ class HomePopularWidget extends StatelessWidget {
                   SizedBox(height: 8),
                   Text(
                     popularItem['title'] ?? 'Title',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8),
                   Row(
                     children: [
-
-                      Icon(Icons.timer,size: 16,color: Colors.black,),
+                      Icon(Icons.timer, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text( popularItem['prep_time']??'', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
+                      Text(
+                        '${popularItem['prep_time'] ?? ''} min',
+                        style: TextStyle(
+                          color: Colors.black38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(width: 16),
                       Icon(Icons.restaurant, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text( popularItem['category_name']??'' , style: TextStyle(color: Colors.black38,fontSize: 10 ,fontWeight: FontWeight.bold)),
+                      Text(
+                        popularItem['category_name'] ?? 'category',
+                        style: TextStyle(
+                          color: Colors.black38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ],

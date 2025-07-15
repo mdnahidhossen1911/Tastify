@@ -7,6 +7,7 @@ class RecipeModel {
   final String? ingredients;
   final String? nutritionInfo;
   final String? cid;
+  final String? category_name;
   final String? description;
   final String? prepTime;
   final String? cookTime;
@@ -20,6 +21,7 @@ class RecipeModel {
     this.ingredients,
     this.nutritionInfo,
     this.cid,
+    this.category_name,
     this.description,
     this.prepTime,
     this.cookTime,
@@ -35,6 +37,7 @@ class RecipeModel {
       ingredients: json['ingredients'],
       nutritionInfo: json['nutrition_info'],
       cid: json['cid'],
+      category_name: json['category_name'],
       description: json['description'],
       prepTime: json['prep_time'],
       cookTime: json['cook_time'],
@@ -50,6 +53,7 @@ class RecipeModel {
       'ingredients': ingredients,
       'nutrition_info': nutritionInfo,
       'cid': cid,
+      'category_name': category_name,
       'description': description,
       'prep_time': prepTime,
       'cook_time': cookTime,

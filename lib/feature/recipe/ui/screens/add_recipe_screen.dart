@@ -695,6 +695,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       cookTime: cookTime,
       photo: imageString,
       cid: _selectedCategoryId ?? '',
+      category_name: _selectedCategory ?? '',
       ingredients: ingredientList.toString(),
       instructions: instructionList.toString(),
       nutritionInfo: nutritionInfo.toString(),

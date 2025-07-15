@@ -59,7 +59,17 @@ class FoodRecipeWidget extends StatelessWidget {
                           CircleAvatar(
                             radius: 10,
                             backgroundColor: Colors.white,
-                            child: Icon(Icons.favorite,size: 14,color: Colors.deepOrange,),
+                            child: recipeDetails['favourites'] == true
+                                ? Icon(
+                              Icons.favorite,
+                              size: 14,
+                              color: Colors.deepOrange,
+                            )
+                                : Icon(
+                              Icons.favorite,
+                              size: 14,
+                              color: Colors.black26,
+                            ),
                           ),
                           SizedBox(width: 5,),
                           Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontSize: 10,fontWeight: FontWeight.bold),),
@@ -73,11 +83,11 @@ class FoodRecipeWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.timer,size: 16,color: Colors.black,),
                       SizedBox(width: 4),
-                      Text(recipeDetails['prep_time'], style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
+                      Text('${recipeDetails['prep_time'] ?? ''} min', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                       SizedBox(width: 16),
                       Icon(Icons.restaurant, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text(recipeDetails['category_name'], style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
+                      Text(recipeDetails['category_name']??'category', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],

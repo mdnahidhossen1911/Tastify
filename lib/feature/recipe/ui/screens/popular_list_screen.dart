@@ -15,7 +15,6 @@ class PopularListScreen extends StatefulWidget {
 class _PopularListScreenState extends State<PopularListScreen> {
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme=Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/core/app_logger.dart';
 
@@ -103,9 +104,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             return Padding(
               padding: const EdgeInsets.all(6),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 4),
-                  SizedBox(width: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: CircleAvatar(radius: 4, backgroundColor: AppColor.themeColor),
+                  ),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       ing,
@@ -139,9 +144,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             return Padding(
               padding: const EdgeInsets.all(6),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 4),
-                  SizedBox(width: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: CircleAvatar(radius: 4, backgroundColor: AppColor.themeColor),
+                  ),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       instruction,
@@ -162,7 +171,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
       width: double.maxFinite,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Color(0xb3fff6ec),
+        color: Color(0xb3fff3ea),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -206,7 +215,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: Color(0xb3fff6ec),
+        color: Color(0xb3fff3ea),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
@@ -223,7 +232,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   children: [
                     Text('Prep Time', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     SizedBox(height: 2),
-                    Text(widget.recipeDetails['prep_time'] ?? '10 Minutes',
+                    Text('${widget.recipeDetails['prep_time'] ?? '0 Minutes'} min',
                         style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 10)),
                   ],
                 ),
@@ -238,7 +247,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   children: [
                     Text('Cook Time', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     SizedBox(height: 2),
-                    Text(widget.recipeDetails['cook_time'] ?? '30 Minutes',
+                    Text('${widget.recipeDetails['cook_time'] ?? '0 Minutes'} min',
                         style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 10)),
                   ],
                 ),

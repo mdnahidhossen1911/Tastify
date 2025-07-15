@@ -26,14 +26,11 @@ class GetRecipeController extends GetxController {
           .order('created_at', ascending: false);
 
       final List<Map<String, dynamic>> recipes = List<Map<String, dynamic>>.from(res).map((json) {
-        final categoryTitle = json['category']?['title'];
-
         final favList = (json['favourites'] as List<dynamic>?) ?? [];
         final isFavourite = favList.any((fav) => fav['uid'] == currentUserId);
 
         return {
           ...json,
-          'category_name': categoryTitle,
           'favourites': isFavourite,
         };
       }).toList();

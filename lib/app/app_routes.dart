@@ -5,6 +5,7 @@ import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
@@ -61,7 +62,12 @@ class AppRoutes {
     }
     else if(settings.name==AddRecipeScreen.name){
       route= const AddRecipeScreen();
+    }else if (settings.name == CategoryWiseListScreen.name) {
+      final String categoryName = settings.arguments as String;
+      route =  CategoryWiseListScreen(categoryName: categoryName,);
     }
+
+
     return MaterialPageRoute(
       builder: (context) {
         return route;

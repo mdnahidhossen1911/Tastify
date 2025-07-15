@@ -125,6 +125,7 @@ class _HomeState extends State<Home> {
                   Navigator.pushNamed(context, FeaturedRecipeListScreen.name);
                 },
               ),
+              SizedBox(height: 4),
               _buildFeaturedRecipe(),
             ],
           ),
