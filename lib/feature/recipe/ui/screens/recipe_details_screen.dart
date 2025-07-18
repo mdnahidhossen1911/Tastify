@@ -1,7 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tastify/core/app_logger.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
+import 'package:tastify/core/utils/utils.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/feedback/ui/controller/feedback_controller.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({super.key, required this.recipeDetails});
@@ -18,6 +23,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   late List<String> ingredients;
   late List<String> instructions;
   late Map<String, dynamic> nutritionInfo;
+
+  TextEditingController feedbackController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -85,71 +93,109 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               SizedBox(height: 20),
               _buildInstructions(),
               SizedBox(height: 40),
-              Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.deepOrange,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Recipe Feedback',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    TextFormField(
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Share your feedback...',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(12),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        fixedSize: Size.fromWidth(double.maxFinite),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 16,
-                        ),
-                      ),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.deepOrange,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _buildSendFeedBack(),
               SizedBox(height: 30),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSendFeedBack() {
+    return Container(
+      width: double.maxFinite,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.deepOrange,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Recipe Feedback',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 16),
+          Container(
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          Form(
+            key: _formKey,
+            child: TextFormField(
+              maxLines: 3,
+              controller: feedbackController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: InputDecoration(
+                hintText: 'Share your feedback...',
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.all(12),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your feedback';
+                }
+                return null;
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+          GetBuilder(
+            init: FeedbackController(),
+            builder: (controller) {
+              return controller.isLoading
+                  ? circleProgress(color: Colors.white)
+                  : ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        Map<String, dynamic> feedback = {
+                          'rid': widget.recipeDetails['id'],
+                          'uid': AuthController.uid,
+                          'feedback': feedbackController.text,
+                        };
+
+                        bool isSuccess = await controller.addFeedback(
+                          feedback,
+                        );
+                        if (isSuccess) {
+                          Utils.showToast('Feedback submitted successfully!');
+                          feedbackController.clear();
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      fixedSize: Size.fromWidth(double.maxFinite),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+            },
+          ),
+        ],
       ),
     );
   }
