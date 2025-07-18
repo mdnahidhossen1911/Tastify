@@ -1,11 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:tastify/app/app_colors.dart';
-import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/core/app_logger.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({super.key, required this.recipeDetails});
+
   final Map<String, dynamic> recipeDetails;
 
   static const String name = '/recipe-details-screen';
@@ -23,9 +23,15 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   void initState() {
     super.initState();
 
-    ingredients = List<String>.from(jsonDecode(widget.recipeDetails['ingredients']));
-    instructions = List<String>.from(jsonDecode(widget.recipeDetails['instructions']));
-    nutritionInfo = Map<String, dynamic>.from(jsonDecode(widget.recipeDetails['nutrition_info']));
+    ingredients = List<String>.from(
+      jsonDecode(widget.recipeDetails['ingredients']),
+    );
+    instructions = List<String>.from(
+      jsonDecode(widget.recipeDetails['instructions']),
+    );
+    nutritionInfo = Map<String, dynamic>.from(
+      jsonDecode(widget.recipeDetails['nutrition_info']),
+    );
   }
 
   @override
@@ -78,7 +84,69 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               _buildIngredients(),
               SizedBox(height: 20),
               _buildInstructions(),
-              SizedBox(height: 60),
+              SizedBox(height: 40),
+              Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Recipe Feedback',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    TextFormField(
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: 'Share your feedback...',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(12),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        fixedSize: Size.fromWidth(double.maxFinite),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
+                      ),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
             ],
           ),
         ),
@@ -106,17 +174,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 7.0),
-                    child: CircleAvatar(radius: 4, backgroundColor: AppColor.themeColor),
-                  ),
+                  Icon(Icons.check_circle, color: Colors.deepOrange, size: 16),
                   SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      ing,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
+                  Expanded(child: Text(ing, style: TextStyle(fontSize: 16))),
                 ],
               ),
             );
@@ -146,16 +206,10 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 7.0),
-                    child: CircleAvatar(radius: 4, backgroundColor: AppColor.themeColor),
-                  ),
+                  Icon(Icons.check_circle, color: Colors.deepOrange, size: 16),
                   SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      instruction,
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    child: Text(instruction, style: TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
@@ -186,7 +240,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: nutritionInfo.length,
-            separatorBuilder: (context, index) => Divider(color: Colors.grey.shade400),
+            separatorBuilder:
+                (context, index) =>
+                    Divider(color: Colors.deepOrangeAccent.withOpacity(0.4)),
             itemBuilder: (context, index) {
               final key = nutritionInfo.keys.elementAt(index);
               final value = nutritionInfo[key];
@@ -204,12 +260,11 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 ],
               );
             },
-          )
+          ),
         ],
       ),
     );
   }
-
 
   Widget _buildTimeCategory() {
     return Container(
@@ -230,10 +285,22 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Prep Time', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                    Text(
+                      'Prep Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
                     SizedBox(height: 2),
-                    Text('${widget.recipeDetails['prep_time'] ?? '0 Minutes'} min',
-                        style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 10)),
+                    Text(
+                      '${widget.recipeDetails['prep_time'] ?? '0 Minutes'} min',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -245,10 +312,22 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Cook Time', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                    Text(
+                      'Cook Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
                     SizedBox(height: 2),
-                    Text('${widget.recipeDetails['cook_time'] ?? '0 Minutes'} min',
-                        style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 10)),
+                    Text(
+                      '${widget.recipeDetails['cook_time'] ?? '0 Minutes'} min',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -257,8 +336,14 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               children: [
                 Icon(Icons.restaurant, size: 24),
                 SizedBox(width: 5),
-                Text(widget.recipeDetails['category_name'] ?? 'Category',
-                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 11)),
+                Text(
+                  widget.recipeDetails['category_name'] ?? 'Category',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                  ),
+                ),
               ],
             ),
           ],

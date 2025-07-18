@@ -5,6 +5,8 @@ import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/sign_up_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/feature/blog/ui/screens/add_blog_screen.dart';
+import 'package:tastify/feature/blog/ui/screens/blog_details_screen.dart';
 import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
@@ -53,8 +55,8 @@ class AppRoutes {
     else if(settings.name==SearchListScreen.name){
       route= const SearchListScreen();
     }
-    else if(settings.name==RecipeFeedback.name){
-      route= const RecipeFeedback();
+    else if(settings.name==RecipeFeedbackScreen.name){
+      route= const RecipeFeedbackScreen();
     }
     else if(settings.name==RecipeDetailsScreen.name){
       final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
@@ -65,6 +67,11 @@ class AppRoutes {
     }else if (settings.name == CategoryWiseListScreen.name) {
       final String categoryName = settings.arguments as String;
       route =  CategoryWiseListScreen(categoryName: categoryName,);
+    }else if (settings.name == BlogDetailsScreen.name) {
+      final Map<String,dynamic> data = settings.arguments as Map<String, dynamic>;
+      route =  BlogDetailsScreen(blogDetails: data,);
+    }else if(settings.name==AddBlogScreen.name){
+      route= const AddBlogScreen();
     }
 
 

@@ -1,5 +1,7 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
+import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
@@ -13,174 +15,178 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool isDarkMode = false;
+
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme=Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Profile',style: textTheme.titleLarge,),
+        title: Text('Profile', style: textTheme.titleLarge),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.account_circle_outlined,size: 45,),
-                    /*CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(AssetsPath.profileImagePNG),
-                    ),*/
-                    SizedBox(width: 8,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('MD Nahid Hossen',style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18
-                        ),),
-                        Text('nahidhossen.mail@gmail.com',style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 12
-                        ),)
-                      ],
-                    )
-                  ],
-                ),
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.grey.shade200,
-                  child: Icon(Icons.person_add_alt,size: 30,),
-                )
-              ],
+      body: Column(
+        children: [
+          SizedBox(height: 16),
+          _buildHeader(),
+          SizedBox(height: 16),
+          ListTile(
+            leading: Icon(Icons.nights_stay_outlined, size: 28),
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            title: Text('Night mode'),
+            trailing: Switch(
+              value: isDarkMode,
+              activeColor: Colors.deepOrange,
+              activeTrackColor: Colors.deepOrange.shade100,
+              inactiveThumbColor: Colors.grey.shade400,
+              inactiveTrackColor: Colors.grey.shade200,
+              trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+              onChanged: (value) {
+                isDarkMode = value;
+                setState(() {});
+              },
             ),
-            SizedBox(height: 16,),
-            Padding(
-              padding: EdgeInsets.only(left: 8,right: 16),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.pushReplacementNamed(context, MyRecipeScreen.name);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.restaurant_menu,size: 30,color: AppColor.themeColor,),
-                          SizedBox(width: 10,),
-                          Text('My Recipe',style: TextStyle(
-                              color: AppColor.themeColor,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),)
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(color: Colors.orange.shade50,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.pushNamed(context, RecipeFeedback.name);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.restaurant,size: 30,color: AppColor.themeColor,),
-                          SizedBox(width: 10,),
-                          Text('Recipe Feedback',style: TextStyle(
-                              color: AppColor.themeColor,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),)
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(color: Colors.orange.shade50,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.lock_open,size: 30,color: AppColor.themeColor,),
-                        SizedBox(width: 10,),
-                        Text('Changed Password',style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),)
-                      ],
-                    ),
-                  ),
-                  Divider(color: Colors.orange.shade50,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.privacy_tip,size: 30,color: AppColor.themeColor,),
-                        SizedBox(width: 10,),
-                        Text('Privacy & Policy',style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),)
-                      ],
-                    ),
-                  ),
-                  Divider(color: Colors.orange.shade50,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(Icons.info,size: 30,color: AppColor.themeColor,),
-                        SizedBox(width: 10,),
-                        Text('About',style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                        ),)
-                      ],
-                    ),
-                  ),
-                  Divider(color: Colors.orange.shade50,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: GestureDetector(
-                      onTap: () {
-                        AuthController.logOut();
-                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.name, (route) => false);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.logout,size: 30,color: AppColor.themeColor,),
-                              SizedBox(width: 10,),
-                              Text('Logout',style: TextStyle(
-                                  color: AppColor.themeColor,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold
-                              ),)
-                            ],
-                          ),
-                          Icon(Icons.arrow_forward_ios,size: 30,color: AppColor.themeColor,)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
+          ),
+          ListTile(
+            leading: Icon(Icons.person_outline, size: 28),
+            title: Text('Profile edit'),
+            onTap: () {},
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            trailing: Icon(Icons.arrow_forward_ios_sharp),
+          ),
+          ListTile(
+            leading: Icon(Icons.lock_open_rounded, size: 28),
+            title: Text('Change password'),
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            onTap: () {},
+            trailing: Icon(Icons.arrow_forward_ios_sharp),
+          ),
+          ListTile(
+            leading: Icon(Icons.restaurant_outlined, size: 28),
+            title: Text('My Recipes'),
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            onTap: () {
+              Navigator.pushNamed(context, MyRecipeScreen.name);
 
+            },
+            trailing: Icon(Icons.arrow_forward_ios_sharp),
+          ),
+          ListTile(
+            leading: Icon(Icons.feedback_outlined, size: 28),
+            title: Text('Recipe feedback'),
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            onTap: () {
+              Navigator.pushNamed(context, RecipeFeedbackScreen.name);
+            },
+            trailing: Icon(Icons.arrow_forward_ios_sharp),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout_outlined, size: 28),
+            title: Text('Logout'),
+            iconColor: Colors.grey.shade700,
+            titleTextStyle: _buildTextStyle(),
+            onTap: () async {
+              // Handle logout action
+              await AuthController.logOut();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginScreen.name,
+                (route) => false,
+              );
+            },
+          ),
+          SizedBox(height: 4),
+          _buildHelpButton(),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector _buildHelpButton() {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.all(18),
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        height: 90,
+        decoration: BoxDecoration(
+          color: Colors.deepOrange.shade50,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.mark_email_unread_outlined,
+              size: 36,
+              color: AppColor.themeColor,
+            ),
+            SizedBox(width: 20),
+            Text(
+              'How can we help you?',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  TextStyle _buildTextStyle() => TextStyle(
+    color: Colors.grey.shade800,
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Row(
+        children: [
+          DottedBorder(
+            options: CircularDottedBorderOptions(
+              padding: const EdgeInsets.all(0),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.deepOrange.shade300,
+                  Colors.deepOrange.shade200,
+                ],
+              ),
+              strokeWidth: 2.8,
+              dashPattern: [13, 4],
+            ),
+            child: CircleAvatar(
+              radius: 32,
+              backgroundColor: Colors.transparent,
+              child: Image.asset(AssetsPath.profileImagePNG, fit: BoxFit.cover),
+            ),
+          ),
+          SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AuthController.userModel?.fullName??'unknown',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              Text(
+                AuthController.userModel?.email??'unknown@gmail.com',
+                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

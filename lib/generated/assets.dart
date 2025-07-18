@@ -2,7 +2,7 @@
 class Assets {
   Assets._();
 
-  static const String imagesAvater = 'assets/images/avater.png';
+  static const String imagesAvatar = 'assets/images/avatar.png';
   static const String imagesBanner1 = 'assets/images/banner1.png';
   static const String imagesBurger = 'assets/images/burger.jpg';
   static const String imagesGoogleLogo = 'assets/images/google_logo.png';

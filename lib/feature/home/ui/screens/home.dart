@@ -43,23 +43,19 @@ class _HomeState extends State<Home> {
             Image.asset(AssetsPath.appLogoPNG, height: 36),
             Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, AddRecipeScreen.name);
-                  },
-                  child: CircleAvatar(
-                    radius: 18,
-                    backgroundColor: Colors.orange.withOpacity(0.15),
-                    child: Icon(
-                      Icons.add,
-                      size: 26,
-                      color: AppColor.themeColor,
-                    ),
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.orange.withOpacity(0.15),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AddRecipeScreen.name);
+                    },
+                    icon: Icon(Icons.add, size: 24, color: AppColor.themeColor),
                   ),
                 ),
                 SizedBox(width: 12),
                 CircleAvatar(
-                  radius: 18,
+                  radius: 20,
                   backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: () {
@@ -150,7 +146,10 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: FoodRecipeWidget(
                     onTap: () {
-                      FavouriteToggleController.toggleFavourite(controller.recipes[index]['id'], AuthController.uid!);
+                      FavouriteToggleController.toggleFavourite(
+                        controller.recipes[index]['id'],
+                        AuthController.uid!,
+                      );
                     },
                     recipeDetails: controller.recipes[index],
                   ),

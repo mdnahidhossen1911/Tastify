@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
  ThemeData appThemeData = ThemeData(
      colorSchemeSeed: Colors.deepOrange,
      scaffoldBackgroundColor: Colors.white,
+     appBarTheme: AppBarTheme(backgroundColor: Colors.white,),
      textTheme: TextTheme(
        titleMedium: TextStyle(
            fontSize: 18,

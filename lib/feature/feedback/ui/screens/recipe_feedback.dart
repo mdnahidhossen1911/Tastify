@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 
-class RecipeFeedback extends StatefulWidget {
-  const RecipeFeedback({super.key});
+class RecipeFeedbackScreen extends StatefulWidget {
+  const RecipeFeedbackScreen({super.key});
 
   static const String name='/recipe-feedback';
 
   @override
-  State<RecipeFeedback> createState() => _RecipeFeedbackState();
+  State<RecipeFeedbackScreen> createState() => _RecipeFeedbackScreenState();
 }
 
-class _RecipeFeedbackState extends State<RecipeFeedback> {
+class _RecipeFeedbackScreenState extends State<RecipeFeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme=Theme.of(context).textTheme;
