@@ -270,7 +270,7 @@ class _LoginScreenState extends State<LoginScreen> {
     NetworkResponse response = await _googleSignController.signInWithGoogle();
     if (response.isSuccess) {
       print("Google Sign-In Success: ${response.responseData}");
-      await AuthController.saveData(
+      await AuthController().saveData(
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
@@ -289,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (response.isSuccess) {
         print("Login Success: ${response.responseData}");
-        await AuthController.saveData(
+        await AuthController().saveData(
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );

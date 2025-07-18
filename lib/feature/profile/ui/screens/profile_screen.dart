@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
@@ -16,6 +17,20 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isDarkMode = false;
+
+  final AuthController _authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    dataUpdate();
+    super.initState();
+  }
+
+  dataUpdate() async {
+    await _authController.getData();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             titleTextStyle: _buildTextStyle(),
             onTap: () async {
               // Handle logout action
-              await AuthController.logOut();
+              await AuthController().logOut();
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 LoginScreen.name,
@@ -150,43 +165,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Row(
-        children: [
-          DottedBorder(
-            options: CircularDottedBorderOptions(
-              padding: const EdgeInsets.all(0),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.deepOrange.shade300,
-                  Colors.deepOrange.shade200,
+      child: GetBuilder(
+        init: _authController,
+        builder: (controller) {
+          return Row(
+            children: [
+              DottedBorder(
+                options: CircularDottedBorderOptions(
+                  padding: const EdgeInsets.all(0),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.deepOrange.shade300,
+                      Colors.deepOrange.shade200,
+                    ],
+                  ),
+                  strokeWidth: 2.8,
+                  dashPattern: [13, 4],
+                ),
+                child: CircleAvatar(
+                  radius: 32,
+                  backgroundColor: Colors.transparent,
+                  child: Image.asset(AssetsPath.profileImagePNG, fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.getUserName,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Text(
+                    controller.getGmail,
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                  ),
                 ],
               ),
-              strokeWidth: 2.8,
-              dashPattern: [13, 4],
-            ),
-            child: CircleAvatar(
-              radius: 32,
-              backgroundColor: Colors.transparent,
-              child: Image.asset(AssetsPath.profileImagePNG, fit: BoxFit.cover),
-            ),
-          ),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AuthController.userModel?.fullName??'unknown',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              Text(
-                AuthController.userModel?.email??'unknown@gmail.com',
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-              ),
             ],
-          ),
-        ],
+          );
+        }
       ),
     );
   }

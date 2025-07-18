@@ -298,7 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       NetworkResponse response = await _signupController.registerUser(user);
       if (response.isSuccess) {
-        await AuthController.saveData(
+        await AuthController().saveData(
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );
@@ -320,7 +320,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     NetworkResponse response = await _googleSignController.signInWithGoogle();
     if (response.isSuccess) {
       print("Google Sign-In Success: ${response.responseData}");
-      await AuthController.saveData(
+      await AuthController().saveData(
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
