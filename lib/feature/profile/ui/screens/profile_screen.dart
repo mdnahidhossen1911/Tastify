@@ -7,7 +7,6 @@ import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';

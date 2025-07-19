@@ -4,7 +4,7 @@ import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/supabase.dart';
 
 
-class GetRecipeController extends GetxController {
+class FetchPopularItemController extends GetxController {
 
 
   bool _isLoading = false;
@@ -22,9 +22,11 @@ class GetRecipeController extends GetxController {
 
     try {
       final res = await supabase
-          .from(table)
-          .select('*, category(title), favourites(rid, uid)')
-          .order('created_at', ascending: false);
+          .from('recipe')
+          .select('*, favourites(uid)')
+          .order('favourite', ascending: false)
+          .limit(10);
+
 
       final List<Map<String, dynamic>> recipes = List<Map<String, dynamic>>.from(res).map((json) {
         final favList = (json['favourites'] as List<dynamic>?) ?? [];

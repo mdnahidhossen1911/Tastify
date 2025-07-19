@@ -10,6 +10,7 @@ import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/home_carousel_slider.dart';
 import 'package:tastify/feature/home/ui/widgets/home_popular_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/section_header.dart';
+import 'package:tastify/feature/recipe/ui/controller/fetch_popular_item_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
@@ -85,6 +86,7 @@ class _HomeState extends State<Home> {
           Get.find<GetRecipeController>().getAllRecipes(
             AuthController.uid ?? '',
           );
+          Get.find<FetchPopularItemController>().getAllRecipes(AuthController.uid??'');
         },
         child: SingleChildScrollView(
           child: Column(
@@ -163,7 +165,7 @@ class _HomeState extends State<Home> {
   Widget _buildPopularSection() {
     return SizedBox(
       height: 196,
-      child: GetBuilder<GetRecipeController>(
+      child: GetBuilder<FetchPopularItemController>(
         builder: (controller) {
           return Visibility(
             visible: !controller.isLoading,
