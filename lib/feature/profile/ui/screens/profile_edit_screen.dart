@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/core/utils/utils.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/auth/ui/widgets/screen_background.dart';
@@ -153,31 +154,39 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         SizedBox(
                           width: double.infinity,
                           height: 55,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final isSuccess = await UpdateProfileController()
-                                  .updateProfile(
-                                    nameController.text.trim(),
-                                    photoString.value,
+                          child: GetBuilder(
+                            init: UpdateProfileController(),
+                            builder: (controller) {
+                              return controller.isLoading
+                                  ? circleProgress()
+                                  : ElevatedButton(
+                                    onPressed: () async {
+                                      final isSuccess = await controller
+                                          .updateProfile(
+                                            nameController.text.trim(),
+                                            photoString.value,
+                                          );
+
+                                      if (isSuccess) {
+                                        Utils.showToast(
+                                          'Profile updated successfully',
+                                        );
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.themeColor,
+                                      elevation: 0,
+                                    ),
+                                    child: Text(
+                                      "Update",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                                   );
-
-                              if (isSuccess) {
-                                Utils.showToast('Profile updated successfully',);
-                              }
-
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColor.themeColor,
-                              elevation: 0,
-                            ),
-                            child: Text(
-                              "Update",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
                           ),
                         ),
                       ],

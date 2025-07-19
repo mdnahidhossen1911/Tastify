@@ -12,6 +12,7 @@ import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -134,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   GestureDetector _buildHelpButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: contactTastifySupport,
       child: Container(
         margin: EdgeInsets.all(18),
         padding: EdgeInsets.symmetric(horizontal: 25),
@@ -237,5 +238,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       ),
     );
+  }
+
+
+  void contactTastifySupport() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'md.nahidhossen1911@gmail.com',
+      query: Uri.encodeFull(
+        'subject=Help with Tastify App&body=Hey Tastify team',
+      ),
+    );
+
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(
+          emailUri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch email client';
+    }
   }
 }
