@@ -39,10 +39,10 @@ class AuthController extends GetxController{
 
    Future<void> updateData(AuthUserModel userModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_uidKey, userModel.uid ?? '');
     await prefs.setString(_modelKey, jsonEncode(userModel));
-    uid = userModel.uid;
     userModel = userModel;
+    await getData();
+    update();
   }
 
    Future<bool> isLogIn()async{

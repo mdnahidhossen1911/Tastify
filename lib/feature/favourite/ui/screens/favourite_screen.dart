@@ -19,7 +19,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
   initState() {
     super.initState();
-    getFavouriteController.FavouriteRecipes(AuthController.uid!);
+    getFavouriteController.FavouriteRecipes(AuthController.uid??'');
   }
 
   @override

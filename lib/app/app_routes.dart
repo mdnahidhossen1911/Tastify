@@ -12,6 +12,7 @@ import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
+import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
@@ -75,6 +76,8 @@ class AppRoutes {
       route =  BlogDetailsScreen(blogDetails: data,);
     }else if(settings.name==AddBlogScreen.name){
       route= const AddBlogScreen();
+    }else if(settings.name==ProfileEditScreen.name){
+      route= const ProfileEditScreen();
     }
 
 

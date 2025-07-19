@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
+import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -69,7 +72,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: Icon(Icons.person_outline, size: 28),
             title: Text('Profile edit'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ProfileEditScreen.name);
+            },
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             trailing: Icon(Icons.arrow_forward_ios_sharp),
@@ -188,10 +193,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   strokeWidth: 2.8,
                   dashPattern: [13, 4],
                 ),
-                child: CircleAvatar(
-                  radius: 32,
-                  backgroundColor: Colors.transparent,
-                  child: Image.asset(AssetsPath.profileImagePNG, fit: BoxFit.cover),
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: SizedBox(
+                    height: 48,
+                    width: 48,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.memory(
+                        base64Decode(controller.getPhoto),
+                        fit: BoxFit.cover,
+                        errorBuilder: (
+                            context,
+                            error,
+                            stackTrace,
+                            ) {
+                          return Image.asset(
+                            AssetsPath.profileImagePNG,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(width: 16),

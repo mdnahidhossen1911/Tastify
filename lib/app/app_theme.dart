@@ -36,6 +36,10 @@ import 'package:flutter/material.dart';
            borderSide: BorderSide(color: Color(0xffffe4d5)),
            borderRadius: BorderRadius.circular(8)
        ),
+       disabledBorder: OutlineInputBorder(
+           borderSide: BorderSide(color: Color(0xffffe4d5)),
+           borderRadius: BorderRadius.circular(8)
+       ),
        filled: true,
        fillColor: Colors.white,
      ),
