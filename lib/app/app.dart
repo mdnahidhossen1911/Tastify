@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tastify/app/app_theme.dart';
+import 'package:tastify/app/controller_binder.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
 
 import 'app_routes.dart';
@@ -8,65 +11,10 @@ class TastifyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.deepOrange,
-        textTheme: TextTheme(
-          titleMedium: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),
-          titleSmall: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.orange
-          ),
-          titleLarge: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          hintStyle: TextStyle(
-              color: Color(0xffb0b0b0),
-              fontSize: 15
-          ),
-          border: OutlineInputBorder(),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffffe4d5)),
-              borderRadius: BorderRadius.circular(8)
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffffe4d5)),
-              borderRadius: BorderRadius.circular(8)
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffffe4d5)),
-              borderRadius: BorderRadius.circular(8)
-          ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
-        navigationBarTheme: NavigationBarThemeData(
-          indicatorColor: Colors.transparent, // ❌ No background color
-          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
-                (Set<MaterialState> states) {
-              if (states.contains(MaterialState.selected)) {
-                return const TextStyle(color: Colors.deepOrange); // ✅ Selected color
-              }
-              return const TextStyle(color: Colors.grey); // ❌ Unselected color
-            },
-          ),
-          iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
-                (Set<MaterialState> states) {
-              if (states.contains(MaterialState.selected)) {
-                return const IconThemeData(color: Colors.deepOrange); // ✅ Selected color
-              }
-              return const IconThemeData(color: Colors.grey); // ❌ Unselected color
-            },
-          ),
-        )
-      ),
+      theme: appThemeData,
+      initialBinding: ControllerBinder(),
       onGenerateRoute: AppRoutes.onGenerateRoute,
       initialRoute: SplashScreen.name,
     );

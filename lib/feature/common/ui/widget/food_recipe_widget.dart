@@ -1,84 +1,104 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:tastify/app/assets_path.dart';
+import 'package:get/get.dart';
+import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
-  const FoodRecipeWidget({super.key});
+  const FoodRecipeWidget({super.key, required this.recipeDetails, required this.onTap});
+  final Map<String,dynamic> recipeDetails ;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, RecipeDetailsScreen.name);
+      onTap: () {
+        Navigator.pushNamed(context, RecipeDetailsScreen.name, arguments: recipeDetails);
       },
       child: Container(
-        height: 140,
+        height: 110,
+        margin: EdgeInsets.symmetric(horizontal: 16),
         width: double.maxFinite,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),  // adjust the radius as you like
-              child: Image.asset(
-                AssetsPath.popularFishImageJPG,
-                height: 140,
-                width: 140,
+              borderRadius: BorderRadius.circular(8),
+              child: Image.memory(
+                base64Decode(recipeDetails['photo'] ?? ''),
+                height: 110,
+                width: 158,
                 fit: BoxFit.cover,
               ),
             ),
 
-            SizedBox(width: 8,),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Big and Juicy Wagyu Beef Cheeseburger',
+                    recipeDetails['title'] ?? 'name',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8,),
                   SizedBox(
-                    width: 150,
-                    child: ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4)
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.favorite,size: 17,color: Colors.deepOrange,),
+                    width: 86,
+                    height: 28,
+                    child: GetBuilder<GetRecipeController>(
+                      id: 'fav-${recipeDetails['id']}',
+                      builder: (controller) {
+                        final isFav = recipeDetails['favourites'] == true;
+                        return ElevatedButton(
+                          onPressed: onTap,
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                            elevation: 0,
                           ),
-                          SizedBox(width: 5,),
-                          Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.bold),),
-
-                        ],
-                      ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.white,
+                                child: isFav == true
+                                    ? Icon(
+                                  Icons.favorite,
+                                  size: 14,
+                                  color: Colors.deepOrange,
+                                )
+                                    : Icon(
+                                  Icons.favorite,
+                                  size: 14,
+                                  color: Colors.black26,
+                                ),
+                              ),
+                              SizedBox(width: 5,),
+                              Text('Favourite',style: TextStyle(color: Colors.deepOrange,fontSize: 10,fontWeight: FontWeight.bold),),
+                              SizedBox(width: 8)
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: 8,),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      /*CircleAvatar(
-                      radius: 10,
-                      backgroundImage: AssetImage(AssetsPath.popularFishImageJPG),
-                      backgroundColor: Colors.transparent,
-                    ),*/
-                      Icon(Icons.timer,size: 20,color: Colors.black,),
+                      Icon(Icons.timer,size: 16,color: Colors.black,),
                       SizedBox(width: 4),
-                      Text('30 Minutes', style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
+                      Text('${recipeDetails['prep_time'] ?? ''} min', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                       SizedBox(width: 16),
-                      Icon(Icons.restaurant, size: 20, color: Colors.black),
+                      Icon(Icons.restaurant, size: 16, color: Colors.black),
                       SizedBox(width: 4),
-                      Text('Breakfast', style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
+                      Text(recipeDetails['category_name']??'category', style: TextStyle(color: Colors.black38,fontSize: 10,fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],

@@ -1,59 +1,47 @@
+import 'package:get/get.dart';
 import 'package:tastify/core/app_logger.dart';
-import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/supabase.dart';
 
-class FavouriteController {
-  static const String table = 'favourites';
+class GetFavouriteController extends GetxController {
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
-  static Future<NetworkResponse> toggleFavourite(String recipeId, String userId) async {
-    try {
-      final existing = await supabase
-          .from(table)
-          .select()
-          .eq('rid', recipeId)
-          .eq('uid', userId)
-          .maybeSingle();
+  List<Map<String, dynamic>> _favouriteRecipes = [];
+  List<Map<String, dynamic>> get favouriteRecipes => _favouriteRecipes;
 
-      if (existing != null) {
-        await supabase.from(table).delete().eq('rid', recipeId).eq('uid', userId);
-        appLogger.i("Favourite removed for recipe: $recipeId by user: $userId");
-        return NetworkResponse(isSuccess: true, responseData: {'favourited': false});
-      } else {
-        final res = await supabase
-            .from(table)
-            .insert({'rid': recipeId, 'uid': userId})
-            .select()
-            .single();
+  Future<bool> FavouriteRecipes(String userId) async {
+    _isLoading = true;
+    update();
 
-        appLogger.i("Favourite added for recipe: $recipeId by user: $userId");
-        return NetworkResponse(isSuccess: true, responseData: {'favourited': true, 'data': res});
-      }
-    } catch (e) {
-      appLogger.e("Toggle Favourite Failed: $e");
-      return NetworkResponse(isSuccess: false, errorMessage: e.toString());
-    }
-  }
-
-
-  static Future<NetworkResponse> getFavouriteRecipes(String userId) async {
     try {
       final res = await supabase
-          .from(table)
-          .select('rid, recipe(*, category(title))')
+          .from('favourites')
+          .select('rid, recipe(*)') // ✅ fixed syntax
           .eq('uid', userId);
 
-      final List favRecipes = List<Map<String, dynamic>>.from(res).map((item) {
-        final recipe = item['recipe'];
-        recipe['category_name'] = recipe['category']?['title'];
+      List<Map<String, dynamic>> favRecipes = List<Map<String, dynamic>>.from(res).map((item) {
+        final recipe = Map<String, dynamic>.from(item['recipe']);
         recipe['favourites'] = true;
         return recipe;
       }).toList();
 
+      _favouriteRecipes = favRecipes;
       appLogger.i("Fetched ${favRecipes.length} favourite recipes for $userId");
-      return NetworkResponse(isSuccess: true, responseData: {'recipes': favRecipes});
+
+      _isLoading = false; // ✅ always stop loading, even if it succeeds
+      update();
+
+      return true;
     } catch (e) {
+      _isLoading = false; // ✅ always stop loading, even if it fails
+      update();
       appLogger.e("Fetch Favourites Failed: $e");
-      return NetworkResponse(isSuccess: false, errorMessage: e.toString());
+      return false;
     }
+  }
+
+  Future<void> removeFavourite(String RID) async {
+    _favouriteRecipes.removeWhere((e) => e['id'] == RID);
+    update();
   }
 }

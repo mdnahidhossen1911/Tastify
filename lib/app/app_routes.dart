@@ -3,18 +3,24 @@ import 'package:tastify/feature/auth/ui/screen/forgot_password_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/otp_verify_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/sign_up.dart';
+import 'package:tastify/feature/auth/ui/screen/sign_up_screen.dart';
 import 'package:tastify/feature/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/feature/blog/ui/screens/add_blog_screen.dart';
+import 'package:tastify/feature/blog/ui/screens/blog_details_screen.dart';
+import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
+import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
+import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
+import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
-import 'package:tastify/feature/auth/ui/screen/google_sign_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/update_recipe_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -29,9 +35,11 @@ class AppRoutes {
     }else if (settings.name == ForgotPasswordScreen.name) {
       route = const ForgotPasswordScreen();
     }else if (settings.name == SetPasswordScreen.name) {
-      route = const SetPasswordScreen();
+      String email = settings.arguments as String;
+      route =  SetPasswordScreen(email: email);
     }else if (settings.name == OtpVerifyScreen.name) {
-      route = const OtpVerifyScreen();
+      String email = settings.arguments as String;
+      route =  OtpVerifyScreen(email: email);
     }
     else if(settings.name==MainBottomNavBar.name){
       route =const MainBottomNavBar();
@@ -51,17 +59,33 @@ class AppRoutes {
     else if(settings.name==SearchListScreen.name){
       route= const SearchListScreen();
     }
-    else if(settings.name==RecipeFeedback.name){
-      route= const RecipeFeedback();
-    }
-    else if(settings.name==RecipeDetailsScreen.name){
-      route= const RecipeDetailsScreen();
+    else if(settings.name==RecipeFeedbackScreen.name){
+      route= const RecipeFeedbackScreen();
+    }else if (settings.name == ChangePasswordScreen.name) {
+      String email = settings.arguments as String;
+      route =  ChangePasswordScreen(email: email);
+    } else if(settings.name==RecipeDetailsScreen.name){
+      final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+      route=  RecipeDetailsScreen(recipeDetails: args,);
     }
     else if(settings.name==AddRecipeScreen.name){
       route= const AddRecipeScreen();
-    }else if (settings.name == GoogleSignScreen.name) {
-      route = const GoogleSignScreen();
+    }else if (settings.name == CategoryWiseListScreen.name) {
+      final String categoryName = settings.arguments as String;
+      route =  CategoryWiseListScreen(categoryName: categoryName,);
+    }else if (settings.name == BlogDetailsScreen.name) {
+      final Map<String,dynamic> data = settings.arguments as Map<String, dynamic>;
+      route =  BlogDetailsScreen(blogDetails: data,);
+    }else if(settings.name==AddBlogScreen.name){
+      route= const AddBlogScreen();
+    }else if(settings.name==ProfileEditScreen.name){
+      route= const ProfileEditScreen();
+    }else if(settings.name==UpdateRecipeScreen.name){
+      final RecipeModel recipeData = settings.arguments as RecipeModel;
+      route=  UpdateRecipeScreen(recipe: recipeData,);
     }
+
+
     return MaterialPageRoute(
       builder: (context) {
         return route;

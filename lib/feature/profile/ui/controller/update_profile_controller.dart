@@ -1,38 +1,47 @@
+import 'package:get/get.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/supabase.dart';
+import 'package:tastify/feature/auth/data/model/auth_user_model.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 
-class UpdateProfileController {
-   
-  Future<bool> updateName(String name) async {
+class UpdateProfileController extends GetxController{
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  Future<bool> updateProfile(String name,String photoString) async {
+
+    _isLoading = true;
+    update();
+
     try {
       final userData = await supabase
           .from('Users')
-          .update({'name': name})
-          .eq('id', '00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd')
+          .update({'name': name, 'photo': photoString})
+          .eq('id', AuthController.uid??'')
           .select('id ,name');
+
+      AuthUserModel userModel = AuthUserModel(
+          uid: AuthController.uid,
+          fullName: name,
+          email: AuthController().getGmail,
+          photo: photoString,
+      );
+      Get.find<AuthController>().updateData(userModel);
+
+      _isLoading = false;
+      update();
 
       appLogger.i('Change User name successfully. \n$userData');
       return true;
     } catch (e) {
       appLogger.e(e);
+
+      _isLoading = false;
+      update();
+
       return false;
     }
   }
 
-
-  Future<bool> updatePhoto(String image) async {
-    try {
-      final userData = await supabase
-          .from('Users')
-          .update({'photo': image})
-          .eq('id', '00eb5dfd-9d07-4754-bae3-47e1dd0cc8cd')
-          .select('id ,name , photo');
-
-      appLogger.i('Change User photo successfully. \n$userData');
-      return true;
-    } catch (e) {
-      appLogger.e(e);
-      return false;
-    }
-  }
 }

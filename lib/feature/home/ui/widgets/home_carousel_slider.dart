@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
 
 class HomeCarouselSlider extends StatefulWidget {
-  const HomeCarouselSlider({super.key});
+   HomeCarouselSlider({super.key, required this.sliderImages});
+
+  List<Map<String, dynamic>> sliderImages = [];
 
   @override
   State<HomeCarouselSlider> createState() => _HomeCarouselSliderState();
@@ -13,54 +15,60 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
   int _selectedSlider=0;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider(
-          options: CarouselOptions(
-              autoPlay: true,
-              height: 200,
-              viewportFraction: 1,
-              onPageChanged: (index,reason){
-                _selectedSlider=index;
-                setState(() {});
-              }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+                autoPlay: true,
+                height: 186,
+                viewportFraction: 1,
+                onPageChanged: (index,reason){
+                  _selectedSlider=index;
+                  setState(() {});
+                }
+            ),
+            items: widget.sliderImages.map((image) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 2.0),
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(8),
+                          image: DecorationImage(image: NetworkImage(image['image'],
+                          ),
+                          fit: BoxFit.fill,
+                          )
+                      ),
+
+                  );
+                },
+              );
+            }).toList(),
           ),
-          items: [1,2,3,4,5].map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 2.0),
-                    decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(image: AssetImage(AssetsPath.carouselImagePNG))
-                    ),
+          SizedBox(height: 8,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for(int i=0;i<widget.sliderImages.length;i++)
+                Container(
+                  width: _selectedSlider==i ? 22: 8,
+                  height: 8,
+                  margin: EdgeInsets.only(left: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    //border: _selectedSlider==i ? Border.all(color: Colors.deepOrange.withOpacity(0.7)) : Border.all(color: Colors.orange.withOpacity(0.8)),
+                    color: _selectedSlider==i ? Colors.deepOrange.withOpacity(0.7): Colors.orange.withOpacity(0.8),
+                  ),
+                )
 
-                );
-              },
-            );
-          }).toList(),
-        ),
-        SizedBox(height: 8,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for(int i=0;i<5;i++)
-              Container(
-                width: _selectedSlider==i ? 20: 10,
-                height: 10,
-                margin: EdgeInsets.only(left: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  //border: _selectedSlider==i ? Border.all(color: Colors.deepOrange.withOpacity(0.7)) : Border.all(color: Colors.orange.withOpacity(0.8)),
-                  color: _selectedSlider==i ? Colors.deepOrange.withOpacity(0.7): Colors.orange.withOpacity(0.8),
-                ),
-              )
-
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -1,12 +1,19 @@
+import 'package:get/get.dart';
 import 'package:tastify/core/secure_password.dart';
 import 'package:tastify/core/supabase.dart';
 import 'package:tastify/feature/auth/data/model/user_model.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/app_logger.dart';
 
-class SignupController {
+class SignupController extends GetxController {
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
    
   Future<NetworkResponse> registerUser(UserModel user) async {
+    _isLoading = true;
+    update();
 
     try {
       final existing = await supabase
@@ -18,6 +25,10 @@ class SignupController {
 
       if (existing != null) {
         appLogger.w('Email already in use: ${user.email}');
+
+        _isLoading = false;
+        update();
+
         return NetworkResponse(
           isSuccess: false,
           errorMessage: "This email is already used!",
@@ -33,6 +44,9 @@ class SignupController {
 
       appLogger.i('User registered with ID: ${response['id']}');
 
+      _isLoading = false;
+      update();
+
       return NetworkResponse(
         isSuccess: true,
         responseData: {
@@ -43,6 +57,10 @@ class SignupController {
         },
       );
     } catch (e, stack) {
+
+      _isLoading = false;
+      update();
+
       appLogger.e('Registration error', error: e, stackTrace: stack);
       return NetworkResponse(
         isSuccess: false,

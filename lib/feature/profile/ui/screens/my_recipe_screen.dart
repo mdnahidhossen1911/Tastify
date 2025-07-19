@@ -1,35 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
+import 'package:tastify/feature/profile/ui/controller/my_recipe_controller.dart';
 import 'package:tastify/feature/profile/ui/widgets/my_recipe_widget.dart';
 
 class MyRecipeScreen extends StatefulWidget {
   const MyRecipeScreen({super.key});
 
-  static const String name='/my-recipe-screen';
+  static const String name = '/my-recipe-screen';
 
   @override
   State<MyRecipeScreen> createState() => _MyRecipeScreenState();
 }
 
 class _MyRecipeScreenState extends State<MyRecipeScreen> {
+  MyRecipeController myRecipeController = Get.find<MyRecipeController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    myRecipeController.fetchMyRecipes();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme=Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('My Recipe',style: textTheme.titleLarge,),
+        forceMaterialTransparency: true,
+        title: Text('My Recipe', style: textTheme.titleLarge),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-          //shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context,index){
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: MyRecipeWidget(),
-            );
+      body: SafeArea(
+        child: GetBuilder(
+          init: myRecipeController,
+          builder: (controller) {
+            return controller.isLoading
+                ? circleProgress()
+                : ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  itemCount: controller.myRecipes.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: MyRecipeWidget(
+                        recipe: controller.myRecipes[index],
+                      ),
+                    );
+                  },
+                );
           },
         ),
       ),

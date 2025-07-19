@@ -1,47 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 
 class CategoryItemWidget extends StatelessWidget {
-  const CategoryItemWidget({super.key});
+  CategoryItemWidget({super.key, this.category});
+  Map<String,dynamic>? category;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      height: 140,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromRGBO(255, 255, 255, 1),    // White at the top
-              Color.fromRGBO(240, 240, 240, 1),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, CategoryWiseListScreen.name,arguments: category!['title']);
+      },
+      child: Container(
+        width: 81,
+        height: 87,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(255, 255, 255, 1),    // White at the top
+                Color.fromRGBO(240, 240, 240, 1),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(12)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network( category!['icon']??'',
+                width: 45,
+                height: 45,
+              ),
+              SizedBox(height: 6),
+              Text(
+                category!['title'] ?? 'Category',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
-          borderRadius: BorderRadius.circular(20)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: Image.asset(AssetsPath.categoryMeatlImageJPG, // Replace with your image path
-                fit: BoxFit.contain,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Breakfast',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ],
         ),
       ),
     );

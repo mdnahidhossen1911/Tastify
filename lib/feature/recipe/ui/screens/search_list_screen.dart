@@ -1,64 +1,96 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:tastify/app/app_colors.dart';
-import 'package:tastify/feature/common/ui/widget/category_item_widget.dart';
+import 'package:get/get.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
+import 'package:tastify/feature/recipe/ui/controller/recipe_search_controller.dart';
+
+import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 
 class SearchListScreen extends StatefulWidget {
   const SearchListScreen({super.key});
 
-  static const String name='/search-screen';
+  static const String name = '/search-screen';
 
   @override
   State<SearchListScreen> createState() => _SearchListScreenState();
 }
 
 class _SearchListScreenState extends State<SearchListScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  final RecipeSearchController _recipeController = RecipeSearchController();
+  Timer? _debounce;
+
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1400), () {
+      _recipeController.searchWithTitle(query.trim().toLowerCase());
+    });
+  }
+
+  void _clearSearch() {
+    _searchController.clear();
+    _recipeController.searchWithTitle('');
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _clearSearch();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme=Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.white,
-        title: Text('Search',style: textTheme.titleLarge,),
+        title: SizedBox(
+          height: 45,
+          child: SearchBar(
+            controller: _searchController,
+            backgroundColor: WidgetStateColor.resolveWith(
+              (states) => Colors.deepOrange.shade50.withOpacity(0.7),
+            ),
+            hintText: "Search recipes with title or category",
+            elevation: const MaterialStatePropertyAll(0),
+            onChanged: _onSearchChanged,
+          ),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                TextField(
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    hintText: 'Strawbery Oatmeal',
-                    hintStyle: TextStyle(color: Colors.black),
-                    suffixIcon: Icon(Icons.search,color: AppColor.themeColor,size: 30,),
-                    fillColor: Colors.pink.shade50,
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(60),
-                      borderSide: BorderSide(color: Colors.pink.shade50)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(60),
-                        borderSide: BorderSide(color: Colors.pink.shade50)
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10,),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context,index){
+      body: SafeArea(
+        child: GetBuilder(
+          init: _recipeController,
+          builder: (controller) {
+            return controller.isLoading
+                ? circleProgress()
+                : ListView.builder(
+                  itemCount: controller.recipes.length,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: FoodRecipeWidget(),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: FoodRecipeWidget(
+                        recipeDetails: controller.recipes[index],
+                        onTap: () {
+                          FavouriteToggleController.toggleFavourite(controller.recipes[index]['id'], AuthController.uid!);
+                          controller.updateToggle(controller.recipes[index]['id']);
+                        },
+                      ),
                     );
                   },
-                ),
-              ],
-            )
+                );
+          },
         ),
       ),
     );

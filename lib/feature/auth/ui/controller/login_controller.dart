@@ -1,14 +1,22 @@
+import 'package:get/get.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/secure_password.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/supabase.dart';
 
-class LoginController {
+class LoginController extends GetxController{
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
    
   Future<NetworkResponse> loginUser({
     required String email,
     required String password,
   }) async {
+
+    _isLoading = true;
+    update();
+
     try {
       final userData =
           await supabase
@@ -20,6 +28,10 @@ class LoginController {
 
       if (userData == null) {
         appLogger.w('User not found!');
+
+        _isLoading = false;
+        update();
+
         return NetworkResponse(
           isSuccess: false,
           errorMessage: "User not found!",
@@ -28,11 +40,18 @@ class LoginController {
 
       if (userData['password'] != securePassword(password)) {
         appLogger.w('Incorrect password!');
+
+        _isLoading = false;
+        update();
+
         return NetworkResponse(
           isSuccess: false,
           errorMessage: 'Incorrect password!',
         );
       }
+
+      _isLoading = false;
+      update();
 
       appLogger.i(userData);
       return NetworkResponse(
@@ -46,11 +65,15 @@ class LoginController {
       );
 
     } catch (e,stack) {
+      _isLoading = false;
+      update();
       appLogger.e('Registration error', error: e, stackTrace: stack);
       return NetworkResponse(
         isSuccess: false,
         errorMessage: 'Error: $e',
       );
     }
+
+
   }
 }

@@ -1,95 +1,399 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:tastify/app/assets_path.dart';
+import 'package:get/get.dart';
+import 'package:tastify/core/app_logger.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
+import 'package:tastify/core/utils/utils.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/feedback/ui/controller/feedback_controller.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
-  const RecipeDetailsScreen({super.key});
+  const RecipeDetailsScreen({super.key, required this.recipeDetails});
 
-  static const String name='/recipe-details-screen';
+  final Map<String, dynamic> recipeDetails;
+
+  static const String name = '/recipe-details-screen';
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+  late List<String> ingredients;
+  late List<String> instructions;
+  late Map<String, dynamic> nutritionInfo;
+
+  TextEditingController feedbackController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    ingredients = List<String>.from(
+      jsonDecode(widget.recipeDetails['ingredients']),
+    );
+    instructions = List<String>.from(
+      jsonDecode(widget.recipeDetails['instructions']),
+    );
+    nutritionInfo = Map<String, dynamic>.from(
+      jsonDecode(widget.recipeDetails['nutrition_info']),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    appLogger.i(widget.recipeDetails);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        forceMaterialTransparency: true,
+        title: Text(
+          widget.recipeDetails['title'],
+          style: TextStyle(fontSize: 18),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
+      body: SafeArea(
+        child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 200,
                 width: double.maxFinite,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(AssetsPath.popularFishImageJPG,width: 300,height: 300,fit: BoxFit.cover,),
-                ),
-              ),
-              SizedBox(height: 8,),
-              Text('Big and Juicy Wagyu Beef Cheeseburger',style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25
-              ),),
-              SizedBox(height: 8,),
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: Color(0xFFf4f3f2),
-                  borderRadius: BorderRadius.circular(12)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.timer),
-                          SizedBox(width: 5,),
-                          Column(
-                            children: [
-                              Text('Prep Time',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                              SizedBox(height: 2,),
-                              Text('30 Minutes',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),),
-                            ],
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.timer),
-                          SizedBox(width: 5,),
-                          Column(
-                            children: [
-                              Text('Prep Time',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                              SizedBox(height: 2,),
-                              Text('30 Minutes',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),),
-                            ],
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.restaurant),
-                          SizedBox(width: 5,),
-                          Text('Breakfast',style: TextStyle(color:Colors.grey,fontWeight: FontWeight.bold,fontSize: 15),),
-                        ],
-                      ),
-        
-                    ],
+                  child: Image.memory(
+                    base64Decode(widget.recipeDetails['photo'] ?? ''),
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              SizedBox(height: 8,),
-              Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",style: TextStyle(color: Colors.grey),)
+              SizedBox(height: 8),
+              Text(
+                widget.recipeDetails['title'],
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(height: 16),
+              _buildTimeCategory(),
+              SizedBox(height: 12),
+              _buildNutrition(),
+              SizedBox(height: 16),
+              Text(
+                widget.recipeDetails['description'],
+                style: TextStyle(color: Colors.black54, fontSize: 15),
+              ),
+              SizedBox(height: 20),
+              _buildIngredients(),
+              SizedBox(height: 20),
+              _buildInstructions(),
+              SizedBox(height: 40),
+              _buildSendFeedBack(),
+              SizedBox(height: 30),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSendFeedBack() {
+    return Container(
+      width: double.maxFinite,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.deepOrange,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Recipe Feedback',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 16),
+          Container(
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          Form(
+            key: _formKey,
+            child: TextFormField(
+              maxLines: 3,
+              controller: feedbackController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: InputDecoration(
+                hintText: 'Share your feedback...',
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.all(12),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your feedback';
+                }
+                return null;
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+          GetBuilder(
+            init: FeedbackController(),
+            builder: (controller) {
+              return controller.isLoading
+                  ? circleProgress(color: Colors.white)
+                  : ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        Map<String, dynamic> feedback = {
+                          'rid': widget.recipeDetails['id'],
+                          'uid': AuthController.uid,
+                          'rwid': widget.recipeDetails['user_id'],
+                          'feedback': feedbackController.text,
+                        };
+
+                        bool isSuccess = await controller.addFeedback(
+                          feedback,
+                        );
+                        if (isSuccess) {
+                          Utils.showToast('Feedback submitted successfully!');
+                          feedbackController.clear();
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      fixedSize: Size.fromWidth(double.maxFinite),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIngredients() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Ingredients',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        SizedBox(height: 8),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: ingredients.length,
+          itemBuilder: (context, index) {
+            String ing = ingredients[index];
+            return Padding(
+              padding: const EdgeInsets.all(6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.check_circle, color: Colors.deepOrange, size: 16),
+                  SizedBox(width: 10),
+                  Expanded(child: Text(ing, style: TextStyle(fontSize: 16))),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInstructions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Instructions',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        SizedBox(height: 8),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: instructions.length,
+          itemBuilder: (context, index) {
+            String instruction = instructions[index];
+            return Padding(
+              padding: const EdgeInsets.all(6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.check_circle, color: Colors.deepOrange, size: 16),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(instruction, style: TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNutrition() {
+    return Container(
+      width: double.maxFinite,
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Color(0xb3fff3ea),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Nutrition Information',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          SizedBox(height: 16),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: nutritionInfo.length,
+            separatorBuilder:
+                (context, index) =>
+                    Divider(color: Colors.deepOrangeAccent.withOpacity(0.4)),
+            itemBuilder: (context, index) {
+              final key = nutritionInfo.keys.elementAt(index);
+              final value = nutritionInfo[key];
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    key[0].toUpperCase() + key.substring(1),
+                    style: TextStyle(color: Colors.grey.shade700),
+                  ),
+                  Text(
+                    value.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimeCategory() {
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: Color(0xb3fff3ea),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.timer, size: 24),
+                SizedBox(width: 5),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Prep Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '${widget.recipeDetails['prep_time'] ?? '0 Minutes'} min',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.timer, size: 24),
+                SizedBox(width: 5),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Cook Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '${widget.recipeDetails['cook_time'] ?? '0 Minutes'} min',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.restaurant, size: 24),
+                SizedBox(width: 5),
+                Text(
+                  widget.recipeDetails['category_name'] ?? 'Category',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
