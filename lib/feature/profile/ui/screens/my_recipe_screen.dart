@@ -14,7 +14,7 @@ class MyRecipeScreen extends StatefulWidget {
 }
 
 class _MyRecipeScreenState extends State<MyRecipeScreen> {
-  MyRecipeController myRecipeController = MyRecipeController();
+  MyRecipeController myRecipeController = Get.find<MyRecipeController>();
 
   @override
   void initState() {
