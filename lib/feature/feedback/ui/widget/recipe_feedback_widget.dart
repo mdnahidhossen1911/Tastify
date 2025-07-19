@@ -6,6 +6,7 @@ import 'package:tastify/core/utc_to_local_date.dart';
 
 class RecipeFeedbackWidget extends StatelessWidget {
   const RecipeFeedbackWidget({super.key, required this.feedback});
+
   final Map<String, dynamic> feedback;
 
   @override
@@ -62,10 +63,29 @@ class RecipeFeedbackWidget extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: 12,
-                        child: Image.asset(AssetsPath.profileImagePNG),
-                      ),
+                      feedback['Users']['photo'] != null
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.memory(
+                              base64Decode(feedback['Users']['photo']),
+                              width: 22,
+                              height: 22,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return CircleAvatar(
+                                  radius: 12,
+                                  child: Image.asset(
+                                    AssetsPath.profileImagePNG,
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          : CircleAvatar(
+                            radius: 12,
+                            child: Image.asset(AssetsPath.profileImagePNG),
+                          ),
+
                       SizedBox(width: 8),
                       Expanded(
                         child: Column(
@@ -87,7 +107,9 @@ class RecipeFeedbackWidget extends StatelessWidget {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  formatUtcToLocalDate(feedback['created_at'] ?? ''),
+                                  formatUtcToLocalDate(
+                                    feedback['created_at'] ?? '',
+                                  ),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,

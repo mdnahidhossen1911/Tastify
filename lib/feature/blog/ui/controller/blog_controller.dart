@@ -38,7 +38,7 @@ class BlogController extends GetxController{
     update();
 
     try {
-      final res = await supabase.from('blog').select('*, Users(name)').order('created_at', ascending: false);
+      final res = await supabase.from('blog').select('*, Users(name,photo)').order('created_at', ascending: false);
 
       if (res.isNotEmpty) {
         _blogs = List<Map<String, dynamic>>.from(res);

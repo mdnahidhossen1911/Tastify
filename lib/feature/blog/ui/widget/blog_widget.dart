@@ -55,9 +55,18 @@ class BlogWidget extends StatelessWidget {
                   SizedBox(height: 4),
                   Row(
                     children: [
-                      CircleAvatar(
-                        radius: 7,
-                        backgroundColor: Colors.grey.shade200,
+                      blogData['Users']['photo'] != null
+                          ? ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.memory(
+                          base64Decode(blogData['Users']['photo']),
+                          width: 16,
+                          height: 16,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                          : CircleAvatar(
+                        radius: 8,
                         child: Image.asset(AssetsPath.profileImagePNG),
                       ),
                       SizedBox(width: 4),

@@ -62,12 +62,21 @@ class BlogDetailsScreen extends StatelessWidget {
                     SizedBox(height: 10),
                     Row(
                       children: [
-                        CircleAvatar(
+                        blogDetails['Users']['photo'] != null
+                            ? ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.memory(
+                            base64Decode(blogDetails['Users']['photo']),
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                            : CircleAvatar(
                           radius: 10,
-                          backgroundColor: Colors.grey.shade200,
                           child: Image.asset(AssetsPath.profileImagePNG),
                         ),
-                        SizedBox(width: 4),
+                        SizedBox(width: 8),
                         Text(
                           blogDetails['Users']['name'] ?? 'Author',
                           style: TextStyle(
