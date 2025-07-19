@@ -84,21 +84,21 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
       instructions.add(TextEditingController(text: widget.recipe.instructions));
     }
 
-    // Initialize nutrition info
     try {
-      List<dynamic> nutritionList = jsonDecode(widget.recipe.nutritionInfo?? '[]');
-      for (var nutrition in nutritionList) {
+      Map<String, dynamic> nutritionMap = jsonDecode(widget.recipe.nutritionInfo ?? '{}');
+      nutritionMap.forEach((key, value) {
         nutritionControllers.add({
-          "key": TextEditingController(text: nutrition["key"]),
-          "value": TextEditingController(text: nutrition["value"]),
+          "key": TextEditingController(text: key),
+          "value": TextEditingController(text: value.toString()),
         });
-      }
+      });
     } catch (e) {
       nutritionControllers.add({
         "key": TextEditingController(text: "Nutrition"),
         "value": TextEditingController(text: widget.recipe.nutritionInfo),
       });
     }
+
 
     // Ensure at least one field exists for ingredients, instructions, and nutrition
     if (ingredients.isEmpty) ingredients.add(TextEditingController());

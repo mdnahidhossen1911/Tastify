@@ -13,12 +13,14 @@ import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
+import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/update_recipe_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -78,6 +80,9 @@ class AppRoutes {
       route= const AddBlogScreen();
     }else if(settings.name==ProfileEditScreen.name){
       route= const ProfileEditScreen();
+    }else if(settings.name==UpdateRecipeScreen.name){
+      final RecipeModel recipeData = settings.arguments as RecipeModel;
+      route=  UpdateRecipeScreen(recipe: recipeData,);
     }
 
 

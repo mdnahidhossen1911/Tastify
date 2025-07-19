@@ -6,7 +6,9 @@ import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/core/utc_to_local_date.dart';
 import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/feature/profile/ui/controller/my_recipe_controller.dart';
+import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
+import 'package:tastify/feature/recipe/ui/screens/update_recipe_screen.dart';
 
 class MyRecipeWidget extends StatelessWidget {
   MyRecipeWidget({super.key, required this.recipe});
@@ -63,7 +65,9 @@ class MyRecipeWidget extends StatelessWidget {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, UpdateRecipeScreen.name, arguments: RecipeModel.fromJson(recipe));
+                      },
                       borderRadius: BorderRadius.circular(12),
                       child: Row(
                         children: [
