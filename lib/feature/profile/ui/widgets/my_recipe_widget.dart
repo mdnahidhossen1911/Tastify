@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tastify/app/app_colors.dart';
-import 'package:tastify/app/assets_path.dart';
+import 'package:tastify/core/utc_to_local_date.dart';
+import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
 
 class MyRecipeWidget extends StatelessWidget {
-  const MyRecipeWidget({super.key});
+  const MyRecipeWidget({super.key, required this.recipe});
+  final Map<String, dynamic> recipe;
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +16,18 @@ class MyRecipeWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              AssetsPath.popularFishImageJPG,
-              height: 100,
-              width: 150,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, RecipeDetailsScreen.name, arguments: recipe);
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.memory(
+                base64Decode(recipe['photo']),
+                height: 100,
+                width: 150,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
 
@@ -30,7 +38,7 @@ class MyRecipeWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Big and Juicy Wagyu Beef Cheeseburger',
+                  recipe['title'] ?? 'Recipe Name',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -39,7 +47,7 @@ class MyRecipeWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height:4),
-                Text('03-07-2025',style: TextStyle(color: Colors.grey,fontSize: 10),),
+                Text(formatUtcToLocalDate(recipe['created_at']),style: TextStyle(color: Colors.grey,fontSize: 10),),
                 SizedBox(height: 8),
                 Row(
                   children: [

@@ -1,0 +1,41 @@
+import 'package:get/get.dart';
+import 'package:tastify/core/supabase.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+
+import '../../../../core/app_logger.dart';
+
+class MyRecipeController extends GetxController {
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  List<Map<String, dynamic>> _myRecipes = [];
+  List<Map<String, dynamic>> get myRecipes => _myRecipes;
+
+  static final String table = 'recipe';
+
+  Future<void> fetchMyRecipes() async {
+    _isLoading = true;
+    update();
+
+    try {
+      final res = await supabase
+          .from(table)
+          .select()
+          .eq('user_id', AuthController.uid??'')
+          .order('created_at', ascending: false);
+
+      _myRecipes = List<Map<String, dynamic>>.from(res);
+      _isLoading = false;
+      update();
+
+      appLogger.i("Fetched ${_myRecipes.length} recipes for user ${AuthController.uid??''}");
+    } catch (e) {
+      appLogger.e("Fetch My Recipes Failed: $e");
+      _isLoading = false;
+      update();
+    }
+  }
+
+
+}
