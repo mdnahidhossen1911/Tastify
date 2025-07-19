@@ -10,6 +10,7 @@ import 'package:tastify/feature/blog/ui/screens/blog_details_screen.dart';
 import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
+import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
@@ -57,8 +58,10 @@ class AppRoutes {
     }
     else if(settings.name==RecipeFeedbackScreen.name){
       route= const RecipeFeedbackScreen();
-    }
-    else if(settings.name==RecipeDetailsScreen.name){
+    }else if (settings.name == ChangePasswordScreen.name) {
+      String email = settings.arguments as String;
+      route =  ChangePasswordScreen(email: email);
+    } else if(settings.name==RecipeDetailsScreen.name){
       final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
       route=  RecipeDetailsScreen(recipeDetails: args,);
     }

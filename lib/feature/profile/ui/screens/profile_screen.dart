@@ -5,7 +5,9 @@ import 'package:tastify/app/app_colors.dart';
 import 'package:tastify/app/assets_path.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/auth/ui/screen/login_screen.dart';
+import 'package:tastify/feature/auth/ui/screen/set_password_screen.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
+import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -77,7 +79,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: Text('Change password'),
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ChangePasswordScreen.name,arguments: _authController.getGmail);
+            },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
           ),
           ListTile(

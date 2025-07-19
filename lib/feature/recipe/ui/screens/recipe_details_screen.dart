@@ -160,6 +160,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                         Map<String, dynamic> feedback = {
                           'rid': widget.recipeDetails['id'],
                           'uid': AuthController.uid,
+                          'rwid': widget.recipeDetails['user_id'],
                           'feedback': feedbackController.text,
                         };
 

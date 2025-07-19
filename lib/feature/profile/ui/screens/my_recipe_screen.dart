@@ -18,12 +18,12 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        forceMaterialTransparency: true,
         title: Text('My Recipe',style: textTheme.titleLarge,),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
+      body: SafeArea(
         child: ListView.builder(
-          //shrinkWrap: true,
+          padding: EdgeInsets.symmetric(vertical: 8),
           itemCount: 10,
           itemBuilder: (context,index){
             return Padding(
