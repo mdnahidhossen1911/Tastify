@@ -57,7 +57,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         icon: Icon(Icons.arrow_back_ios_new),
                       ),
                     ),
-                    SizedBox(height: 90),
+                    SizedBox(height: 60),
                     Column(
                       children: [
                         Stack(

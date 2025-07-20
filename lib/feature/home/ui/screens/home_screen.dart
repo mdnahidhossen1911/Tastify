@@ -10,16 +10,16 @@ import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/home_carousel_slider.dart';
 import 'package:tastify/feature/home/ui/widgets/home_popular_widget.dart';
 import 'package:tastify/feature/home/ui/widgets/section_header.dart';
-import 'package:tastify/feature/recipe/ui/controller/fetch_popular_item_controller.dart';
+import 'package:tastify/feature/home/ui/controller/fetch_popular_item_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
+import 'package:tastify/feature/category/ui/screen/category_list_screen.dart';
+import 'package:tastify/feature/home/ui/screens/popular_list_screen.dart';
+import 'package:tastify/feature/home/ui/screens/search_list_screen.dart';
 
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../controller/carousel_image_controller.dart';
+import 'featured_recipe_list_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

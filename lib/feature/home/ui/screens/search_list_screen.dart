@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tastify/core/utils/circle_progress.dart';
 import 'package:tastify/feature/common/ui/widget/food_recipe_widget.dart';
-import 'package:tastify/feature/recipe/ui/controller/recipe_search_controller.dart';
+import 'package:tastify/feature/home/ui/controller/recipe_search_controller.dart';
 
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';

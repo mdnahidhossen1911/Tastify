@@ -64,19 +64,21 @@ class FoodRecipeWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CircleAvatar(
-                                radius: 10,
-                                backgroundColor: Colors.white,
-                                child: isFav == true
-                                    ? Icon(
-                                  Icons.favorite,
-                                  size: 14,
-                                  color: Colors.deepOrange,
-                                )
-                                    : Icon(
-                                  Icons.favorite,
-                                  size: 14,
-                                  color: Colors.black26,
+                              Flexible(
+                                child: CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor: Colors.white,
+                                  child: isFav == true
+                                      ? Icon(
+                                    Icons.favorite,
+                                    size: 14,
+                                    color: Colors.deepOrange,
+                                  )
+                                      : Icon(
+                                    Icons.favorite,
+                                    size: 14,
+                                    color: Colors.black26,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 5,),

@@ -205,6 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 30),
                     _buildGoogleSignINButton(),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),

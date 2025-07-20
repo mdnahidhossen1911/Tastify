@@ -10,16 +10,16 @@ import 'package:tastify/feature/blog/ui/screens/blog_details_screen.dart';
 import 'package:tastify/feature/category/ui/screen/category_wise_list_screen.dart';
 import 'package:tastify/feature/common/ui/screens/main_bottom_nav_bar.dart';
 import 'package:tastify/feature/feedback/ui/screens/recipe_feedback.dart';
+import 'package:tastify/feature/home/ui/screens/featured_recipe_list_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/change_password_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/my_recipe_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/profile_edit_screen.dart';
 import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
 import 'package:tastify/feature/recipe/ui/screens/add_recipe_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/category_list_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/featured_recipe_list_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/popular_list_screen.dart';
+import 'package:tastify/feature/category/ui/screen/category_list_screen.dart';
+import 'package:tastify/feature/home/ui/screens/popular_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/recipe_details_screen.dart';
-import 'package:tastify/feature/recipe/ui/screens/search_list_screen.dart';
+import 'package:tastify/feature/home/ui/screens/search_list_screen.dart';
 import 'package:tastify/feature/recipe/ui/screens/update_recipe_screen.dart';
 
 class AppRoutes {
