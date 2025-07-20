@@ -1,6 +1,6 @@
 # Tastify a recipe application
 
-<img src="https://raw.githubusercontent.com/mdnahidhossen1911/Tastify/refs/heads/master/banner.jpg?token=GHSAT0AAAAAADGVXUMAW3I7DNE2X55QICYI2D46ZXQ" />
+<img src="https://raw.githubusercontent.com/mdnahidhossen1911/Tastify/refs/heads/master/banner.jpg?token=GHSAT0AAAAAADGVXUMBT3UAPHOXQWOUPIWE2D5A5PQ" />
 
 Welcome to **Tastify**! This project is a recipe application designed to be built using an **Agile Development process**. Our team is collaboratively solving problems and implementing features through continuous discussion and iteration.
 
