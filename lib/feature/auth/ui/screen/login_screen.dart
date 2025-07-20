@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tastify/app/app_colors.dart';
@@ -29,7 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   final LoginController _loginController = Get.find<LoginController>();
-  final GoogleSignController _googleSignController = Get.find<GoogleSignController>();
+  final GoogleSignController _googleSignController =
+      Get.find<GoogleSignController>();
+
+  RxBool passwordVisible = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 96),
+                    SizedBox(height: 70),
                     Text(
                       "Welcome to",
                       style: TextStyle(
@@ -103,26 +107,43 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height: 4),
-                    TextFormField(
-                      obscureText: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: "*****************",
-                        suffixIcon: Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Colors.grey,
+                    Obx(
+                      () => TextFormField(
+                        obscureText: passwordVisible.value,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          hintText: "*****************",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              if (passwordVisible.value) {
+                                passwordVisible.value = false;
+                              } else {
+                                passwordVisible.value = true;
+                              }
+                            },
+                            icon:
+                                passwordVisible.value == false
+                                    ? Icon(
+                                      CupertinoIcons.eye_slash,
+                                      color: Colors.grey.shade400,
+                                    )
+                                    : Icon(
+                                      CupertinoIcons.eye,
+                                      color: Colors.grey.shade400,
+                                    ),
+                          ),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
-                        }
-                        return null;
-                      },
                     ),
                     SizedBox(height: 10),
                     Align(
@@ -184,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 30),
                     _buildGoogleSignINButton(),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -309,4 +331,3 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 }
-

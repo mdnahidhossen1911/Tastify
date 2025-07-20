@@ -39,7 +39,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             return controller.isLoading
                 ? circleProgress()
                 : ListView.builder(
-                  shrinkWrap: true,
                   itemCount: controller.favouriteRecipes.length,
                   itemBuilder: (context, index) {
                     return Padding(

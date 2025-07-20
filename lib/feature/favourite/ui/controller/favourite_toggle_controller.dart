@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:tastify/core/app_logger.dart';
 import 'package:tastify/core/network_response.dart';
 import 'package:tastify/core/supabase.dart';
-import 'package:tastify/feature/recipe/ui/controller/fetch_popular_item_controller.dart';
+import 'package:tastify/feature/home/ui/controller/fetch_popular_item_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 
 class FavouriteToggleController {

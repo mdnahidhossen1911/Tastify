@@ -9,7 +9,7 @@ import 'package:tastify/core/utils/utils.dart';
 import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
 import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/recipe/data/model/recipe_model.dart';
-import 'package:tastify/feature/recipe/ui/controller/fetch_popular_item_controller.dart';
+import 'package:tastify/feature/home/ui/controller/fetch_popular_item_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/recipe_controller.dart';
 

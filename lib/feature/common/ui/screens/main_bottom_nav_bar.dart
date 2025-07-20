@@ -5,9 +5,9 @@ import 'package:tastify/feature/blog/ui/screens/blog_screen.dart';
 import 'package:tastify/feature/category/controller/category_controller.dart';
 import 'package:tastify/feature/favourite/ui/screens/favourite_screen.dart';
 import 'package:tastify/feature/home/ui/controller/carousel_image_controller.dart';
-import 'package:tastify/feature/home/ui/screens/home.dart';
+import 'package:tastify/feature/home/ui/screens/home_screen.dart';
 import 'package:tastify/feature/profile/ui/screens/profile_screen.dart';
-import 'package:tastify/feature/recipe/ui/controller/fetch_popular_item_controller.dart';
+import 'package:tastify/feature/home/ui/controller/fetch_popular_item_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/get_recipe_controller.dart';
 import 'package:tastify/feature/recipe/ui/controller/recipe_controller.dart';
 

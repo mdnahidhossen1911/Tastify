@@ -29,8 +29,6 @@ class _PopularListScreenState extends State<PopularListScreen> {
         child:  GetBuilder<GetRecipeController>(
             builder: (controller) {
               return ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
                 itemCount: controller.recipes.length,
                 padding: EdgeInsets.only(bottom: 20),
                 itemBuilder: (context, index) {
