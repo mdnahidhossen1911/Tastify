@@ -2,16 +2,40 @@
 
 <img src="https://raw.githubusercontent.com/mdnahidhossen1911/Tastify/refs/heads/master/banner.jpg?token=GHSAT0AAAAAADGVXUMAW3I7DNE2X55QICYI2D46ZXQ" />
 
-We are going to practice the Agile Development process through this module by
-building a Food App. Learners will work as a team and solve problems through
-discussion.
+Welcome to **Tastify**! This project is a recipe application designed to be built using an **Agile Development process**. Our team is collaboratively solving problems and implementing features through continuous discussion and iteration.
 
-__.env file__
+
+
+## Our Team
+
+We believe in teamwork and shared responsibility. Here's a breakdown of our roles:
+
+* **Nahid Hossen**
+    * **Role:** System Design, Figma Design, Backend Design & Implementation
+    * **GitHub:** [mdnahidhossen1911](https://github.com/mdnahidhossen1911)
+* **Jahangir Alam**
+    * **Role:** App UI Design
+    * **GitHub:** [jahangirsim](https://github.com/jahangirsim)
+* **Mahfuz Ahmed**
+    * **Role:** App UI Design
+    * **GitHub:** [MahfuzAhmed28](https://github.com/MahfuzAhmed28)
+
+## Device Support
+
+Tastify is being developed to support a wide range of mobile users:
+
+* **Android** 
+* **iOS** 
+
+## Environment Configuration
+
+To set up the project locally, you'll need a `.env` file with the following variables:
+
 ~~~
 APPNAME='Tastify'
-GOOGLESIGNID=' '
-SUPABASEURL=' '
-ANOKEY=' '
+GOOGLESIGNID='YOUR_GOOGLE_SIGN_IN_ID'
+SUPABASEURL='YOUR_SUPABASE_PROJECT_URL'
+ANOKEY='YOUR_SUPABASE_ANON_KEY''
 ~~~
 
 ## Features to Build
@@ -30,9 +54,19 @@ accounts.
 - Contact Page: Users can send messages or feedback through a contact form.
 - Light/Dark Mode: Switch between light and dark themes.
 
-figma: <a href="https://www.figma.com/design/jzNSKXN5lFN3ZeBxPIEm9p/Tastify?node-id=0-1&t=T8wn1dqrzmGuy2pM-1" target="_blank">Tastify App UI</a>
 
-# Supabase 
+## UI/UX Design (Figma)
+
+Explore the visual design and user experience of the Tastify app:
+
+* **Figma Prototype:** [Tastify App UI](https://www.figma.com/design/jzNSKXN5lFN3ZeBxPIEm9p/Tastify?node-id=0-1&t=T8wn1dqrzmGuy2pM-1)
+
+
+
+# Supabase Database Schema
+
+This section provides a detailed overview of the database tables and their relationships, powered by Supabase. Understanding these structures is key to comprehending the application's data flow and functionality.
+
 ## Table: `Users`
 
 The `Users` table is a core component for storing all user accounts. Below are the details for each column:
