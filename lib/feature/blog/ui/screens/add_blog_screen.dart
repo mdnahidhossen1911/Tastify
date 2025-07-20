@@ -1,0 +1,242 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tastify/app/app_colors.dart';
+import 'package:tastify/core/utils/circle_progress.dart';
+import 'package:tastify/core/utils/utils.dart';
+import 'package:tastify/feature/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/feature/blog/ui/controller/blog_controller.dart';
+
+class AddBlogScreen extends StatefulWidget {
+  const AddBlogScreen({super.key});
+
+  static const String name = '/add-blog';
+
+  @override
+  State<AddBlogScreen> createState() => _AddBlogScreenState();
+}
+
+class _AddBlogScreenState extends State<AddBlogScreen> {
+  XFile? _pickedImage;
+  String imageString = '';
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+
+  final BlogController _blogController = Get.find<BlogController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        forceMaterialTransparency: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios_new),
+        ),
+        title: Text(
+          'Add Blog',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          GetBuilder(
+            init: _blogController,
+            builder: (controller) {
+              return controller.isLoading
+                  ? circleProgress()
+                  : ElevatedButton(
+                    onPressed: () {
+                      blogPost();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.themeColor,
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+            },
+          ),
+          SizedBox(width: 12),
+        ],
+      ),
+
+      body: ColoredBox(
+        color: Colors.deepOrangeAccent.shade100.withOpacity(0.03),
+        child: SizedBox(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  SizedBox(height: 16),
+                  _buildImagePicker(),
+                  SizedBox(height: 16),
+                  _buildNameAndSes(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImagePicker() {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        height: 190,
+        decoration: BoxDecoration(
+          color: Color(0xffffede9),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        alignment: Alignment.center,
+        child:
+            _pickedImage == null
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add_photo_alternate,
+                      size: 30,
+                      color: AppColor.themeColor,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'Add Image',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.themeColor,
+                      ),
+                    ),
+                  ],
+                )
+                : ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.file(
+                    File(_pickedImage!.path),
+                    width: double.infinity,
+                    height: 190,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+      ),
+    );
+  }
+
+  Widget _buildNameAndSes() {
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              minLines: 1,
+              maxLines: 4,
+              controller: _titleController,
+              decoration: InputDecoration(
+                hintText: 'Title',
+                hintStyle: _hinttextStyle(),
+              ),
+              validator: (String? value) {
+                if (value?.trim().isEmpty ?? true) {
+                  return 'Enter Title';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              minLines: 6,
+              maxLines: null,
+              controller: _contentController,
+              keyboardType: TextInputType.multiline,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: InputDecoration(
+                hintText: 'Content',
+                hintStyle: _hinttextStyle(),
+              ),
+              validator: (String? value) {
+                if (value?.trim().isEmpty ?? true) {
+                  return 'Enter Content';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  TextStyle _hinttextStyle() => TextStyle(
+    color: Colors.deepOrangeAccent.shade100,
+    fontWeight: FontWeight.w600,
+  );
+
+  Future<void> _pickImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 200,
+      imageQuality: 80,
+    );
+    if (image != null) {
+      _pickedImage = image;
+      setState(() {});
+    }
+  }
+
+  blogPost() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (_pickedImage != null) {
+        final bytes = await _pickedImage!.readAsBytes();
+        String imageString = base64Encode(bytes);
+
+        bool isSuccess = await _blogController.addBlog({
+          'title': _titleController.text.trim(),
+          'content': _contentController.text.trim(),
+          'uid': AuthController.uid,
+          'image': imageString,
+        });
+
+        if (isSuccess) {
+          Utils.showToast('Blog added successfully');
+          Navigator.pop(context);
+        }
+      }
+    } else {
+      Utils.showFlushBar(context, 'Please select an image');
+    }
+  }
+}
