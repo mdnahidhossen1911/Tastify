@@ -1,8 +1,18 @@
-# tastify 
+# Tastify A Recipe Application
+
+<img src="https://raw.githubusercontent.com/mdnahidhossen1911/Tastify/refs/heads/master/banner.jpg?token=GHSAT0AAAAAADGVXUMAW3I7DNE2X55QICYI2D46ZXQ" />
 
 We are going to practice the Agile Development process through this module by
 building a Food App. Learners will work as a team and solve problems through
 discussion.
+
+__.env file__
+~~~
+APPNAME='Tastify'
+GOOGLESIGNID=' '
+SUPABASEURL=' '
+ANOKEY=' '
+~~~
 
 ## Features to Build
 - Authentication: Users can sign up using email or social login and log in to their
