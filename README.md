@@ -52,7 +52,6 @@ accounts.
 - Blog Section: Read articles related to food, cooking tips, and healthy eating.
 - Blog Post Page: Full blog article view with related content suggestions.
 - Contact Page: Users can send messages or feedback through a contact form.
-- Light/Dark Mode: Switch between light and dark themes.
 
 
 ## UI/UX Design (Figma)
