@@ -33,15 +33,19 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         forceMaterialTransparency: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(AssetsPath.appLogoPNG, height: 36),
+            isDarkMode
+                ? Image.asset(AssetsPath.appLogoDarkPNG, height: 36)
+                : Image.asset(AssetsPath.appLogoPNG, height: 36),
             Row(
               children: [
                 CircleAvatar(
@@ -105,7 +109,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 8),
               SectionHeader(
-                title: 'Category',
+                title: isDarkMode ? 'Category dark' : 'Category',
                 seeAll: () {
                   Navigator.pushNamed(context, CategoryListScreen.name);
                 },

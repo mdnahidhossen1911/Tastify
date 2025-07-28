@@ -19,11 +19,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Category', style: textTheme.titleLarge),
-      ),
+      appBar: AppBar(title: Text('Category', style: textTheme.titleLarge)),
       body: Padding(
         padding: EdgeInsets.all(8),
         child: GetBuilder<CategoryController>(

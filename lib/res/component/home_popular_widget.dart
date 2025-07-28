@@ -15,6 +15,11 @@ class HomePopularWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -30,7 +35,10 @@ class HomePopularWidget extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.white, Color(0xfffff0e8)],
+            colors: [
+              Colors.transparent,
+              isDarkMode ? Colors.orange.withOpacity(0.05) : Color(0xfffff0e8),
+            ],
           ),
         ),
         child: Column(
@@ -89,33 +97,34 @@ class HomePopularWidget extends StatelessWidget {
                   SizedBox(height: 8),
                   Text(
                     popularItem['title'] ?? 'Title',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: textTheme.labelMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(Icons.timer, size: 16, color: Colors.black),
+                      Icon(
+                        Icons.timer,
+                        size: 16,
+
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       SizedBox(width: 4),
                       Text(
                         '${popularItem['prep_time'] ?? ''} min',
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                       SizedBox(width: 16),
-                      Icon(Icons.restaurant, size: 16, color: Colors.black),
+                      Icon(
+                        Icons.restaurant,
+                        size: 16,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       SizedBox(width: 4),
                       Text(
                         popularItem['category_name'] ?? 'category',
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                     ],
                   ),

@@ -8,6 +8,7 @@ class CategoryItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -23,10 +24,7 @@ class CategoryItemWidget extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color.fromRGBO(255, 255, 255, 1), // White at the top
-              Color.fromRGBO(240, 240, 240, 1),
-            ],
+            colors: [Color(0xFFFFFF), Color(0x1A696969)],
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -39,11 +37,7 @@ class CategoryItemWidget extends StatelessWidget {
               SizedBox(height: 6),
               Text(
                 category!['title'] ?? 'Category',
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: textTheme.labelSmall,
               ),
             ],
           ),

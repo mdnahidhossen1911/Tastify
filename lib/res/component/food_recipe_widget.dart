@@ -17,6 +17,10 @@ class FoodRecipeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -49,7 +53,7 @@ class FoodRecipeWidget extends StatelessWidget {
                 children: [
                   Text(
                     recipeDetails['title'] ?? 'name',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: textTheme.labelLarge,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -109,26 +113,26 @@ class FoodRecipeWidget extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.timer, size: 16, color: Colors.black),
+                      Icon(
+                        Icons.timer,
+                        size: 16,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       SizedBox(width: 4),
                       Text(
                         '${recipeDetails['prep_time'] ?? ''} min',
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                       SizedBox(width: 16),
-                      Icon(Icons.restaurant, size: 16, color: Colors.black),
+                      Icon(
+                        Icons.restaurant,
+                        size: 16,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       SizedBox(width: 4),
                       Text(
                         recipeDetails['category_name'] ?? 'category',
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                     ],
                   ),

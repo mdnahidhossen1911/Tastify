@@ -2,6 +2,7 @@ class AssetsPath {
   static const String _imagePath = 'assets/images';
 
   static const String appLogoPNG = '$_imagePath/testify_logo.png';
+  static const String appLogoDarkPNG = '$_imagePath/testify_logo_dark.png';
   static const String googleLogoPNG = '$_imagePath/google_logo.png';
   static const String carouselImagePNG = '$_imagePath/banner1.png';
   static const String categoryMeatlImageJPG = '$_imagePath/meet.png';

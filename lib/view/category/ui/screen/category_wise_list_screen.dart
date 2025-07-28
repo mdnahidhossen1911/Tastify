@@ -33,9 +33,7 @@ class _CategoryWiseListScreenState extends State<CategoryWiseListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: true,
         title: Text(widget.categoryName),
       ),

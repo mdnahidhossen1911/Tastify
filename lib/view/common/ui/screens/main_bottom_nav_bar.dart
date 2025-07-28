@@ -68,8 +68,6 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
               ),
               NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
             ],
-            backgroundColor: Colors.white,
-            //indicatorColor: Colors.orange,
           ),
         ],
       ),

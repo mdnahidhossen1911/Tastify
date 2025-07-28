@@ -21,7 +21,6 @@ class _FeaturedRecipeListScreenState extends State<FeaturedRecipeListScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         forceMaterialTransparency: true,
