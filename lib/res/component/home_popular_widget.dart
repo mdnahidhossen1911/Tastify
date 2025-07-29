@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:tastify/res/theme/theme_changer.dart';
 
 import '../../view/auth/ui/controller/auth_controller.dart';
 import '../../view/favourite/ui/controller/favourite_toggle_controller.dart';
@@ -15,9 +17,7 @@ class HomePopularWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
+    ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
@@ -36,8 +36,10 @@ class HomePopularWidget extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.transparent,
-              isDarkMode ? Colors.orange.withOpacity(0.05) : Color(0xfffff0e8),
+              themeChanger.values ? Colors.transparent : Colors.white,
+              themeChanger.values
+                  ? Colors.orange.withOpacity(0.05)
+                  : Color(0xfffff0e8),
             ],
           ),
         ),
@@ -108,7 +110,8 @@ class HomePopularWidget extends StatelessWidget {
                         Icons.timer,
                         size: 16,
 
-                        color: isDarkMode ? Colors.white : Colors.black,
+                        color:
+                            themeChanger.values ? Colors.white : Colors.black,
                       ),
                       SizedBox(width: 4),
                       Text(
@@ -119,7 +122,8 @@ class HomePopularWidget extends StatelessWidget {
                       Icon(
                         Icons.restaurant,
                         size: 16,
-                        color: isDarkMode ? Colors.white : Colors.black,
+                        color:
+                            themeChanger.values ? Colors.white : Colors.black,
                       ),
                       SizedBox(width: 4),
                       Text(

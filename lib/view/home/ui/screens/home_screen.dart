@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tastify/res/component/home_view_app_logo.dart';
 import 'package:tastify/view/home/ui/screens/popular_list_screen.dart';
 import 'package:tastify/view/home/ui/screens/search_list_screen.dart';
 
 import '../../../../res/app_colors.dart';
-import '../../../../res/assets_path.dart';
 import '../../../../res/component/category_item_widget.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/food_recipe_widget.dart';
@@ -42,9 +42,7 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            isDarkMode
-                ? Image.asset(AssetsPath.appLogoDarkPNG, height: 36)
-                : Image.asset(AssetsPath.appLogoPNG, height: 36),
+            HomeAppLogo(),
             Row(
               children: [
                 CircleAvatar(
