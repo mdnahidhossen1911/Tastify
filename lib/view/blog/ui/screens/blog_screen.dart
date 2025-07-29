@@ -28,10 +28,8 @@ class _BlogScreenState extends State<BlogScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Blog', style: textTheme.titleLarge),
+        title: Text('Blog', style: textTheme.headlineSmall),
         forceMaterialTransparency: true,
       ),
 

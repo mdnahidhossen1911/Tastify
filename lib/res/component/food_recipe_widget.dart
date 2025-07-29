@@ -70,6 +70,7 @@ class FoodRecipeWidget extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 4),
                             elevation: 0,
+                            backgroundColor: Color(0x33ffa571),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

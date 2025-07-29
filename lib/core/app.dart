@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:tastify/res/theme/theme_changer.dart';
 
 import '../binder/controller_binder.dart';
 import '../res/theme/dark_theme.dart';
@@ -12,14 +14,24 @@ class TastifyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
-      themeMode: ThemeMode.system,
-      initialBinding: ControllerBinder(),
-      onGenerateRoute: AppRoutes.onGenerateRoute,
-      initialRoute: SplashScreen.name,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeChanger()),
+        // Add other providers here if needed
+      ],
+      child: Builder(
+        builder: (context) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightThemeData,
+            darkTheme: darkThemeData,
+            themeMode: Provider.of<ThemeChanger>(context).mode,
+            initialBinding: ControllerBinder(),
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            initialRoute: SplashScreen.name,
+          );
+        },
+      ),
     );
   }
 }

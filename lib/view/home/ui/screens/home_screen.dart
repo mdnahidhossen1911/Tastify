@@ -38,7 +38,6 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

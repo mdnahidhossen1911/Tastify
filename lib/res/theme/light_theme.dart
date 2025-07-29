@@ -5,9 +5,10 @@ ThemeData lightThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(backgroundColor: Colors.white),
   textTheme: TextTheme(
+    headlineSmall: TextStyle(fontWeight: FontWeight.bold),
     titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
     titleSmall: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
-    titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     labelSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
     labelMedium: TextStyle(fontWeight: FontWeight.bold),
   ),
@@ -35,6 +36,7 @@ ThemeData lightThemeData = ThemeData(
   ),
   navigationBarTheme: NavigationBarThemeData(
     indicatorColor: Colors.deepOrange.withOpacity(0.05),
+    backgroundColor: Colors.white,
     labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>((
       Set<MaterialState> states,
     ) {

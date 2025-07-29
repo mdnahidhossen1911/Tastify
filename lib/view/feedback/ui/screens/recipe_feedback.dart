@@ -29,11 +29,9 @@ class _RecipeFeedbackScreenState extends State<RecipeFeedbackScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: true,
-        title: Text('Feedback', style: textTheme.titleLarge),
+        title: Text('Feedback', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: GetBuilder(

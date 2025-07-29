@@ -6,16 +6,22 @@ ThemeData darkThemeData = ThemeData(
   appBarTheme: AppBarTheme(
     titleTextStyle: TextStyle(color: Colors.white),
     backgroundColor: Color(0xff1c1918),
+    iconTheme: IconThemeData(color: Colors.white),
   ),
   iconTheme: IconThemeData(color: Colors.white),
   textTheme: TextTheme(
+    headlineSmall: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
     titleMedium: TextStyle(
       fontSize: 18,
       color: Colors.white,
       fontWeight: FontWeight.w800,
     ),
     titleSmall: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
-    titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
     labelSmall: TextStyle(
       fontSize: 10,
       color: Colors.white,

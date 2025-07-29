@@ -27,11 +27,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
-        title: Text('Favourite', style: textTheme.titleLarge),
+        title: Text('Favourite', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: GetBuilder(

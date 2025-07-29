@@ -22,9 +22,8 @@ class _FeaturedRecipeListScreenState extends State<FeaturedRecipeListScreen> {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: true,
-        title: Text('Featured Recipe'),
+        title: Text('Featured Recipe', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: GetBuilder<GetRecipeController>(

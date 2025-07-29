@@ -32,7 +32,7 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         forceMaterialTransparency: true,
-        title: Text('My Recipe', style: textTheme.titleLarge),
+        title: Text('My Recipe', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: GetBuilder(

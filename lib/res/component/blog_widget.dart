@@ -13,6 +13,8 @@ class BlogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 16),
@@ -47,7 +49,7 @@ class BlogWidget extends StatelessWidget {
                 children: [
                   Text(
                     blogData['title'] ?? 'Blog Title',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: textTheme.labelLarge,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -55,7 +57,7 @@ class BlogWidget extends StatelessWidget {
                   Text(
                     blogData['content'] ??
                         'This is a sample blog content that is quite long and should be truncated if it exceeds the maximum lines allowed.',
-                    style: TextStyle(fontSize: 10, color: Colors.black54),
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
@@ -81,11 +83,7 @@ class BlogWidget extends StatelessWidget {
                       SizedBox(width: 4),
                       Text(
                         blogData['Users']['name'] ?? 'Author',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                       SizedBox(width: 6),
                       Icon(Icons.circle, size: 3.5, color: Colors.grey),
@@ -93,11 +91,7 @@ class BlogWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           formatUtcToLocalDate(blogData['created_at'] ?? ''),
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
+                          style: textTheme.labelSmall,
                         ),
                       ),
                     ],

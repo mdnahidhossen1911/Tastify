@@ -18,11 +18,12 @@ class PopularListScreen extends StatefulWidget {
 class _PopularListScreenState extends State<PopularListScreen> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: true,
-        title: Text('Popular'),
+        title: Text('Popular', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: GetBuilder<GetRecipeController>(

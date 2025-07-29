@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/view/profile/ui/screens/profile_edit_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,8 +24,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isDarkMode = false;
-
   final AuthController _authController = Get.find<AuthController>();
 
   @override
@@ -41,11 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Profile', style: textTheme.titleLarge),
-      ),
+      appBar: AppBar(title: Text('Profile', style: textTheme.headlineSmall)),
       body: Column(
         children: [
           SizedBox(height: 16),
@@ -56,16 +52,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             title: Text('Night mode'),
-            trailing: Switch(
-              value: isDarkMode,
-              activeColor: Colors.deepOrange,
-              activeTrackColor: Colors.deepOrange.shade100,
-              inactiveThumbColor: Colors.grey.shade400,
-              inactiveTrackColor: Colors.grey.shade200,
-              trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-              onChanged: (value) {
-                isDarkMode = value;
-                setState(() {});
+            trailing: Consumer<ThemeChanger>(
+              builder: (context, value, child) {
+                return Switch(
+                  value: value.values,
+                  activeColor: Colors.deepOrange,
+                  activeTrackColor: Colors.deepOrange.shade100,
+                  inactiveThumbColor: Colors.grey.shade400,
+                  inactiveTrackColor: Colors.grey.shade200,
+                  trackOutlineColor: WidgetStateProperty.all(
+                    Colors.transparent,
+                  ),
+                  onChanged: (mode) {
+                    value.change(mode);
+                  },
+                );
               },
             ),
           ),
@@ -175,6 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   );
 
   Widget _buildHeader() {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: GetBuilder(
@@ -221,10 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    controller.getUserName,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
+                  Text(controller.getUserName, style: textTheme.titleLarge),
                   Text(
                     controller.getGmail,
                     style: TextStyle(color: Colors.grey.shade500, fontSize: 12),

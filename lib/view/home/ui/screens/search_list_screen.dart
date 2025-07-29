@@ -53,7 +53,6 @@ class _SearchListScreenState extends State<SearchListScreen> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
         title: SizedBox(
           height: 45,
           child: SearchBar(
