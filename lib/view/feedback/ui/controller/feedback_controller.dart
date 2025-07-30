@@ -14,7 +14,7 @@ class FeedbackController extends GetxController {
     update();
 
     try {
-      final res = await supabase.from(table).insert(feedback).select().single();
+      final res = await supaBase.from(table).insert(feedback).select().single();
 
       appLogger.i("Feedback Added: ${res['id']}");
       _isLoading = false;

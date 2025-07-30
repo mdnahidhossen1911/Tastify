@@ -19,7 +19,7 @@ class FavouriteToggleController {
 
     try {
       final existing =
-          await supabase
+          await supaBase
               .from(favouritesTable)
               .select()
               .eq('rid', recipeId)
@@ -28,7 +28,7 @@ class FavouriteToggleController {
 
       if (existing != null) {
         // Remove favorite
-        await supabase
+        await supaBase
             .from(favouritesTable)
             .delete()
             .eq('rid', recipeId)
@@ -36,7 +36,7 @@ class FavouriteToggleController {
 
         // Get current favorite count
         final currentRecipe =
-            await supabase
+            await supaBase
                 .from(recipesTable)
                 .select('favourite')
                 .eq('id', recipeId)
@@ -44,7 +44,7 @@ class FavouriteToggleController {
 
         // Decrement count
         final newCount = (currentRecipe['favourite'] as num) - 1;
-        await supabase
+        await supaBase
             .from(recipesTable)
             .update({'favourite': newCount})
             .eq('id', recipeId);
@@ -57,7 +57,7 @@ class FavouriteToggleController {
       } else {
         // Add favorite
         final res =
-            await supabase
+            await supaBase
                 .from(favouritesTable)
                 .insert({'rid': recipeId, 'uid': userId})
                 .select()
@@ -65,7 +65,7 @@ class FavouriteToggleController {
 
         // Get current favorite count
         final currentRecipe =
-            await supabase
+            await supaBase
                 .from(recipesTable)
                 .select('favourite')
                 .eq('id', recipeId)
@@ -73,7 +73,7 @@ class FavouriteToggleController {
 
         // Increment count
         final newCount = (currentRecipe['favourite'] as num) + 1;
-        await supabase
+        await supaBase
             .from(recipesTable)
             .update({'favourite': newCount})
             .eq('id', recipeId);

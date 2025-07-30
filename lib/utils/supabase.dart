@@ -1,4 +1,3 @@
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-final SupabaseClient supabase = Supabase.instance.client;
+final SupabaseClient supaBase = Supabase.instance.client;

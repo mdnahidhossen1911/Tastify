@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 
 class BlogController extends GetxController {
   bool _isLoading = false;
@@ -15,7 +16,12 @@ class BlogController extends GetxController {
     update();
 
     try {
-      final res = await supabase.from('blog').insert(blog).select().single();
+      final res =
+          await supaBase
+              .from(SupaBaseTables.blog)
+              .insert(blog)
+              .select()
+              .single();
 
       appLogger.i("Blog Added: ${res['id']}");
       _isLoading = false;
@@ -36,8 +42,8 @@ class BlogController extends GetxController {
     update();
 
     try {
-      final res = await supabase
-          .from('blog')
+      final res = await supaBase
+          .from(SupaBaseTables.blog)
           .select('*, Users(name,photo)')
           .order('created_at', ascending: false);
 

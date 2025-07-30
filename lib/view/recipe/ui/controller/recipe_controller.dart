@@ -17,7 +17,7 @@ class RecipeController extends GetxController {
 
     try {
       final res =
-          await supabase.from(table).insert(recipe.toJson()).select().single();
+          await supaBase.from(table).insert(recipe.toJson()).select().single();
 
       appLogger.i("Recipe Added: ${res['id']}");
 
@@ -43,7 +43,7 @@ class RecipeController extends GetxController {
       data.removeWhere((key, value) => value == null);
 
       final res =
-          await supabase
+          await supaBase
               .from(table)
               .update(data)
               .eq('id', id)
@@ -70,7 +70,7 @@ class RecipeController extends GetxController {
     update();
 
     try {
-      await supabase.from(table).delete().eq('id', id);
+      await supaBase.from(table).delete().eq('id', id);
       appLogger.i("Recipe Deleted: $id");
 
       _isLoading = false;

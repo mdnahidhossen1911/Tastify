@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../utils/app_logger.dart';
 import '../../../utils/supabase.dart';
+import '../../../utils/supabase_tables.dart';
 import '../../auth/ui/controller/auth_controller.dart';
 
 class GetRecipeByCategoryController extends GetxController {
@@ -16,8 +17,8 @@ class GetRecipeByCategoryController extends GetxController {
     update();
 
     try {
-      final response = await supabase
-          .from('recipe')
+      final response = await supaBase
+          .from(SupaBaseTables.recipe)
           .select('*, favourites(rid, uid)')
           .eq('category_name', categoryName);
 

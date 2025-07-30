@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 
 class MyRecipeController extends GetxController {
@@ -20,7 +21,7 @@ class MyRecipeController extends GetxController {
     update();
 
     try {
-      final res = await supabase
+      final res = await supaBase
           .from(table)
           .select()
           .eq('user_id', AuthController.uid ?? '')
@@ -42,9 +43,9 @@ class MyRecipeController extends GetxController {
 
   Future<bool> deleteRecipe(String id) async {
     try {
-      await supabase.from('favourites').delete().eq('rid', id);
-      await supabase.from('feedback').delete().eq('rid', id);
-      await supabase.from('recipe').delete().eq('id', id);
+      await supaBase.from(SupaBaseTables.favourites).delete().eq('rid', id);
+      await supaBase.from(SupaBaseTables.feedback).delete().eq('rid', id);
+      await supaBase.from(SupaBaseTables.recipe).delete().eq('id', id);
 
       _myRecipes.removeWhere((recipe) => recipe['id'] == id);
       update();

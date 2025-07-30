@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 
 class CarouselImageController extends GetxController {
   bool _isLoading = false;
@@ -16,7 +17,7 @@ class CarouselImageController extends GetxController {
     update();
 
     try {
-      final image = await supabase.from('carousel').select();
+      final image = await supaBase.from(SupaBaseTables.carousel).select();
       appLogger.i(image);
 
       _isLoading = false;

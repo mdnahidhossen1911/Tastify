@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 
 class FetchPopularItemController extends GetxController {
   bool _isLoading = false;
@@ -18,8 +19,8 @@ class FetchPopularItemController extends GetxController {
     update();
 
     try {
-      final res = await supabase
-          .from('recipe')
+      final res = await supaBase
+          .from(SupaBaseTables.recipe)
           .select('*, favourites(uid)')
           .order('favourite', ascending: false)
           .limit(10);

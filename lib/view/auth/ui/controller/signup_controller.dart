@@ -5,6 +5,7 @@ import '../../../../model/user_model.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/secure_password.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 
 class SignupController extends GetxController {
   bool _isLoading = false;
@@ -16,8 +17,8 @@ class SignupController extends GetxController {
 
     try {
       final existing =
-          await supabase
-              .from('Users')
+          await supaBase
+              .from(SupaBaseTables.users)
               .select('id')
               .eq('email', user.email)
               .limit(1)
@@ -36,8 +37,8 @@ class SignupController extends GetxController {
       }
 
       final response =
-          await supabase
-              .from('Users')
+          await supaBase
+              .from(SupaBaseTables.users)
               .insert({
                 'name': user.name,
                 'email': user.email,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tastify/utils/supabase_tables.dart';
 
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
@@ -15,8 +16,8 @@ class ForgotPasswordController extends GetxController {
 
     try {
       final userData =
-          await supabase
-              .from('Users')
+          await supaBase
+              .from(SupaBaseTables.users)
               .select('id')
               .eq('email', email)
               .limit(1)
@@ -54,8 +55,8 @@ class ForgotPasswordController extends GetxController {
     _isLoading = true;
 
     try {
-      await supabase
-          .from('Users')
+      await supaBase
+          .from(SupaBaseTables.users)
           .update({'password': securePassword(pass)})
           .eq('email', email);
       appLogger.i('user password change successfully');

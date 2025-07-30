@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tastify/utils/supabase_tables.dart';
 
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
@@ -24,8 +25,8 @@ class GoogleSignController extends GetxController {
       final userInfo;
       if (googleUser != null) {
         final userData =
-            await supabase
-                .from('Users')
+            await supaBase
+                .from(SupaBaseTables.users)
                 .select('id, name, email, password, photo')
                 .eq('email', googleUser.email)
                 .limit(1)
@@ -33,8 +34,8 @@ class GoogleSignController extends GetxController {
 
         if (userData == null) {
           final response =
-              await supabase
-                  .from('Users')
+              await supaBase
+                  .from(SupaBaseTables.users)
                   .insert({
                     'name': googleUser.displayName,
                     'email': googleUser.email,

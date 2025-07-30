@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 
 class GetFavouriteController extends GetxController {
   bool _isLoading = false;
@@ -15,8 +16,8 @@ class GetFavouriteController extends GetxController {
     update();
 
     try {
-      final res = await supabase
-          .from('favourites')
+      final res = await supaBase
+          .from(SupaBaseTables.favourites)
           .select('rid, recipe(*)') // ✅ fixed syntax
           .eq('uid', userId);
 

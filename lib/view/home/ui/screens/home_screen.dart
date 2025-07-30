@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 8),
               SectionHeader(
-                title: isDarkMode ? 'Category dark' : 'Category',
+                title: 'Category',
                 seeAll: () {
                   Navigator.pushNamed(context, CategoryListScreen.name);
                 },

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 
 class RecipeSearchController extends GetxController {
@@ -16,8 +17,8 @@ class RecipeSearchController extends GetxController {
     update();
 
     try {
-      final res = await supabase
-          .from('recipe')
+      final res = await supaBase
+          .from(SupaBaseTables.recipe)
           .select('*, category(title), favourites(rid, uid)')
           .or('title.ilike.%$search%,category_name.ilike.%$search%')
           .order('created_at', ascending: false);

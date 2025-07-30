@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../model/auth_user_model.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../utils/supabase_tables.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 
 class UpdateProfileController extends GetxController {
@@ -14,8 +15,8 @@ class UpdateProfileController extends GetxController {
     update();
 
     try {
-      final userData = await supabase
-          .from('Users')
+      final userData = await supaBase
+          .from(SupaBaseTables.users)
           .update({'name': name, 'photo': photoString})
           .eq('id', AuthController.uid ?? '')
           .select('id ,name');

@@ -18,7 +18,7 @@ class GetRecipeController extends GetxController {
     update();
 
     try {
-      final res = await supabase
+      final res = await supaBase
           .from(table)
           .select('*, category(title), favourites(rid, uid)')
           .order('created_at', ascending: false);

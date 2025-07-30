@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../model/network_response.dart';
 import '../../../utils/app_logger.dart';
 import '../../../utils/supabase.dart';
+import '../../../utils/supabase_tables.dart';
 
 class CategoryController extends GetxController {
   bool _isLoading = false;
@@ -16,7 +17,8 @@ class CategoryController extends GetxController {
     update();
 
     try {
-      final categoryItems = await supabase.from('category').select();
+      final categoryItems =
+          await supaBase.from(SupaBaseTables.category).select();
       appLogger.i(categoryItems);
 
       _isLoading = false;

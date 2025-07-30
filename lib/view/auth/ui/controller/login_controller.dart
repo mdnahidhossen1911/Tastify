@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tastify/utils/supabase_tables.dart';
 
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
@@ -18,8 +19,8 @@ class LoginController extends GetxController {
 
     try {
       final userData =
-          await supabase
-              .from('Users')
+          await supaBase
+              .from(SupaBaseTables.users)
               .select('id, name, email, password, photo')
               .eq('email', email)
               .limit(1)

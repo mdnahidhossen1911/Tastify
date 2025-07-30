@@ -20,7 +20,7 @@ class FatchRecipeFeedbackController extends GetxController {
     update();
 
     try {
-      final res = await supabase
+      final res = await supaBase
           .from(table)
           .select('*, recipe(title,photo) , Users(name, photo)')
           .eq('rwid', AuthController.uid ?? '')
