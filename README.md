@@ -11,7 +11,7 @@ Welcome to **Tastify**! This project is a recipe application designed to be buil
 We believe in teamwork and shared responsibility. Here's a breakdown of our roles:
 
 * **Nahid Hossen**
-    * **Role:** System Design, Figma Design, Backend Design & Implementation
+    * **Role:** App UI Design, Figma Design, Backend Design & Implementation
     * **GitHub:** [mdnahidhossen1911](https://github.com/mdnahidhossen1911)
 * **Jahangir Alam**
     * **Role:** App UI Design
