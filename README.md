@@ -61,142 +61,109 @@ Explore the visual design and user experience of the Tastify app:
 * **Figma Prototype:** [Tastify App UI](https://www.figma.com/design/jzNSKXN5lFN3ZeBxPIEm9p/Tastify?node-id=0-1&t=T8wn1dqrzmGuy2pM-1)
 
 
+---
 
 # Supabase Database Schema
 
-This section provides a detailed overview of the database tables and their relationships, powered by Supabase. Understanding these structures is key to comprehending the application's data flow and functionality.
+### Manual Tables (Data added manually via dashboard)
 
-## Table: `Users`
+These tables must be populated manually. Image fields should store direct **image URLs**.
 
-The `Users` table is a core component for storing all user accounts. Below are the details for each column:
+#### Table: `category`
 
-| Column Name   | Type        | Default Value        | Primary Key |
-| :------------ | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`name`** | `text`      | `NULL`               | ❌ No       |
-| **`email`** | `varchar`   | `NULL`               | ❌ No       |
-| **`password`**| `varchar`   | `NULL`               | ❌ No       |
-| **`photo`** | `varchar`   | `NULL`               | ❌ No       |
-| **`create_at`**| `timestamp` | `now()`              | ❌ No       |
+| Column       | Type      | Notes            |
+| ------------ | --------- | ---------------- |
+| `id`         | uuid      | Primary key      |
+| `created_at` | timestamp | Auto-generated   |
+| `title`      | varchar   | Category title   |
+| `icon`       | varchar   | Image URL (icon) |
 
----
+#### Table: `carousel`
 
-
-## Table: `carousel`
-
-| Column Name    | Type        | Default Value        | Primary Key |
-| :------------- | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`image`** | `varchar`   | `NULL`               | ❌ No       |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       |
+| Column       | Type      | Notes          |
+| ------------ | --------- | -------------- |
+| `id`         | uuid      | Primary key    |
+| `image`      | varchar   | Image URL      |
+| `created_at` | timestamp | Auto-generated |
 
 ---
 
-## Table: `category`
+###  Dynamic Tables (Managed via App)
 
-| Column Name    | Type        | Default Value        | Primary Key |
-| :------------- | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       |
-| **`title`** | `varchar`   | `NULL`               | ❌ No       |
-| **`icon`** | `varchar`   | `NULL`               | ❌ No       |
+All image fields here will store **Base64 strings** submitted by the user via the app.
 
----
+#### Table: `Users`
 
-## Table: `recipe`
+Stores user accounts.
 
-| Column Name      | Type        | Default Value        | Primary Key |
-| :--------------- | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`user_id`** | `uuid`      | `gen_random_uuid()`  | ❌ No       |
-| **`title`** | `text`      | `NULL`               | ❌ No       |
-| **`photo`** | `varchar`   | `NULL`               | ❌ No       |
-| **`instructions`** | `varchar`   | `NULL`               | ❌ No       |
-| **`ingredients`** | `varchar`   | `NULL`               | ❌ No       |
-| **`nutrition_info`** | `varchar`   | `NULL`               | ❌ No       |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       |
-| **`cid`** | `uuid`      | `NULL`               | ❌ No       |
-| **`description`** | `varchar`   | `NULL`               | ❌ No       |
-| **`prep_time`** | `text`      | `NULL`               | ❌ No       |
-| **`cook_time`** | `text`      | `NULL`               | ❌ No       |
-| **`category_nam`** | `text`      | `NULL`               | ❌ No       |
-| **`favourite`** | `int8`      | `0::bigint`          | ❌ No       |
+| Column      | Type      | Primary | Notes                     |
+| ----------- | --------- | ------- | ------------------------- |
+| `id`        | uuid      | ✅       | Primary key               |
+| `name`      | text      | ❌       |                           |
+| `email`     | varchar   | ❌       |                           |
+| `password`  | varchar   | ❌       | (optional if using OAuth) |
+| `photo`     | varchar   | ❌       | Base64 image string       |
+| `create_at` | timestamp | ❌       | Auto timestamp            |
 
-## 🔗 Foreign Keys
+#### Table: `recipe`
 
-The `recipe` table establishes relationships with other tables to maintain data integrity and enable comprehensive data querying.
+Core recipe details.
 
-| Foreign Key Name   | Relation To         | Columns             |
-| :----------------- | :------------------ | :------------------ |
-| `recipe_user_id_fkey` | `public.Users`      | `user_id` &rarr; `public.Users.id` |
-| `recipe_cid_fkey`  | `public.category`   | `cid` &rarr; `public.category.id` |
+| Column           | Type      | Notes                        |
+| ---------------- | --------- | ---------------------------- |
+| `id`             | uuid      | Primary key                  |
+| `user_id`        | uuid      | FK → Users.id                |
+| `title`          | text      | Recipe name                  |
+| `photo`          | varchar   | Base64 image                 |
+| `instructions`   | varchar   |                              |
+| `ingredients`    | varchar   |                              |
+| `nutrition_info` | varchar   |                              |
+| `description`    | varchar   |                              |
+| `prep_time`      | text      |                              |
+| `cook_time`      | text      |                              |
+| `category_nam`   | text      | (redundant if category used) |
+| `cid`            | uuid      | FK → category.id             |
+| `favourite`      | int8      | Defaults to 0                |
+| `created_at`     | timestamp | Auto timestamp               |
 
----
+#### Table: `favourites`
 
-## Table: `favourites`
+User's saved recipes.
 
-| Column Name    | Type        | Default Value        | Primary Key |
-| :------------- | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`rid`** | `uuid`      | `gen_random_uuid()`  | ❌ No       |
-| **`uid`** | `uuid`      | `gen_random_uuid()`  | ❌ No       |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       |
+| Column       | Type      | Notes          |
+| ------------ | --------- | -------------- |
+| `id`         | uuid      | Primary key    |
+| `rid`        | uuid      | FK → recipe.id |
+| `uid`        | uuid      | FK → Users.id  |
+| `created_at` | timestamp | Auto timestamp |
 
+#### Table: `feedback`
 
-## 🔗 Foreign Keys
+Stores user feedback on recipes.
 
-The `favourites` table establishes relationships with other tables to link favourite entries to specific recipes and users.
+| Column       | Type      | Notes                  |
+| ------------ | --------- | ---------------------- |
+| `id`         | uuid      | Primary key            |
+| `uid`        | uuid      | FK → Users.id          |
+| `rid`        | uuid      | FK → recipe.id         |
+| `rwid`       | uuid      | Recipe owner's user ID |
+| `feedback`   | varchar   | Text content           |
+| `created_at` | timestamp | Auto timestamp         |
 
-| Foreign Key Name     | Relation To       | Columns           |
-| :------------------- | :---------------- | :---------------- |
-| `favourites_rid_fkey` | `public.recipe`   | `rid` &rarr; `public.recipe.id` |
-| `favourites_uid_fkey` | `public.Users`    | `uid` &rarr; `public.Users.id`  |
+#### Table: `blog`
 
----
+User-generated blog posts.
 
-## Table: `feedback`
-
-| Column Name    | Type        | Default Value        | Primary Key | Description                              |
-| :------------- | :---------- | :------------------- | :---------- | :--------------------------------------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      | Unique identifier for each feedback entry. |
-| **`uid`** | `uuid`      | `gen_random_uuid()`  | ❌ No       | User ID of the person providing feedback.  |
-| **`rid`** | `uuid`      | `gen_random_uuid()`  | ❌ No       | Recipe ID that the feedback is for.      |
-| **`feedback`** | `varchar`   | `NULL`               | ❌ No       | The actual feedback text.                |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       | Timestamp when the feedback was created. |
-| **`rwid`** | `uuid`      | `NULL`               | ❌ No       | User ID of the recipe writer.            |
-
-
-## 🔗 Foreign Keys
-
-The `feedback` table establishes relationships with other tables to link feedback entries to specific users and recipes.
-
-| Foreign Key Name   | Relation To       | Columns           |
-| :----------------- | :---------------- | :---------------- |
-| `feedback_uid_fkey` | `public.Users`    | `uid` &rarr; `public.Users.id` |
-| `feedback_rid_fkey` | `public.recipe`   | `rid` &rarr; `public.recipe.id` |
+| Column       | Type      | Notes                |
+| ------------ | --------- | -------------------- |
+| `id`         | uuid      | Primary key          |
+| `title`      | text      |                      |
+| `image`      | varchar   | Base64 image         |
+| `content`    | text      | Full article content |
+| `uid`        | uuid      | FK → Users.id        |
+| `created_at` | timestamp | Auto timestamp       |
 
 ---
-
-## Table: `blog`
-
-| Column Name    | Type        | Default Value        | Primary Key |
-| :------------- | :---------- | :------------------- | :---------- |
-| **`id`** | `uuid`      | `gen_random_uuid()`  | ✅ Yes      |
-| **`title`** | `text`      | `NULL`               | ❌ No       |
-| **`image`** | `varchar`   | `NULL`               | ❌ No       |
-| **`content`** | `text`      | `NULL`               | ❌ No       |
-| **`created_at`** | `timestamp` | `now()`              | ❌ No       |
-| **`uid`** | `uuid`      | `NULL`               | ❌ No       |
-
-
-## 🔗 Foreign Keys
-
-The `blog` table establishes a relationship with the `Users` table to link blog posts to their respective authors.
-
-| Foreign Key Name   | Relation To       | Columns           |
-| :----------------- | :---------------- | :---------------- |
-| `blog_uid_fkey`    | `public.Users`    | `uid` &rarr; `public.Users.id` |
-
 <br>
 
 ## 💖 A Big Thank You for Your Visit!
