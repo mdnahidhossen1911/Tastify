@@ -96,14 +96,14 @@ All image fields here will store **Base64 strings** submitted by the user via th
 
 Stores user accounts.
 
-| Column      | Type      | Primary | Notes                     |
-| ----------- | --------- | ------- | ------------------------- |
-| `id`        | uuid      | ✅       | Primary key               |
-| `name`      | text      | ❌       |                           |
-| `email`     | varchar   | ❌       |                           |
-| `password`  | varchar   | ❌       | (optional if using OAuth) |
-| `photo`     | varchar   | ❌       | Base64 image string       |
-| `create_at` | timestamp | ❌       | Auto timestamp            |
+| Column      | Type      | Notes                     |
+| ----------- | --------- | ------------------------- |
+| `id`        | uuid      | Primary key               |
+| `name`      | text      |                           |
+| `email`     | varchar   |                           |
+| `password`  | varchar   | (optional if using OAuth) |
+| `photo`     | varchar   | Base64 image string       |
+| `create_at` | timestamp | Auto timestamp            |
 
 #### Table: `recipe`
 
