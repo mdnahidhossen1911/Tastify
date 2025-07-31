@@ -1,12 +1,12 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:tastify/utils/supabase_tables.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/secure_password.dart';
-import '../../../../utils/supabase.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/secure_password.dart';
+import '../utils/supabase.dart';
 
-class LoginController extends GetxController {
+class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -15,7 +15,7 @@ class LoginController extends GetxController {
     required String password,
   }) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final userData =
@@ -30,7 +30,7 @@ class LoginController extends GetxController {
         appLogger.w('User not found!');
 
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(
           isSuccess: false,
@@ -42,7 +42,7 @@ class LoginController extends GetxController {
         appLogger.w('Incorrect password!');
 
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(
           isSuccess: false,
@@ -51,7 +51,7 @@ class LoginController extends GetxController {
       }
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       appLogger.i(userData);
       return NetworkResponse(
@@ -65,7 +65,7 @@ class LoginController extends GetxController {
       );
     } catch (e, stack) {
       _isLoading = false;
-      update();
+      notifyListeners();
       appLogger.e('Registration error', error: e, stackTrace: stack);
       return NetworkResponse(isSuccess: false, errorMessage: 'Error: $e');
     }

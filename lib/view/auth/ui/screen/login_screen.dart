@@ -12,9 +12,9 @@ import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
 import '../../../../view_model/google_sign_view_model.dart';
+import '../../../../view_model/login_view_model.dart';
 import '../../../common/ui/screens/main_bottom_nav_bar.dart';
 import '../controller/auth_controller.dart';
-import '../controller/login_controller.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final LoginController _loginController = Get.find<LoginController>();
+  late LoginViewModel _loginViewModel;
 
   RxBool passwordInVisible = true.obs;
 
@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context,
       listen: false,
     );
+    _loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
     return Scaffold(
       body: ScreenBackground(
         child: SafeArea(
@@ -263,11 +264,10 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SizedBox(
         width: double.infinity,
         height: 55,
-        child: GetBuilder(
-          init: _loginController,
-          builder: (controller) {
+        child: Consumer<LoginViewModel>(
+          builder: (context, value, child) {
             return Visibility(
-              visible: !controller.isLoading,
+              visible: !value.isLoading,
               replacement: circleProgress(),
               child: ElevatedButton(
                 onPressed: () {
@@ -310,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   onClickLoginButton() async {
     if (_SignInFormKey.currentState!.validate()) {
-      NetworkResponse response = await _loginController.loginUser(
+      NetworkResponse response = await _loginViewModel.loginUser(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );

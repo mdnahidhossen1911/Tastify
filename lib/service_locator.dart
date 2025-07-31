@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/view_model/google_sign_view_model.dart';
+import 'package:tastify/view_model/login_view_model.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -11,12 +12,5 @@ void setupLocator() {
   locator.registerLazySingleton<GoogleSignViewModel>(
     () => GoogleSignViewModel(),
   );
+  locator.registerLazySingleton<LoginViewModel>(() => LoginViewModel());
 }
-
-// Register your services and controllers here
-// Example:
-// locator.registerLazySingleton<YourService>(() => YourService());
-// locator.registerFactory<YourController>(() => YourController());
-
-// For example, if you have a service called ApiService:
-// locator.registerLazySingleton<ApiService>(() => ApiService());
