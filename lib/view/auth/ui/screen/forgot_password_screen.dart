@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../controller/forgot_password_controller.dart';
+import '../../../../view_model/forgot_password_view_model.dart';
 import 'otp_verify_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -18,14 +18,14 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final ForgotPasswordController forgotPasswordController =
-      Get.find<ForgotPasswordController>();
+  late ForgotPasswordViewModel _forgotPasswordViewModel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    _forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context);
     return Scaffold(
       body: ScreenBackground(
         child: SafeArea(
@@ -76,11 +76,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  GetBuilder(
-                    init: forgotPasswordController,
-                    builder: (controller) {
+                  Consumer<ForgotPasswordViewModel>(
+                    builder: (context, value, child) {
                       return Visibility(
-                        visible: !controller.isLoading,
+                        visible: !value.isLoading,
                         replacement: circleProgress(),
                         child: Center(
                           child: SizedBox(
@@ -141,7 +140,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   chackEmail() async {
     if (_formKey.currentState!.validate()) {
-      final response = await forgotPasswordController.chackEmail(
+      final response = await _forgotPasswordViewModel.chackEmail(
         email: emailController.text,
       );
       if (response.isSuccess) {

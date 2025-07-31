@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../../../auth/ui/controller/forgot_password_controller.dart';
+import '../../../../view_model/forgot_password_view_model.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   ChangePasswordScreen({super.key, required this.email});
@@ -22,11 +22,11 @@ class _SetPasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  final ForgotPasswordController _forgotPasswordController =
-      Get.find<ForgotPasswordController>();
+  late ForgotPasswordViewModel _forgotPasswordViewModel;
 
   @override
   Widget build(BuildContext context) {
+    _forgotPasswordViewModel = Provider.of<ForgotPasswordViewModel>(context);
     return Scaffold(
       body: ScreenBackground(
         child: SafeArea(
@@ -119,11 +119,10 @@ class _SetPasswordScreenState extends State<ChangePasswordScreen> {
                       },
                     ),
                     SizedBox(height: 24),
-                    GetBuilder(
-                      init: _forgotPasswordController,
-                      builder: (controller) {
+                    Consumer<ForgotPasswordViewModel>(
+                      builder: (context, value, child) {
                         return Visibility(
-                          visible: !controller.isLoading,
+                          visible: !value.isLoading,
                           replacement: circleProgress(),
                           child: Center(
                             child: SizedBox(
@@ -165,7 +164,7 @@ class _SetPasswordScreenState extends State<ChangePasswordScreen> {
     if (_formKey.currentState!.validate()) {
       print("Password set successfully for ${widget.email}");
 
-      final isSuccess = await _forgotPasswordController.changePassword(
+      final isSuccess = await _forgotPasswordViewModel.changePassword(
         email: widget.email!,
         pass: passwordController.text,
       );

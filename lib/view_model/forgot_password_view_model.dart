@@ -1,18 +1,18 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:tastify/utils/supabase_tables.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/secure_password.dart';
-import '../../../../utils/supabase.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/secure_password.dart';
+import '../utils/supabase.dart';
 
-class ForgotPasswordController extends GetxController {
+class ForgotPasswordViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   Future<NetworkResponse> chackEmail({required String email}) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final userData =
@@ -26,7 +26,7 @@ class ForgotPasswordController extends GetxController {
       appLogger.i(userData);
       if (userData == null) {
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(
           isSuccess: false,
@@ -34,7 +34,7 @@ class ForgotPasswordController extends GetxController {
         );
       } else {
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(isSuccess: true);
       }
@@ -42,7 +42,7 @@ class ForgotPasswordController extends GetxController {
       appLogger.e(error);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: '$error');
     }
@@ -62,14 +62,14 @@ class ForgotPasswordController extends GetxController {
       appLogger.i('user password change successfully');
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return true;
     } catch (e) {
       appLogger.e('error: $e');
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return false;
     }
