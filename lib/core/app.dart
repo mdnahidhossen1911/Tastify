@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
+import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/google_sign_view_model.dart';
 
 import '../binder/controller_binder.dart';
 import '../res/theme/dark_theme.dart';
@@ -16,7 +18,8 @@ class TastifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeChanger()),
+        ChangeNotifierProvider(create: (_) => locator<ThemeChanger>()),
+        ChangeNotifierProvider(create: (_) => locator<GoogleSignViewModel>()),
         // Add other providers here if needed
       ],
       child: Builder(

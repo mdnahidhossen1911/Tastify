@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/auth_user_model.dart';
 import '../../../../model/network_response.dart';
@@ -9,9 +10,9 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/google_sign_view_model.dart';
 import '../../../common/ui/screens/main_bottom_nav_bar.dart';
 import '../controller/auth_controller.dart';
-import '../controller/google_sign_controller.dart';
 import '../controller/signup_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -32,11 +33,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   final SignupController _signupController = SignupController();
-  final GoogleSignController _googleSignController =
-      Get.find<GoogleSignController>();
+  late GoogleSignViewModel _googleSignController;
 
   @override
   Widget build(BuildContext context) {
+    _googleSignController = Provider.of<GoogleSignViewModel>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       body: ScreenBackground(
         child: SafeArea(
@@ -256,11 +260,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Center _buildGoogleSignINButton() {
     return Center(
-      child: GetBuilder(
-        init: _googleSignController,
-        builder: (controller) {
+      child: Consumer<GoogleSignViewModel>(
+        builder: (context, value, child) {
           return Visibility(
-            visible: !controller.isLoading,
+            visible: !value.isLoading,
             replacement: circleProgress(),
             child: SizedBox(
               width: double.infinity,

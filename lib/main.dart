@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tastify/service_locator.dart';
 
 import 'core/app.dart';
 
@@ -12,5 +13,8 @@ void main() async {
     url: dotenv.env['SUPABASEURL'] ?? 'NO URL',
     anonKey: dotenv.env['ANOKEY'] ?? 'NO API KEY',
   );
+
+  setupLocator();
+
   runApp(const TastifyApp());
 }

@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tastify/utils/supabase_tables.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
 
-class GoogleSignController extends GetxController {
+class GoogleSignViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -18,7 +18,7 @@ class GoogleSignController extends GetxController {
 
   Future<NetworkResponse> signInWithGoogle() async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -53,7 +53,7 @@ class GoogleSignController extends GetxController {
 
         signOut();
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(
           isSuccess: true,
@@ -66,7 +66,7 @@ class GoogleSignController extends GetxController {
         );
       } else {
         _isLoading = false;
-        update();
+        notifyListeners();
         return NetworkResponse(
           isSuccess: false,
           errorMessage: "Sign-in was cancelled by the user.",
@@ -76,7 +76,7 @@ class GoogleSignController extends GetxController {
       print("Google Sign-In Error: $error");
       print("network error : $stack");
       _isLoading = false;
-      update();
+      notifyListeners();
       return NetworkResponse(errorMessage: error.toString(), isSuccess: false);
     }
   }
