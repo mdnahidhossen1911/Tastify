@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/component/home_view_app_logo.dart';
+import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/home/ui/screens/popular_list_screen.dart';
 import 'package:tastify/view/home/ui/screens/search_list_screen.dart';
 
@@ -85,9 +86,7 @@ class _HomeState extends State<Home> {
         onRefresh: () async {
           Get.find<CarouselImageController>().getImage();
           Get.find<CategoryController>().getCategory();
-          Provider.of<GetRecipeViewModel>(
-            context,
-          ).getAllRecipes(AuthController.uid ?? '');
+          locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
           Get.find<FetchPopularItemController>().getAllRecipes(
             AuthController.uid ?? '',
           );

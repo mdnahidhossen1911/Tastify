@@ -11,7 +11,9 @@ import 'package:tastify/view_model/recipe_view_model.dart';
 final GetIt locator = GetIt.instance;
 
 void setupLocator() {
+  //singletons
   locator.registerSingleton<ThemeChanger>(ThemeChanger());
+  locator.registerSingleton<GetRecipeViewModel>(GetRecipeViewModel());
 
   //lazySingletons
   locator.registerLazySingleton<GoogleSignViewModel>(
@@ -24,5 +26,4 @@ void setupLocator() {
   locator.registerLazySingleton<RecipeViewModel>(() => RecipeViewModel());
   locator.registerLazySingleton<BlogViewModel>(() => BlogViewModel());
   locator.registerLazySingleton<MyRecipeViewModel>(() => MyRecipeViewModel());
-  locator.registerLazySingleton<GetRecipeViewModel>(() => GetRecipeViewModel());
 }
