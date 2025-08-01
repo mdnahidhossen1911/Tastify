@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 
 import '../../view/auth/ui/controller/auth_controller.dart';
 import '../../view/favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../view/recipe/ui/controller/get_recipe_controller.dart';
 import '../../view/recipe/ui/screens/recipe_details_screen.dart';
 
 class HomePopularWidget extends StatelessWidget {
@@ -19,6 +17,8 @@ class HomePopularWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
+
+    final isFav = popularItem['favourites'] == true;
 
     return GestureDetector(
       onTap: () {
@@ -65,28 +65,22 @@ class HomePopularWidget extends StatelessWidget {
                 Positioned(
                   top: 5,
                   right: 20,
-                  child: GetBuilder<GetRecipeController>(
-                    id: 'fav-${popularItem['id']}',
-                    builder: (controller) {
-                      final isFav = popularItem['favourites'] == true;
-                      return CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 16,
-                        child: IconButton(
-                          onPressed: () {
-                            FavouriteToggleController.toggleFavourite(
-                              popularItem['id'],
-                              AuthController.uid!,
-                            );
-                          },
-                          icon: Icon(
-                            Icons.favorite,
-                            size: 17,
-                            color: isFav ? Colors.deepOrange : Colors.grey,
-                          ),
-                        ),
-                      );
-                    },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 16,
+                    child: IconButton(
+                      onPressed: () {
+                        FavouriteToggleController.toggleFavourite(
+                          popularItem['id'],
+                          AuthController.uid!,
+                        );
+                      },
+                      icon: Icon(
+                        Icons.favorite,
+                        size: 17,
+                        color: isFav ? Colors.deepOrange : Colors.grey,
+                      ),
+                    ),
                   ),
                 ),
               ],

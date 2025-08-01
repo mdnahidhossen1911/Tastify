@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../view/recipe/ui/controller/get_recipe_controller.dart';
 import '../../view/recipe/ui/screens/recipe_details_screen.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
@@ -20,6 +18,8 @@ class FoodRecipeWidget extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     bool isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    final isFav = recipeDetails['favourites'] == true;
 
     return GestureDetector(
       onTap: () {
@@ -61,53 +61,47 @@ class FoodRecipeWidget extends StatelessWidget {
                   SizedBox(
                     width: 86,
                     height: 28,
-                    child: GetBuilder<GetRecipeController>(
-                      id: 'fav-${recipeDetails['id']}',
-                      builder: (controller) {
-                        final isFav = recipeDetails['favourites'] == true;
-                        return ElevatedButton(
-                          onPressed: onTap,
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 4),
-                            elevation: 0,
-                            backgroundColor: Color(0x33ffa571),
+                    child: ElevatedButton(
+                      onPressed: onTap,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 4),
+                        elevation: 0,
+                        backgroundColor: Color(0x33ffa571),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.white,
+                              child:
+                                  isFav == true
+                                      ? Icon(
+                                        Icons.favorite,
+                                        size: 14,
+                                        color: Colors.deepOrange,
+                                      )
+                                      : Icon(
+                                        Icons.favorite,
+                                        size: 14,
+                                        color: Colors.black26,
+                                      ),
+                            ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: CircleAvatar(
-                                  radius: 10,
-                                  backgroundColor: Colors.white,
-                                  child:
-                                      isFav == true
-                                          ? Icon(
-                                            Icons.favorite,
-                                            size: 14,
-                                            color: Colors.deepOrange,
-                                          )
-                                          : Icon(
-                                            Icons.favorite,
-                                            size: 14,
-                                            color: Colors.black26,
-                                          ),
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'Favourite',
-                                style: TextStyle(
-                                  color: Colors.deepOrange,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                            ],
+                          SizedBox(width: 5),
+                          Text(
+                            'Favourite',
+                            style: TextStyle(
+                              color: Colors.deepOrange,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        );
-                      },
+                          SizedBox(width: 8),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 8),
