@@ -4,14 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/recipe_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../category/controller/category_controller.dart';
-import '../controller/recipe_controller.dart';
 
 class UpdateRecipeScreen extends StatefulWidget {
   final RecipeModel recipe;
@@ -41,7 +42,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final RecipeController recipeController = Get.find<RecipeController>();
+  late RecipeViewModel _recipeViewModel;
   final CategoryController categoryController = Get.find<CategoryController>();
 
   String? _selectedCategory;
@@ -139,6 +140,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _recipeViewModel = Provider.of<RecipeViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -156,10 +158,10 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
               'Update Recipe',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            GetBuilder<RecipeController>(
-              builder: (controller) {
+            Consumer<RecipeViewModel>(
+              builder: (context, value, child) {
                 return Visibility(
-                  visible: !controller.isLoading,
+                  visible: !value.isLoading,
                   replacement: circleProgress(),
                   child: ElevatedButton(
                     onPressed: () {
@@ -802,7 +804,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
       nutritionInfo: nutritionInfo.toString(),
     );
 
-    final response = await recipeController.updateRecipe(
+    final response = await _recipeViewModel.updateRecipe(
       widget.recipe.id!,
       model,
     );

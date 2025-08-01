@@ -4,16 +4,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/recipe_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../home/ui/controller/fetch_popular_item_controller.dart';
 import '../controller/get_recipe_controller.dart';
-import '../controller/recipe_controller.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
@@ -40,7 +41,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final RecipeController recipeController = Get.find<RecipeController>();
+  late RecipeViewModel _recipeViewModel;
 
   String? _selectedCategory;
   String? _selectedCategoryId;
@@ -66,6 +67,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _recipeViewModel = Provider.of<RecipeViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -83,10 +85,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
               'Add Recipe',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            GetBuilder<RecipeController>(
-              builder: (controller) {
+            Consumer<RecipeViewModel>(
+              builder: (context, value, child) {
                 return Visibility(
-                  visible: !controller.isLoading,
+                  visible: !value.isLoading,
                   replacement: circleProgress(),
                   child: ElevatedButton(
                     onPressed: () {
@@ -706,7 +708,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       nutritionInfo: nutritionInfo.toString(),
     );
 
-    final response = await recipeController.addRecipe(model);
+    final response = await _recipeViewModel.addRecipe(model);
     if (response.isSuccess) {
       Utils.showToast("Recipe added successfully");
       Get.find<GetRecipeController>().getAllRecipes(AuthController.uid!);

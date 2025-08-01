@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../model/recipe_model.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
+import '../model/network_response.dart';
+import '../model/recipe_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
 
-class RecipeController extends GetxController {
+class RecipeViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -13,7 +13,7 @@ class RecipeController extends GetxController {
 
   Future<NetworkResponse> addRecipe(RecipeModel recipe) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res =
@@ -22,13 +22,13 @@ class RecipeController extends GetxController {
       appLogger.i("Recipe Added: ${res['id']}");
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: true, responseData: res);
     } catch (e) {
       appLogger.e("Add Recipe Failed: $e");
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }
@@ -36,7 +36,7 @@ class RecipeController extends GetxController {
 
   Future<NetworkResponse> updateRecipe(String id, RecipeModel recipe) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final data = recipe.toJson();
@@ -52,14 +52,14 @@ class RecipeController extends GetxController {
 
       appLogger.i("Recipe Updated: $id");
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: true, responseData: res);
     } catch (e) {
       appLogger.e("Update Failed: $e");
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }
@@ -67,21 +67,21 @@ class RecipeController extends GetxController {
 
   Future<NetworkResponse> deleteRecipe(String id) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       await supaBase.from(table).delete().eq('id', id);
       appLogger.i("Recipe Deleted: $id");
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: true);
     } catch (e) {
       appLogger.e("Delete Failed: $e");
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }
