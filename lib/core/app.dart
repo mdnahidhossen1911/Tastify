@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/blog_view_model.dart';
 import 'package:tastify/view_model/forgot_password_view_model.dart';
 import 'package:tastify/view_model/google_sign_view_model.dart';
 import 'package:tastify/view_model/login_view_model.dart';
@@ -28,6 +29,7 @@ class TastifyApp extends StatelessWidget {
           create: (_) => locator<ForgotPasswordViewModel>(),
         ),
         ChangeNotifierProvider(create: (_) => locator<RecipeViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<BlogViewModel>()),
         // Add other providers here if needed
       ],
       child: Builder(

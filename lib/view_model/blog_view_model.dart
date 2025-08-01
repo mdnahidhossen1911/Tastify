@@ -1,10 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class BlogController extends GetxController {
+class BlogViewModel extends ChangeNotifier {
   bool _isLoading = false;
   List<Map<String, dynamic>> _blogs = [];
 
@@ -13,7 +13,7 @@ class BlogController extends GetxController {
 
   Future<bool> addBlog(Map<String, dynamic> blog) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res =
@@ -25,12 +25,12 @@ class BlogController extends GetxController {
 
       appLogger.i("Blog Added: ${res['id']}");
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return true;
     } catch (e) {
       _isLoading = false;
-      update();
+      notifyListeners();
       appLogger.e("Failed to add blog: $e");
 
       return false;
@@ -39,7 +39,7 @@ class BlogController extends GetxController {
 
   Future<void> fetchBlogs() async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -59,7 +59,7 @@ class BlogController extends GetxController {
       _blogs = [];
     } finally {
       _isLoading = false;
-      update();
+      notifyListeners();
     }
   }
 }

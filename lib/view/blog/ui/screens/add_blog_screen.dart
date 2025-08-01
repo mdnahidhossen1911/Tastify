@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/blog_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
-import '../controller/blog_controller.dart';
 
 class AddBlogScreen extends StatefulWidget {
   const AddBlogScreen({super.key});
@@ -28,10 +28,11 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
-  final BlogController _blogController = Get.find<BlogController>();
+  late BlogViewModel _blogViewModel;
 
   @override
   Widget build(BuildContext context) {
+    _blogViewModel = Provider.of<BlogViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -46,10 +47,9 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         actions: [
-          GetBuilder(
-            init: _blogController,
-            builder: (controller) {
-              return controller.isLoading
+          Consumer<BlogViewModel>(
+            builder: (context, value, child) {
+              return value.isLoading
                   ? circleProgress()
                   : ElevatedButton(
                     onPressed: () {
@@ -224,7 +224,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
         final bytes = await _pickedImage!.readAsBytes();
         String imageString = base64Encode(bytes);
 
-        bool isSuccess = await _blogController.addBlog({
+        bool isSuccess = await _blogViewModel.addBlog({
           'title': _titleController.text.trim(),
           'content': _contentController.text.trim(),
           'uid': AuthController.uid,
