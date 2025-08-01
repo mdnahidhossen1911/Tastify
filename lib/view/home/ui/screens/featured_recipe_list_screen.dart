@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/component/food_recipe_widget.dart';
+import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../../recipe/ui/controller/get_recipe_controller.dart';
 
 class FeaturedRecipeListScreen extends StatefulWidget {
   const FeaturedRecipeListScreen({super.key});
@@ -26,19 +26,19 @@ class _FeaturedRecipeListScreenState extends State<FeaturedRecipeListScreen> {
         title: Text('Featured Recipe', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
-        child: GetBuilder<GetRecipeController>(
-          builder: (controller) {
+        child: Consumer<GetRecipeViewModel>(
+          builder: (context, value, child) {
             return ListView.builder(
-              itemCount: controller.recipes.length,
+              itemCount: value.recipes.length,
               padding: EdgeInsets.only(bottom: 20),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: FoodRecipeWidget(
-                    recipeDetails: controller.recipes[index],
+                    recipeDetails: value.recipes[index],
                     onTap: () {
                       FavouriteToggleController.toggleFavourite(
-                        controller.recipes[index]['id'],
+                        value.recipes[index]['id'],
                         AuthController.uid!,
                       );
                     },

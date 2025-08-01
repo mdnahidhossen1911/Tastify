@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:tastify/res/component/home_view_app_logo.dart';
+import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/home/ui/screens/popular_list_screen.dart';
 import 'package:tastify/view/home/ui/screens/search_list_screen.dart';
 
@@ -11,11 +13,11 @@ import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../res/component/home_carousel_slider.dart';
 import '../../../../res/component/home_popular_widget.dart';
 import '../../../../res/component/section_header.dart';
+import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../category/ui/screen/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../../recipe/ui/controller/get_recipe_controller.dart';
 import '../../../recipe/ui/screens/add_recipe_screen.dart';
 import '../controller/carousel_image_controller.dart';
 import '../controller/fetch_popular_item_controller.dart';
@@ -84,9 +86,7 @@ class _HomeState extends State<Home> {
         onRefresh: () async {
           Get.find<CarouselImageController>().getImage();
           Get.find<CategoryController>().getCategory();
-          Get.find<GetRecipeController>().getAllRecipes(
-            AuthController.uid ?? '',
-          );
+          locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
           Get.find<FetchPopularItemController>().getAllRecipes(
             AuthController.uid ?? '',
           );
@@ -137,14 +137,14 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildFeaturedRecipe() {
-    return GetBuilder<GetRecipeController>(
-      builder: (controller) {
-        return controller.isLoading
+    return Consumer<GetRecipeViewModel>(
+      builder: (context, value, child) {
+        return value.isLoading
             ? Center(child: circleProgress())
             : ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.recipes.length,
+              itemCount: value.recipes.length,
               padding: EdgeInsets.only(bottom: 20),
               itemBuilder: (context, index) {
                 return Padding(
@@ -152,11 +152,11 @@ class _HomeState extends State<Home> {
                   child: FoodRecipeWidget(
                     onTap: () {
                       FavouriteToggleController.toggleFavourite(
-                        controller.recipes[index]['id'],
+                        value.recipes[index]['id'],
                         AuthController.uid!,
                       );
                     },
-                    recipeDetails: controller.recipes[index],
+                    recipeDetails: value.recipes[index],
                   ),
                 );
               },

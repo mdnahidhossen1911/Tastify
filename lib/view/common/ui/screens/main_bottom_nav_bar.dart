@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../blog/ui/screens/blog_screen.dart';
+import '../../../blog/blog_screen.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../favourite/ui/screens/favourite_screen.dart';
 import '../../../home/ui/controller/carousel_image_controller.dart';
 import '../../../home/ui/controller/fetch_popular_item_controller.dart';
 import '../../../home/ui/screens/home_screen.dart';
 import '../../../profile/ui/screens/profile_screen.dart';
-import '../../../recipe/ui/controller/get_recipe_controller.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   const MainBottomNavBar({super.key});
@@ -22,6 +23,9 @@ class MainBottomNavBar extends StatefulWidget {
 
 class _MainBottomNavBarState extends State<MainBottomNavBar> {
   int _selectedIndex = 0;
+
+  late GetRecipeViewModel _getRecipeViewModel;
+
   final List<Widget> _screens = [
     Home(),
     BlogScreen(),
@@ -31,18 +35,23 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    Get.find<CarouselImageController>().getImage();
-    Get.find<CategoryController>().getCategory();
-    Get.find<GetRecipeController>().getAllRecipes(AuthController.uid ?? '');
-    Get.find<FetchPopularItemController>().getAllRecipes(
-      AuthController.uid ?? '',
-    );
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<CarouselImageController>().getImage();
+      Get.find<CategoryController>().getCategory();
+      _getRecipeViewModel.getAllRecipes(AuthController.uid ?? '');
+      Get.find<FetchPopularItemController>().getAllRecipes(
+        AuthController.uid ?? '',
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _getRecipeViewModel = Provider.of<GetRecipeViewModel>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Column(

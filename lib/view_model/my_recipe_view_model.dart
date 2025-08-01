@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
+import '../view/auth/ui/controller/auth_controller.dart';
 
-class MyRecipeController extends GetxController {
+class MyRecipeViewModel extends ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -18,7 +18,8 @@ class MyRecipeController extends GetxController {
 
   Future<void> fetchMyRecipes() async {
     _isLoading = true;
-    update();
+
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -29,7 +30,7 @@ class MyRecipeController extends GetxController {
 
       _myRecipes = List<Map<String, dynamic>>.from(res);
       _isLoading = false;
-      update();
+      notifyListeners();
 
       appLogger.i(
         "Fetched ${_myRecipes.length} recipes for user ${AuthController.uid ?? ''}",
@@ -37,7 +38,7 @@ class MyRecipeController extends GetxController {
     } catch (e) {
       appLogger.e("Fetch My Recipes Failed: $e");
       _isLoading = false;
-      update();
+      notifyListeners();
     }
   }
 
@@ -48,7 +49,7 @@ class MyRecipeController extends GetxController {
       await supaBase.from(SupaBaseTables.recipe).delete().eq('id', id);
 
       _myRecipes.removeWhere((recipe) => recipe['id'] == id);
-      update();
+      notifyListeners();
 
       appLogger.i("Recipe Deleted: $id");
       return true;

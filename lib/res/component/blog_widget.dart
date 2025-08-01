@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../utils/utc_to_local_date.dart';
-import '../../view/blog/ui/screens/blog_details_screen.dart';
+import '../../view/blog/blog_details_screen.dart';
 import '../assets_path.dart';
 
 class BlogWidget extends StatelessWidget {
