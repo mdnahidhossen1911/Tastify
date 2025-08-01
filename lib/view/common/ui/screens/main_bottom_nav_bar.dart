@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../blog/ui/screens/blog_screen.dart';
+import '../../../blog/blog_screen.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../favourite/ui/screens/favourite_screen.dart';
 import '../../../home/ui/controller/carousel_image_controller.dart';

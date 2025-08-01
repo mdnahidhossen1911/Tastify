@@ -3,13 +3,12 @@ import 'package:tastify/view/auth/ui/screen/login_screen.dart';
 import 'package:tastify/view/auth/ui/screen/splash_screen.dart';
 
 import '../../model/recipe_model.dart';
-import '../../view/auth/ui/screen/forgot_password_screen.dart'
-    show ForgotPasswordScreen;
+import '../../view/auth/ui/screen/forgot_password_screen.dart';
 import '../../view/auth/ui/screen/otp_verify_screen.dart';
 import '../../view/auth/ui/screen/set_password_screen.dart';
-import '../../view/auth/ui/screen/sign_up_screen.dart' show SignUpScreen;
-import '../../view/blog/ui/screens/add_blog_screen.dart';
-import '../../view/blog/ui/screens/blog_details_screen.dart';
+import '../../view/auth/ui/screen/sign_up_screen.dart';
+import '../../view/blog/add_blog_screen.dart';
+import '../../view/blog/blog_details_screen.dart';
 import '../../view/category/ui/screen/category_list_screen.dart';
 import '../../view/category/ui/screen/category_wise_list_screen.dart';
 import '../../view/common/ui/screens/main_bottom_nav_bar.dart';

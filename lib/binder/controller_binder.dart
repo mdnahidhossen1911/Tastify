@@ -4,7 +4,6 @@ import '../view/auth/ui/controller/auth_controller.dart';
 import '../view/category/controller/category_controller.dart';
 import '../view/home/ui/controller/carousel_image_controller.dart';
 import '../view/home/ui/controller/fetch_popular_item_controller.dart';
-import '../view/profile/ui/controller/my_recipe_controller.dart';
 import '../view/recipe/ui/controller/get_recipe_controller.dart';
 
 class ControllerBinder extends Bindings {
@@ -16,7 +15,7 @@ class ControllerBinder extends Bindings {
 
     // Get.lazyPut(() => RecipeController());
     // Get.lazyPut(() => BlogController());
-    Get.lazyPut(() => MyRecipeController());
+    // Get.lazyPut(() => MyRecipeController());
 
     Get.put(GetRecipeController());
     Get.put(FetchPopularItemController());

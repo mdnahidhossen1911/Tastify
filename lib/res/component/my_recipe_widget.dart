@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/recipe_model.dart';
 import '../../utils/utc_to_local_date.dart';
-import '../../view/profile/ui/controller/my_recipe_controller.dart';
 import '../../view/recipe/ui/screens/recipe_details_screen.dart';
 import '../../view/recipe/ui/screens/update_recipe_screen.dart';
+import '../../view_model/my_recipe_view_model.dart';
 import '../app_colors.dart';
 import 'circle_progress.dart';
 
@@ -18,8 +19,12 @@ class MyRecipeWidget extends StatelessWidget {
 
   RxBool deleteInProgress = false.obs;
 
+  late MyRecipeViewModel _myRecipeViewModel;
+
   @override
   Widget build(BuildContext context) {
+    _myRecipeViewModel = Provider.of<MyRecipeViewModel>(context, listen: false);
+
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 16),
@@ -102,8 +107,9 @@ class MyRecipeWidget extends StatelessWidget {
                               : InkWell(
                                 onTap: () async {
                                   deleteInProgress.value = true;
-                                  await Get.find<MyRecipeController>()
-                                      .deleteRecipe(recipe['id']);
+                                  await _myRecipeViewModel.deleteRecipe(
+                                    recipe['id'],
+                                  );
                                   deleteInProgress.value = false;
                                 },
                                 borderRadius: BorderRadius.circular(12),
