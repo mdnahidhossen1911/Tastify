@@ -10,7 +10,8 @@ class Assets {
   static const String imagesMeet = 'assets/images/meet.png';
   static const String imagesSnack = 'assets/images/snack.png';
   static const String imagesTestifyLogo = 'assets/images/testify_logo.png';
+  static const String imagesTestifyLogoDark =
+      'assets/images/testify_logo_dark.png';
   static const String imagesTimer = 'assets/images/timer.png';
-  static const String tastifyAPPS = '.env';
-
+  static const String tastify = '.env';
 }
