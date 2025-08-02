@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../res/component/circle_progress.dart';
-import '../../../../res/component/my_recipe_widget.dart';
-import '../../../../view_model/my_recipe_view_model.dart';
+import '../../res/component/circle_progress.dart';
+import '../../res/component/my_recipe_widget.dart';
+import '../../view_model/my_recipe_view_model.dart';
 
 class MyRecipeScreen extends StatefulWidget {
   const MyRecipeScreen({super.key});

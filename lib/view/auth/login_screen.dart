@@ -13,7 +13,7 @@ import '../../../../utils/utils.dart';
 import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/google_sign_view_model.dart';
 import '../../../../view_model/login_view_model.dart';
-import '../common/main_bottom_nav_bar.dart';
+import '../main_bottom_nav_bar.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';
 

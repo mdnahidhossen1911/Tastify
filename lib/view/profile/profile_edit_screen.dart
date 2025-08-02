@@ -4,14 +4,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/update_profile_view_model.dart';
 
-import '../../../../res/app_colors.dart';
-import '../../../../res/assets_path.dart';
-import '../../../../res/component/circle_progress.dart';
-import '../../../../res/component/screen_background.dart';
-import '../../../../utils/utils.dart';
-import '../../../../view_model/auth_view_model.dart';
-import '../controller/update_profile_controller.dart';
+import '../../res/app_colors.dart';
+import '../../res/assets_path.dart';
+import '../../res/component/circle_progress.dart';
+import '../../res/component/screen_background.dart';
+import '../../utils/utils.dart';
+import '../../view_model/auth_view_model.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({super.key});
@@ -155,39 +157,42 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         SizedBox(
                           width: double.infinity,
                           height: 55,
-                          child: GetBuilder(
-                            init: UpdateProfileController(),
-                            builder: (controller) {
-                              return controller.isLoading
-                                  ? circleProgress()
-                                  : ElevatedButton(
-                                    onPressed: () async {
-                                      final isSuccess = await controller
-                                          .updateProfile(
-                                            nameController.text.trim(),
-                                            photoString.value,
-                                          );
+                          child: ChangeNotifierProvider(
+                            create:
+                                (context) => locator<UpdateProfileViewModel>(),
+                            child: Consumer<UpdateProfileViewModel>(
+                              builder: (context, value, child) {
+                                return value.isLoading
+                                    ? circleProgress()
+                                    : ElevatedButton(
+                                      onPressed: () async {
+                                        final isSuccess = await value
+                                            .updateProfile(
+                                              nameController.text.trim(),
+                                              photoString.value,
+                                            );
 
-                                      if (isSuccess) {
-                                        Utils.showToast(
-                                          'Profile updated successfully',
-                                        );
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.themeColor,
-                                      elevation: 0,
-                                    ),
-                                    child: Text(
-                                      "Update",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
+                                        if (isSuccess) {
+                                          Utils.showToast(
+                                            'Profile updated successfully',
+                                          );
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColor.themeColor,
+                                        elevation: 0,
                                       ),
-                                    ),
-                                  );
-                            },
+                                      child: Text(
+                                        "Update",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    );
+                              },
+                            ),
                           ),
                         ),
                       ],

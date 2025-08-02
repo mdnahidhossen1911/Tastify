@@ -15,6 +15,7 @@ import 'package:tastify/view_model/my_recipe_view_model.dart';
 import 'package:tastify/view_model/recipe_search_view_model.dart';
 import 'package:tastify/view_model/recipe_view_model.dart';
 import 'package:tastify/view_model/signup_view_model.dart';
+import 'package:tastify/view_model/update_profile_view_model.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -46,4 +47,7 @@ void setupLocator() {
     () => GetRecipeByCategoryViewModel(),
   );
   locator.registerFactory<RecipeSearchViewModel>(() => RecipeSearchViewModel());
+  locator.registerFactory<UpdateProfileViewModel>(
+    () => UpdateProfileViewModel(),
+  );
 }

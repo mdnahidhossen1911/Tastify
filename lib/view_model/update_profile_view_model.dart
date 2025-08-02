@@ -1,19 +1,19 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:tastify/service_locator.dart';
 
-import '../../../../model/auth_user_model.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
-import '../../../../view_model/auth_view_model.dart';
+import '../model/auth_user_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
+import 'auth_view_model.dart';
 
-class UpdateProfileController extends GetxController {
+class UpdateProfileViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   Future<bool> updateProfile(String name, String photoString) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final userData = await supaBase
@@ -31,7 +31,7 @@ class UpdateProfileController extends GetxController {
       locator<AuthViewModel>().updateData(userModel);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       appLogger.i('Change User name successfully. \n$userData');
       return true;
@@ -39,7 +39,7 @@ class UpdateProfileController extends GetxController {
       appLogger.e(e);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return false;
     }
