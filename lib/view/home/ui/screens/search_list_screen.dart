@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../view_model/auth_view_model.dart';
-import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
+import '../../../../view_model/favourite_toggle_controller.dart';
 import '../controller/recipe_search_controller.dart';
 
 class SearchListScreen extends StatefulWidget {
@@ -81,7 +81,7 @@ class _SearchListScreenState extends State<SearchListScreen> {
                       child: FoodRecipeWidget(
                         recipeDetails: controller.recipes[index],
                         onTap: () {
-                          FavouriteToggleController.toggleFavourite(
+                          FavouriteToggleViewModel.toggleFavourite(
                             controller.recipes[index]['id'],
                             AuthViewModel.uid!,
                           );

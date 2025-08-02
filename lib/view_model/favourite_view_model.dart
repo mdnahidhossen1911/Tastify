@@ -1,10 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class GetFavouriteController extends GetxController {
+class GetFavouriteViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -13,7 +13,7 @@ class GetFavouriteController extends GetxController {
 
   Future<bool> FavouriteRecipes(String userId) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -32,12 +32,12 @@ class GetFavouriteController extends GetxController {
       appLogger.i("Fetched ${favRecipes.length} favourite recipes for $userId");
 
       _isLoading = false; // ✅ always stop loading, even if it succeeds
-      update();
+      notifyListeners();
 
       return true;
     } catch (e) {
       _isLoading = false; // ✅ always stop loading, even if it fails
-      update();
+      notifyListeners();
       appLogger.e("Fetch Favourites Failed: $e");
       return false;
     }
@@ -45,6 +45,6 @@ class GetFavouriteController extends GetxController {
 
   Future<void> removeFavourite(String RID) async {
     _favouriteRecipes.removeWhere((e) => e['id'] == RID);
-    update();
+    notifyListeners();
   }
 }

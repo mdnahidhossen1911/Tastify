@@ -1,12 +1,12 @@
 import 'package:tastify/service_locator.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../view_model/fetch_popular_view_model.dart';
-import '../../../../view_model/get_recipe_view_model.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import 'fetch_popular_view_model.dart';
+import 'get_recipe_view_model.dart';
 
-class FavouriteToggleController {
+class FavouriteToggleViewModel {
   static const String favouritesTable = 'favourites';
   static const String recipesTable = 'recipe';
 

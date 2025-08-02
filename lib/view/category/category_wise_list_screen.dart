@@ -5,8 +5,8 @@ import 'package:tastify/service_locator.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/food_recipe_widget.dart';
 import '../../view_model/auth_view_model.dart';
+import '../../view_model/favourite_toggle_controller.dart';
 import '../../view_model/get_recipe_by_category_view_model.dart';
-import '../favourite/ui/controller/favourite_toggle_controller.dart';
 
 class CategoryWiseListScreen extends StatefulWidget {
   const CategoryWiseListScreen({super.key, required this.categoryName});
@@ -60,7 +60,7 @@ class _CategoryWiseListScreenState extends State<CategoryWiseListScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: FoodRecipeWidget(
                             onTap: () {
-                              FavouriteToggleController.toggleFavourite(
+                              FavouriteToggleViewModel.toggleFavourite(
                                 value.recipes[index]['id'],
                                 AuthViewModel.uid!,
                               );

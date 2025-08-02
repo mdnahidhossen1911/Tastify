@@ -4,6 +4,7 @@ import 'package:tastify/view_model/auth_view_model.dart';
 import 'package:tastify/view_model/blog_view_model.dart';
 import 'package:tastify/view_model/carousel_image_view_model.dart';
 import 'package:tastify/view_model/category_view_model.dart';
+import 'package:tastify/view_model/favourite_view_model.dart';
 import 'package:tastify/view_model/fetch_popular_view_model.dart';
 import 'package:tastify/view_model/forgot_password_view_model.dart';
 import 'package:tastify/view_model/get_recipe_by_category_view_model.dart';
@@ -39,6 +40,7 @@ void setupLocator() {
 
   //registerFactory
   locator.registerFactory<SignupViewModel>(() => SignupViewModel());
+  locator.registerFactory<GetFavouriteViewModel>(() => GetFavouriteViewModel());
   locator.registerFactory<GetRecipeByCategoryViewModel>(
     () => GetRecipeByCategoryViewModel(),
   );

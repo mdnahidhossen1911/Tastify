@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../view_model/auth_view_model.dart';
+import '../../../../view_model/favourite_toggle_controller.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 
 class PopularListScreen extends StatefulWidget {
   const PopularListScreen({super.key});
@@ -37,7 +37,7 @@ class _PopularListScreenState extends State<PopularListScreen> {
                   child: FoodRecipeWidget(
                     recipeDetails: value.recipes[index],
                     onTap: () {
-                      FavouriteToggleController.toggleFavourite(
+                      FavouriteToggleViewModel.toggleFavourite(
                         value.recipes[index]['id'],
                         AuthViewModel.uid!,
                       );

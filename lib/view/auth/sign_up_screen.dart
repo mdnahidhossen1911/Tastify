@@ -13,7 +13,7 @@ import '../../utils/utils.dart';
 import '../../view_model/auth_view_model.dart';
 import '../../view_model/google_sign_view_model.dart';
 import '../../view_model/signup_view_model.dart';
-import '../common/ui/screens/main_bottom_nav_bar.dart';
+import '../common/main_bottom_nav_bar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 
-import '../../view/favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../view/recipe/recipe_details_screen.dart';
 import '../../view_model/auth_view_model.dart';
+import '../../view_model/favourite_toggle_controller.dart';
 
 class HomePopularWidget extends StatelessWidget {
   HomePopularWidget({super.key, required this.popularItem});
@@ -70,7 +70,7 @@ class HomePopularWidget extends StatelessWidget {
                     radius: 16,
                     child: IconButton(
                       onPressed: () {
-                        FavouriteToggleController.toggleFavourite(
+                        FavouriteToggleViewModel.toggleFavourite(
                           popularItem['id'],
                           AuthViewModel.uid!,
                         );
