@@ -10,11 +10,11 @@ import '../../model/recipe_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
+import '../../view_model/auth_view_model.dart';
 import '../../view_model/category_view_model.dart';
 import '../../view_model/fetch_popular_view_model.dart';
 import '../../view_model/get_recipe_view_model.dart';
 import '../../view_model/recipe_view_model.dart';
-import '../auth/ui/controller/auth_controller.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
@@ -653,7 +653,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     String recipeDescription = _recipeDescriptionTEController.text;
     String prepTime = _recipePrepTimeTEController.text;
     String cookTime = _recipeCookTimeTEController.text;
-    String uid = AuthController.uid!;
+    String uid = AuthViewModel.uid!;
     late String imageString;
 
     final ingredientList =
@@ -714,8 +714,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
       Provider.of<GetRecipeViewModel>(
         context,
-      ).getAllRecipes(AuthController.uid!);
-      locator<FetchPopularViewModel>().getAllRecipes(AuthController.uid!);
+      ).getAllRecipes(AuthViewModel.uid!);
+      locator<FetchPopularViewModel>().getAllRecipes(AuthViewModel.uid!);
       Navigator.pop(context);
     } else {
       Utils.showFlushBar(context, response.errorMessage);

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/auth_view_model.dart';
 import 'package:tastify/view_model/blog_view_model.dart';
 import 'package:tastify/view_model/carousel_image_view_model.dart';
 import 'package:tastify/view_model/category_view_model.dart';
@@ -14,7 +15,6 @@ import 'package:tastify/view_model/login_view_model.dart';
 import 'package:tastify/view_model/my_recipe_view_model.dart';
 import 'package:tastify/view_model/recipe_view_model.dart';
 
-import '../binder/controller_binder.dart';
 import '../res/theme/dark_theme.dart';
 import '../res/theme/light_theme.dart';
 import '../utils/routes/app_routes.dart';
@@ -27,6 +27,7 @@ class TastifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => locator<AuthViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<ThemeChanger>()),
         ChangeNotifierProvider(create: (_) => locator<GoogleSignViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
@@ -51,7 +52,6 @@ class TastifyApp extends StatelessWidget {
             theme: lightThemeData,
             darkTheme: darkThemeData,
             themeMode: Provider.of<ThemeChanger>(context).mode,
-            initialBinding: ControllerBinder(),
             onGenerateRoute: AppRoutes.onGenerateRoute,
             initialRoute: SplashScreen.name,
           );

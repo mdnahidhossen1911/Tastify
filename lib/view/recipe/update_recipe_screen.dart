@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/view_model/auth_view_model.dart';
 import 'package:tastify/view_model/category_view_model.dart';
 
 import '../../../../model/recipe_model.dart';
@@ -750,7 +750,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
     String recipeDescription = _recipeDescriptionTEController.text;
     String prepTime = _recipePrepTimeTEController.text;
     String cookTime = _recipeCookTimeTEController.text;
-    String uid = AuthController.uid!;
+    String uid = AuthViewModel.uid!;
     String imageString = widget.recipe.photo!;
 
     final ingredientList =

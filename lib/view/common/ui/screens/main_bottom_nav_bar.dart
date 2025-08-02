@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
 
+import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/category_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../blog/blog_screen.dart';
 import '../../../favourite/ui/screens/favourite_screen.dart';
 import '../../../home/ui/screens/home_screen.dart';
@@ -39,8 +39,8 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locator<CarouselImageViewModel>().getImage();
       locator<CategoryViewModel>().getCategory();
-      _getRecipeViewModel.getAllRecipes(AuthController.uid ?? '');
-      locator<FetchPopularViewModel>().getAllRecipes(AuthController.uid ?? '');
+      _getRecipeViewModel.getAllRecipes(AuthViewModel.uid ?? '');
+      locator<FetchPopularViewModel>().getAllRecipes(AuthViewModel.uid ?? '');
     });
   }
 

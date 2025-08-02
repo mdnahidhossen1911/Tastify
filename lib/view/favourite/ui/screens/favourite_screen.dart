@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/food_recipe_widget.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../controller/favourite_controller.dart';
 import '../controller/favourite_toggle_controller.dart';
 
@@ -20,7 +20,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
   initState() {
     super.initState();
-    getFavouriteController.FavouriteRecipes(AuthController.uid ?? '');
+    getFavouriteController.FavouriteRecipes(AuthViewModel.uid ?? '');
   }
 
   @override
@@ -47,7 +47,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         onTap: () {
                           FavouriteToggleController.toggleFavourite(
                             controller.favouriteRecipes[index]['id'],
-                            AuthController.uid!,
+                            AuthViewModel.uid!,
                           );
                           controller.removeFavourite(
                             controller.favouriteRecipes[index]['id'],

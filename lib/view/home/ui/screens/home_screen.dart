@@ -13,10 +13,10 @@ import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../res/component/home_carousel_slider.dart';
 import '../../../../res/component/home_popular_widget.dart';
 import '../../../../res/component/section_header.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../category/ui/screen/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../../recipe/add_recipe_screen.dart';
@@ -85,9 +85,9 @@ class _HomeState extends State<Home> {
         onRefresh: () async {
           locator<CarouselImageViewModel>().getImage();
           locator<CategoryViewModel>().getCategory();
-          locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
+          locator<GetRecipeViewModel>().getAllRecipes(AuthViewModel.uid ?? '');
           locator<FetchPopularViewModel>().getAllRecipes(
-            AuthController.uid ?? '',
+            AuthViewModel.uid ?? '',
           );
         },
         child: SingleChildScrollView(
@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
                     onTap: () {
                       FavouriteToggleController.toggleFavourite(
                         value.recipes[index]['id'],
-                        AuthController.uid!,
+                        AuthViewModel.uid!,
                       );
                     },
                     recipeDetails: value.recipes[index],

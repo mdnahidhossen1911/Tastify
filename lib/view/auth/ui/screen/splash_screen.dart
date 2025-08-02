@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../res/component/app_logo.dart';
 import '../../../../res/component/screen_background.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../common/ui/screens/main_bottom_nav_bar.dart';
-import '../controller/auth_controller.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> moveToNextScreen() async {
     await Future.delayed(Duration(seconds: 3));
-    bool isLogin = await AuthController().isLogIn();
+    bool isLogin = await AuthViewModel().isLogIn();
     if (isLogin) {
       Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
     } else {

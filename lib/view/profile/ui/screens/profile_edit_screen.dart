@@ -10,7 +10,7 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../controller/update_profile_controller.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -26,9 +26,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    photoString.value = AuthController().getPhoto;
-    nameController.text = AuthController().getUserName;
-    emailController.text = AuthController().getGmail;
+    photoString.value = AuthViewModel().getPhoto;
+    nameController.text = AuthViewModel().getUserName;
+    emailController.text = AuthViewModel().getGmail;
     super.initState();
   }
 

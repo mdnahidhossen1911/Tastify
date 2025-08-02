@@ -11,10 +11,10 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/google_sign_view_model.dart';
 import '../../../../view_model/login_view_model.dart';
 import '../../../common/ui/screens/main_bottom_nav_bar.dart';
-import '../controller/auth_controller.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -297,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
     NetworkResponse response = await _googleSignController.signInWithGoogle();
     if (response.isSuccess) {
       print("Google Sign-In Success: ${response.responseData}");
-      await AuthController().saveData(
+      await AuthViewModel().saveData(
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
@@ -316,7 +316,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (response.isSuccess) {
         print("Login Success: ${response.responseData}");
-        await AuthController().saveData(
+        await AuthViewModel().saveData(
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../model/auth_user_model.dart';
-import '../../../../utils/app_logger.dart';
+import '../model/auth_user_model.dart';
+import '../utils/app_logger.dart';
 
-class AuthController extends GetxController {
+class AuthViewModel extends ChangeNotifier {
   static String? uid;
   static AuthUserModel? userModel;
 
@@ -42,7 +42,7 @@ class AuthController extends GetxController {
     await prefs.setString(_modelKey, jsonEncode(userModel));
     userModel = userModel;
     await getData();
-    update();
+    notifyListeners();
   }
 
   Future<bool> isLogIn() async {
@@ -65,7 +65,7 @@ class AuthController extends GetxController {
     userModel = null;
     uid = null;
 
-    update();
+    notifyListeners();
     appLogger.i("User logged out successfully");
   }
 }

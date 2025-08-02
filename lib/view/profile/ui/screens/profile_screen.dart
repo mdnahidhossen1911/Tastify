@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
+import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/profile/ui/screens/profile_edit_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/assets_path.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../auth/ui/screen/login_screen.dart';
 import '../../../feedback/ui/screens/recipe_feedback.dart';
 import 'change_password_screen.dart';
@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthViewModel _authViewModel = locator<AuthViewModel>();
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   dataUpdate() async {
-    await _authController.getData();
+    await _authViewModel.getData();
   }
 
   @override
@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushNamed(
                 context,
                 ChangePasswordScreen.name,
-                arguments: _authController.getGmail,
+                arguments: _authViewModel.getGmail,
               );
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             titleTextStyle: _buildTextStyle(),
             onTap: () async {
               // Handle logout action
-              await AuthController().logOut();
+              await _authViewModel.logOut();
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 LoginScreen.name,
@@ -179,9 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: GetBuilder(
-        init: _authController,
-        builder: (controller) {
+      child: Consumer<AuthViewModel>(
+        builder: (context, value, child) {
           return Row(
             children: [
               DottedBorder(
@@ -206,7 +205,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image.memory(
-                        base64Decode(controller.getPhoto),
+                        base64Decode(value.getPhoto),
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset(
@@ -223,9 +222,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(controller.getUserName, style: textTheme.titleLarge),
+                  Text(value.getUserName, style: textTheme.titleLarge),
                   Text(
-                    controller.getGmail,
+                    value.getGmail,
                     style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                   ),
                 ],

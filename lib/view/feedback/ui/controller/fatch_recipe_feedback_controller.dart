@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 
 class FatchRecipeFeedbackController extends GetxController {
   bool _isLoading = false;
@@ -23,7 +23,7 @@ class FatchRecipeFeedbackController extends GetxController {
       final res = await supaBase
           .from(table)
           .select('*, recipe(title,photo) , Users(name, photo)')
-          .eq('rwid', AuthController.uid ?? '')
+          .eq('rwid', AuthViewModel.uid ?? '')
           .order('created_at', ascending: false);
 
       if (res.isNotEmpty) {

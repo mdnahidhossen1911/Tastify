@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/food_recipe_widget.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../controller/get_recipe_by_category_controller.dart';
 
@@ -60,7 +60,7 @@ class _CategoryWiseListScreenState extends State<CategoryWiseListScreen> {
                           onTap: () {
                             FavouriteToggleController.toggleFavourite(
                               controller.recipes[index]['id'],
-                              AuthController.uid!,
+                              AuthViewModel.uid!,
                             );
                             controller.updateToggle(
                               controller.recipes[index]['id'],

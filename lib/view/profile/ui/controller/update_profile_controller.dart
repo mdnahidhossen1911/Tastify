@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import 'package:tastify/service_locator.dart';
 
 import '../../../../model/auth_user_model.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
 import '../../../../utils/supabase_tables.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 
 class UpdateProfileController extends GetxController {
   bool _isLoading = false;
@@ -18,16 +19,16 @@ class UpdateProfileController extends GetxController {
       final userData = await supaBase
           .from(SupaBaseTables.users)
           .update({'name': name, 'photo': photoString})
-          .eq('id', AuthController.uid ?? '')
+          .eq('id', AuthViewModel.uid ?? '')
           .select('id ,name');
 
       AuthUserModel userModel = AuthUserModel(
-        uid: AuthController.uid,
+        uid: AuthViewModel.uid,
         fullName: name,
-        email: AuthController().getGmail,
+        email: AuthViewModel().getGmail,
         photo: photoString,
       );
-      Get.find<AuthController>().updateData(userModel);
+      locator<AuthViewModel>().updateData(userModel);
 
       _isLoading = false;
       update();

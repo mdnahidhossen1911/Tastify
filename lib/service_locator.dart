@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
+import 'package:tastify/view_model/auth_view_model.dart';
 import 'package:tastify/view_model/blog_view_model.dart';
 import 'package:tastify/view_model/carousel_image_view_model.dart';
 import 'package:tastify/view_model/category_view_model.dart';
@@ -20,6 +21,7 @@ void setupLocator() {
   locator.registerSingleton<FetchPopularViewModel>(FetchPopularViewModel());
   locator.registerSingleton<CarouselImageViewModel>(CarouselImageViewModel());
   locator.registerSingleton<CategoryViewModel>(CategoryViewModel());
+  locator.registerSingleton<AuthViewModel>(AuthViewModel());
 
   //lazySingletons
   locator.registerLazySingleton<GoogleSignViewModel>(

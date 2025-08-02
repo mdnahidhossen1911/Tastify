@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
 import '../../../../utils/supabase_tables.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
+import '../../../../view_model/auth_view_model.dart';
 
 class RecipeSearchController extends GetxController {
   bool _isLoading = false;
@@ -27,7 +27,7 @@ class RecipeSearchController extends GetxController {
           List<Map<String, dynamic>>.from(res).map((json) {
             final favList = (json['favourites'] as List<dynamic>?) ?? [];
             final isFavourite = favList.any(
-              (fav) => fav['uid'] == AuthController.uid,
+              (fav) => fav['uid'] == AuthViewModel.uid,
             );
 
             return {...json, 'favourites': isFavourite};

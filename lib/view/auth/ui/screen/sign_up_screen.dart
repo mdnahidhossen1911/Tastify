@@ -10,9 +10,9 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
+import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/google_sign_view_model.dart';
 import '../../../common/ui/screens/main_bottom_nav_bar.dart';
-import '../controller/auth_controller.dart';
 import '../controller/signup_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -304,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       NetworkResponse response = await _signupController.registerUser(user);
       if (response.isSuccess) {
-        await AuthController().saveData(
+        await AuthViewModel().saveData(
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );
@@ -326,7 +326,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     NetworkResponse response = await _googleSignController.signInWithGoogle();
     if (response.isSuccess) {
       print("Google Sign-In Success: ${response.responseData}");
-      await AuthController().saveData(
+      await AuthViewModel().saveData(
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
