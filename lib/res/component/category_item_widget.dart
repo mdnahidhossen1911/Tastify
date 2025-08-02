@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../view/category/ui/screen/category_wise_list_screen.dart';
+import '../../view/category/category_wise_list_screen.dart';
 
 class CategoryItemWidget extends StatelessWidget {
   CategoryItemWidget({super.key, this.category});

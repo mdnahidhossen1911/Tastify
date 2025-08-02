@@ -17,7 +17,7 @@ import '../../../../view_model/auth_view_model.dart';
 import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../category/ui/screen/category_list_screen.dart';
+import '../../../category/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../../recipe/add_recipe_screen.dart';
 import 'featured_recipe_list_screen.dart';

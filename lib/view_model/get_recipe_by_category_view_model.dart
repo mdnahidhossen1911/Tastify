@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 
-import '../../../utils/app_logger.dart';
-import '../../../utils/supabase.dart';
-import '../../../utils/supabase_tables.dart';
-import '../../../view_model/auth_view_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
+import 'auth_view_model.dart';
 
-class GetRecipeByCategoryController extends GetxController {
+class GetRecipeByCategoryViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -14,7 +14,7 @@ class GetRecipeByCategoryController extends GetxController {
 
   Future<void> getRecipesByCategory(String categoryName) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final response = await supaBase
@@ -34,11 +34,11 @@ class GetRecipeByCategoryController extends GetxController {
 
       _recipes = recipes;
       _isLoading = false;
-      update();
+      notifyListeners();
     } catch (e) {
       appLogger.e(e.toString());
       _isLoading = false;
-      update();
+      notifyListeners();
       rethrow; // Propagate the error
     }
   }
@@ -47,7 +47,7 @@ class GetRecipeByCategoryController extends GetxController {
     for (Map<String, dynamic> recipe in _recipes) {
       if (recipe['id'] == RID) {
         recipe['favourites'] = !(recipe['favourites'] == true);
-        update(['fav-$RID']);
+        notifyListeners();
         break;
       }
     }

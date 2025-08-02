@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../res/component/category_item_widget.dart';
-import '../../../../res/component/circle_progress.dart';
-import '../../../../view_model/category_view_model.dart';
+import '../../res/component/category_item_widget.dart';
+import '../../res/component/circle_progress.dart';
+import '../../view_model/category_view_model.dart';
 
 class CategoryListScreen extends StatefulWidget {
   const CategoryListScreen({super.key});
