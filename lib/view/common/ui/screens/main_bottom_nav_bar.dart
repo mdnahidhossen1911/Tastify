@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
 
+import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../blog/blog_screen.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../favourite/ui/screens/favourite_screen.dart';
-import '../../../home/ui/controller/carousel_image_controller.dart';
 import '../../../home/ui/screens/home_screen.dart';
 import '../../../profile/ui/screens/profile_screen.dart';
 
@@ -38,7 +38,7 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<CarouselImageController>().getImage();
+      locator<CarouselImageViewModel>().getImage();
       Get.find<CategoryController>().getCategory();
       _getRecipeViewModel.getAllRecipes(AuthController.uid ?? '');
       locator<FetchPopularViewModel>().getAllRecipes(AuthController.uid ?? '');

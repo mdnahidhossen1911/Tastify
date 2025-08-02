@@ -13,6 +13,7 @@ import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../res/component/home_carousel_slider.dart';
 import '../../../../res/component/home_popular_widget.dart';
 import '../../../../res/component/section_header.dart';
+import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
@@ -20,7 +21,6 @@ import '../../../category/controller/category_controller.dart';
 import '../../../category/ui/screen/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../../recipe/add_recipe_screen.dart';
-import '../controller/carousel_image_controller.dart';
 import 'featured_recipe_list_screen.dart';
 
 class Home extends StatefulWidget {
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
         edgeOffset: 10,
         triggerMode: RefreshIndicatorTriggerMode.onEdge,
         onRefresh: () async {
-          Get.find<CarouselImageController>().getImage();
+          locator<CarouselImageViewModel>().getImage();
           Get.find<CategoryController>().getCategory();
           locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
           locator<FetchPopularViewModel>().getAllRecipes(
@@ -95,13 +95,11 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               SizedBox(height: 10),
-              GetBuilder<CarouselImageController>(
-                builder: (controller) {
-                  return controller.isLoading
+              Consumer<CarouselImageViewModel>(
+                builder: (context, value, child) {
+                  return value.isLoading
                       ? Center(child: circleProgress())
-                      : HomeCarouselSlider(
-                        sliderImages: controller.carouselImages,
-                      );
+                      : HomeCarouselSlider(sliderImages: value.carouselImages);
                 },
               ),
               SizedBox(height: 8),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
 import 'package:tastify/view_model/blog_view_model.dart';
+import 'package:tastify/view_model/carousel_image_view_model.dart';
 import 'package:tastify/view_model/fetch_popular_view_model.dart';
 import 'package:tastify/view_model/forgot_password_view_model.dart';
 import 'package:tastify/view_model/get_recipe_view_model.dart';
@@ -36,6 +37,9 @@ class TastifyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<MyRecipeViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<GetRecipeViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<FetchPopularViewModel>()),
+        ChangeNotifierProvider(
+          create: (_) => locator<CarouselImageViewModel>(),
+        ),
         // Add other providers here if needed
       ],
       child: Builder(

@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class CarouselImageController extends GetxController {
+class CarouselImageViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -14,14 +14,13 @@ class CarouselImageController extends GetxController {
 
   Future<NetworkResponse> getImage() async {
     _isLoading = true;
-    update();
-
+    notifyListeners();
     try {
       final image = await supaBase.from(SupaBaseTables.carousel).select();
       appLogger.i(image);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       _carouselImages = image;
       return NetworkResponse(isSuccess: true, responseData: {'data': image});
@@ -29,7 +28,7 @@ class CarouselImageController extends GetxController {
       appLogger.e(e);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }
