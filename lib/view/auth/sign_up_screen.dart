@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/service_locator.dart';
 
-import '../../../../model/auth_user_model.dart';
-import '../../../../model/network_response.dart';
-import '../../../../model/user_model.dart';
-import '../../../../res/app_colors.dart';
-import '../../../../res/assets_path.dart';
-import '../../../../res/component/circle_progress.dart';
-import '../../../../res/component/screen_background.dart';
-import '../../../../utils/utils.dart';
-import '../../../../view_model/auth_view_model.dart';
-import '../../../../view_model/google_sign_view_model.dart';
-import '../../../common/ui/screens/main_bottom_nav_bar.dart';
-import '../controller/signup_controller.dart';
+import '../../model/auth_user_model.dart';
+import '../../model/network_response.dart';
+import '../../model/user_model.dart';
+import '../../res/app_colors.dart';
+import '../../res/assets_path.dart';
+import '../../res/component/circle_progress.dart';
+import '../../res/component/screen_background.dart';
+import '../../utils/utils.dart';
+import '../../view_model/auth_view_model.dart';
+import '../../view_model/google_sign_view_model.dart';
+import '../../view_model/signup_view_model.dart';
+import '../common/ui/screens/main_bottom_nav_bar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -32,8 +32,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  final SignupController _signupController = SignupController();
   late GoogleSignViewModel _googleSignController;
+
+  final SignupViewModel _signupViewModel = locator<SignupViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -222,39 +223,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  GetBuilder<SignupController> _buildSignUpButton() {
-    return GetBuilder(
-      init: _signupController,
-      builder: (controller) {
-        return Visibility(
-          visible: !controller.isLoading,
-          replacement: circleProgress(),
-          child: Center(
-            child: SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
-                  ///Need to put profile page Navigation
-                  onClickSignUp();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.themeColor,
-                  elevation: 0,
-                ),
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+  Widget _buildSignUpButton() {
+    return ChangeNotifierProvider(
+      create: (context) => _signupViewModel,
+      child: Consumer<SignupViewModel>(
+        builder: (context, value, child) {
+          return Visibility(
+            visible: !value.isLoading,
+            replacement: circleProgress(),
+            child: Center(
+              child: SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () {
+                    ///Need to put profile page Navigation
+                    onClickSignUp();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.themeColor,
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -302,7 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: passwordController.text.trim(),
       );
 
-      NetworkResponse response = await _signupController.registerUser(user);
+      NetworkResponse response = await _signupViewModel.registerUser(user);
       if (response.isSuccess) {
         await AuthViewModel().saveData(
           response.responseData!['id'],

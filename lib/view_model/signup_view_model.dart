@@ -1,19 +1,19 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../model/user_model.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/secure_password.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
+import '../model/network_response.dart';
+import '../model/user_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/secure_password.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class SignupController extends GetxController {
+class SignupViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   Future<NetworkResponse> registerUser(UserModel user) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final existing =
@@ -28,7 +28,7 @@ class SignupController extends GetxController {
         appLogger.w('Email already in use: ${user.email}');
 
         _isLoading = false;
-        update();
+        notifyListeners();
 
         return NetworkResponse(
           isSuccess: false,
@@ -51,7 +51,7 @@ class SignupController extends GetxController {
       appLogger.i('User registered with ID: ${response['id']}');
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(
         isSuccess: true,
@@ -64,7 +64,7 @@ class SignupController extends GetxController {
       );
     } catch (e, stack) {
       _isLoading = false;
-      update();
+      notifyListeners();
 
       appLogger.e('Registration error', error: e, stackTrace: stack);
       return NetworkResponse(isSuccess: false, errorMessage: 'Error: $e');

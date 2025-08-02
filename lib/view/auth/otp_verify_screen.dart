@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:tastify/view/auth/ui/screen/set_password_screen.dart';
+import 'package:tastify/view/auth/set_password_screen.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/screen_background.dart';

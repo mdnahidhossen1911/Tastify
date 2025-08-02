@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/assets_path.dart';
 import '../../../../view_model/auth_view_model.dart';
-import '../../../auth/ui/screen/login_screen.dart';
+import '../../../auth/login_screen.dart';
 import '../../../feedback/ui/screens/recipe_feedback.dart';
 import 'change_password_screen.dart';
 import 'my_recipe_screen.dart';

@@ -11,6 +11,7 @@ import 'package:tastify/view_model/google_sign_view_model.dart';
 import 'package:tastify/view_model/login_view_model.dart';
 import 'package:tastify/view_model/my_recipe_view_model.dart';
 import 'package:tastify/view_model/recipe_view_model.dart';
+import 'package:tastify/view_model/signup_view_model.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -34,4 +35,7 @@ void setupLocator() {
   locator.registerLazySingleton<RecipeViewModel>(() => RecipeViewModel());
   locator.registerLazySingleton<BlogViewModel>(() => BlogViewModel());
   locator.registerLazySingleton<MyRecipeViewModel>(() => MyRecipeViewModel());
+
+  //registerFactory
+  locator.registerFactory<SignupViewModel>(() => SignupViewModel());
 }

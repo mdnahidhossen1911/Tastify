@@ -18,7 +18,7 @@ import 'package:tastify/view_model/recipe_view_model.dart';
 import '../res/theme/dark_theme.dart';
 import '../res/theme/light_theme.dart';
 import '../utils/routes/app_routes.dart';
-import '../view/auth/ui/screen/splash_screen.dart';
+import '../view/auth/splash_screen.dart';
 
 class TastifyApp extends StatelessWidget {
   const TastifyApp({super.key});
@@ -31,6 +31,7 @@ class TastifyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<ThemeChanger>()),
         ChangeNotifierProvider(create: (_) => locator<GoogleSignViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
+
         ChangeNotifierProvider(
           create: (_) => locator<ForgotPasswordViewModel>(),
         ),

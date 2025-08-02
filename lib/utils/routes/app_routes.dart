@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/view/auth/ui/screen/login_screen.dart';
-import 'package:tastify/view/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/view/auth/login_screen.dart';
+import 'package:tastify/view/auth/splash_screen.dart';
 
 import '../../model/recipe_model.dart';
-import '../../view/auth/ui/screen/forgot_password_screen.dart';
-import '../../view/auth/ui/screen/otp_verify_screen.dart';
-import '../../view/auth/ui/screen/set_password_screen.dart';
-import '../../view/auth/ui/screen/sign_up_screen.dart';
+import '../../view/auth/forgot_password_screen.dart';
+import '../../view/auth/otp_verify_screen.dart';
+import '../../view/auth/set_password_screen.dart';
+import '../../view/auth/sign_up_screen.dart';
 import '../../view/blog/add_blog_screen.dart';
 import '../../view/blog/blog_details_screen.dart';
 import '../../view/category/ui/screen/category_list_screen.dart';
