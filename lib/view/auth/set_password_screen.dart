@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../../../../view_model/forgot_password_view_model.dart';
 import 'login_screen.dart';
 
 class SetPasswordScreen extends StatefulWidget {

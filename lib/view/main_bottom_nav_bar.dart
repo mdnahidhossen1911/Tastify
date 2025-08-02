@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
-import '../view_model/auth_view_model.dart';
-import '../view_model/carousel_image_view_model.dart';
-import '../view_model/category_view_model.dart';
-import '../view_model/fetch_popular_view_model.dart';
-import '../view_model/get_recipe_view_model.dart';
 import 'blog/blog_screen.dart';
 import 'favourite/favourite_screen.dart';
 import 'home/home_screen.dart';

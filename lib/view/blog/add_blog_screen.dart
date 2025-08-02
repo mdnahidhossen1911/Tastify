@@ -4,12 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/blog_view_model.dart';
 
 class AddBlogScreen extends StatefulWidget {
   const AddBlogScreen({super.key});

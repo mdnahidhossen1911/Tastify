@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../model/auth_user_model.dart';
 import '../../../../model/network_response.dart';
@@ -10,9 +11,6 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../../../../view_model/auth_view_model.dart';
-import '../../../../view_model/google_sign_view_model.dart';
-import '../../../../view_model/login_view_model.dart';
 import '../main_bottom_nav_bar.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';

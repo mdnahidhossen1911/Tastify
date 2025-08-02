@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/blog_widget.dart';
 import '../../res/component/circle_progress.dart';
-import '../../view_model/blog_view_model.dart';
 import 'add_blog_screen.dart';
 
 class BlogScreen extends StatefulWidget {

@@ -6,14 +6,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view_model/update_profile_view_model.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/assets_path.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({super.key});

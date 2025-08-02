@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/circle_progress.dart';
 import '../../res/component/food_recipe_widget.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/favourite_toggle_controller.dart';
-import '../../view_model/get_recipe_by_category_view_model.dart';
 
 class CategoryWiseListScreen extends StatefulWidget {
   const CategoryWiseListScreen({super.key, required this.categoryName});

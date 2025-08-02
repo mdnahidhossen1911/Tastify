@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/circle_progress.dart';
 import '../../res/component/food_recipe_widget.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/favourite_toggle_controller.dart';
-import '../../view_model/favourite_view_model.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});

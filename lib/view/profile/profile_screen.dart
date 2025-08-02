@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/profile/profile_edit_screen.dart';
+import 'package:tastify/view_model/view_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/app_colors.dart';

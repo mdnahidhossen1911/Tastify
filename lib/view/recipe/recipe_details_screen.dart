@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view_model/add_feedback_view_model.dart';
-import 'package:tastify/view_model/auth_view_model.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/app_logger.dart';

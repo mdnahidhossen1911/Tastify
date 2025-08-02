@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/app_logo.dart';
 import '../../res/component/screen_background.dart';
-import '../../view_model/auth_view_model.dart';
 import '../main_bottom_nav_bar.dart';
 import 'login_screen.dart';
 
