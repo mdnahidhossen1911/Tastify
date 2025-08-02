@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../model/network_response.dart';
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class FetchPopularItemController extends GetxController {
+class FetchPopularViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -16,7 +16,7 @@ class FetchPopularItemController extends GetxController {
 
   Future<NetworkResponse> getAllRecipes(String currentUserId) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -36,7 +36,7 @@ class FetchPopularItemController extends GetxController {
           }).toList();
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       _recipes = recipes;
 
@@ -51,7 +51,7 @@ class FetchPopularItemController extends GetxController {
       appLogger.e("Fetch Recipes Failed: $e");
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }
@@ -61,7 +61,6 @@ class FetchPopularItemController extends GetxController {
     for (Map<String, dynamic> recipe in _recipes) {
       if (recipe['id'] == RID) {
         recipe['favourites'] = !(recipe['favourites'] == true);
-        update(['fav-$RID']);
         break;
       }
     }

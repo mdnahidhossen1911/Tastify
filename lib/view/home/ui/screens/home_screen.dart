@@ -13,14 +13,14 @@ import '../../../../res/component/food_recipe_widget.dart';
 import '../../../../res/component/home_carousel_slider.dart';
 import '../../../../res/component/home_popular_widget.dart';
 import '../../../../res/component/section_header.dart';
+import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
 import '../../../category/controller/category_controller.dart';
 import '../../../category/ui/screen/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../../recipe/ui/screens/add_recipe_screen.dart';
+import '../../../recipe/add_recipe_screen.dart';
 import '../controller/carousel_image_controller.dart';
-import '../controller/fetch_popular_item_controller.dart';
 import 'featured_recipe_list_screen.dart';
 
 class Home extends StatefulWidget {
@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
           Get.find<CarouselImageController>().getImage();
           Get.find<CategoryController>().getCategory();
           locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
-          Get.find<FetchPopularItemController>().getAllRecipes(
+          locator<FetchPopularViewModel>().getAllRecipes(
             AuthController.uid ?? '',
           );
         },
@@ -168,21 +168,19 @@ class _HomeState extends State<Home> {
   Widget _buildPopularSection() {
     return SizedBox(
       height: 196,
-      child: GetBuilder<FetchPopularItemController>(
-        builder: (controller) {
+      child: Consumer<FetchPopularViewModel>(
+        builder: (context, value, child) {
           return Visibility(
-            visible: !controller.isLoading,
+            visible: !value.isLoading,
             replacement: Center(child: circleProgress()),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: controller.recipes.length,
+              itemCount: value.recipes.length,
               padding: EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: HomePopularWidget(
-                    popularItem: controller.recipes[index],
-                  ),
+                  child: HomePopularWidget(popularItem: value.recipes[index]),
                 );
               },
             ),

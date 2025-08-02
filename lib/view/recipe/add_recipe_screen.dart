@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/service_locator.dart';
 
-import '../../../../model/recipe_model.dart';
-import '../../../../res/app_colors.dart';
-import '../../../../res/component/circle_progress.dart';
-import '../../../../utils/utils.dart';
-import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../../view_model/recipe_view_model.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../category/controller/category_controller.dart';
-import '../../../home/ui/controller/fetch_popular_item_controller.dart';
+import '../../model/recipe_model.dart';
+import '../../res/app_colors.dart';
+import '../../res/component/circle_progress.dart';
+import '../../utils/utils.dart';
+import '../../view_model/fetch_popular_view_model.dart';
+import '../../view_model/get_recipe_view_model.dart';
+import '../../view_model/recipe_view_model.dart';
+import '../auth/ui/controller/auth_controller.dart';
+import '../category/controller/category_controller.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
@@ -715,7 +716,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       Provider.of<GetRecipeViewModel>(
         context,
       ).getAllRecipes(AuthController.uid!);
-      Get.find<FetchPopularItemController>().getAllRecipes(AuthController.uid!);
+      locator<FetchPopularViewModel>().getAllRecipes(AuthController.uid!);
       Navigator.pop(context);
     } else {
       Utils.showFlushBar(context, response.errorMessage);

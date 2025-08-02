@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tastify/view/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/view/feedback/ui/controller/feedback_controller.dart';
 
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/utils.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../feedback/ui/controller/feedback_controller.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({super.key, required this.recipeDetails});

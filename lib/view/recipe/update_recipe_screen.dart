@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/auth/ui/controller/auth_controller.dart';
+import 'package:tastify/view/category/controller/category_controller.dart';
 
 import '../../../../model/recipe_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/utils.dart';
 import '../../../../view_model/recipe_view_model.dart';
-import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../category/controller/category_controller.dart';
 
 class UpdateRecipeScreen extends StatefulWidget {
   final RecipeModel recipe;

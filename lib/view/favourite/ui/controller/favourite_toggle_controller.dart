@@ -1,11 +1,10 @@
-import 'package:get/get.dart';
 import 'package:tastify/service_locator.dart';
 
 import '../../../../model/network_response.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/supabase.dart';
+import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
-import '../../../home/ui/controller/fetch_popular_item_controller.dart';
 
 class FavouriteToggleController {
   static const String favouritesTable = 'favourites';
@@ -16,7 +15,7 @@ class FavouriteToggleController {
     String userId,
   ) async {
     locator<GetRecipeViewModel>().updateToggle(recipeId);
-    Get.find<FetchPopularItemController>().updateToggle(recipeId);
+    locator<FetchPopularViewModel>().updateToggle(recipeId);
 
     try {
       final existing =

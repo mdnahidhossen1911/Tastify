@@ -19,9 +19,9 @@ import '../../view/home/ui/screens/search_list_screen.dart';
 import '../../view/profile/ui/screens/change_password_screen.dart';
 import '../../view/profile/ui/screens/my_recipe_screen.dart';
 import '../../view/profile/ui/screens/profile_edit_screen.dart';
-import '../../view/recipe/ui/screens/add_recipe_screen.dart';
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
-import '../../view/recipe/ui/screens/update_recipe_screen.dart';
+import '../../view/recipe/add_recipe_screen.dart';
+import '../../view/recipe/recipe_details_screen.dart';
+import '../../view/recipe/update_recipe_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {

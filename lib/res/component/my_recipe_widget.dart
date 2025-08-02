@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../model/recipe_model.dart';
 import '../../utils/utc_to_local_date.dart';
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
-import '../../view/recipe/ui/screens/update_recipe_screen.dart';
+import '../../view/recipe/recipe_details_screen.dart';
+import '../../view/recipe/update_recipe_screen.dart';
 import '../../view_model/my_recipe_view_model.dart';
 import '../app_colors.dart';
 import 'circle_progress.dart';

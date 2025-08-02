@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
+import '../../view/recipe/recipe_details_screen.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
   const FoodRecipeWidget({

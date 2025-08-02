@@ -6,7 +6,7 @@ import 'package:tastify/res/theme/theme_changer.dart';
 
 import '../../view/auth/ui/controller/auth_controller.dart';
 import '../../view/favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
+import '../../view/recipe/recipe_details_screen.dart';
 
 class HomePopularWidget extends StatelessWidget {
   HomePopularWidget({super.key, required this.popularItem});
