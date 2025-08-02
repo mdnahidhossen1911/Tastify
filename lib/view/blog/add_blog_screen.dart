@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
+import '../../view_model/auth_view_model.dart';
 import '../../view_model/blog_view_model.dart';
-import '../auth/ui/controller/auth_controller.dart';
 
 class AddBlogScreen extends StatefulWidget {
   const AddBlogScreen({super.key});
@@ -227,7 +227,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
         bool isSuccess = await _blogViewModel.addBlog({
           'title': _titleController.text.trim(),
           'content': _contentController.text.trim(),
-          'uid': AuthController.uid,
+          'uid': AuthViewModel.uid,
           'image': imageString,
         });
 

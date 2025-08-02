@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:tastify/view/auth/ui/screen/login_screen.dart';
-import 'package:tastify/view/auth/ui/screen/splash_screen.dart';
+import 'package:tastify/view/auth/login_screen.dart';
+import 'package:tastify/view/auth/splash_screen.dart';
 
 import '../../model/recipe_model.dart';
-import '../../view/auth/ui/screen/forgot_password_screen.dart';
-import '../../view/auth/ui/screen/otp_verify_screen.dart';
-import '../../view/auth/ui/screen/set_password_screen.dart';
-import '../../view/auth/ui/screen/sign_up_screen.dart';
+import '../../view/auth/forgot_password_screen.dart';
+import '../../view/auth/otp_verify_screen.dart';
+import '../../view/auth/set_password_screen.dart';
+import '../../view/auth/sign_up_screen.dart';
 import '../../view/blog/add_blog_screen.dart';
 import '../../view/blog/blog_details_screen.dart';
-import '../../view/category/ui/screen/category_list_screen.dart';
-import '../../view/category/ui/screen/category_wise_list_screen.dart';
-import '../../view/common/ui/screens/main_bottom_nav_bar.dart';
-import '../../view/feedback/ui/screens/recipe_feedback.dart';
-import '../../view/home/ui/screens/featured_recipe_list_screen.dart';
-import '../../view/home/ui/screens/popular_list_screen.dart';
-import '../../view/home/ui/screens/search_list_screen.dart';
-import '../../view/profile/ui/screens/change_password_screen.dart';
-import '../../view/profile/ui/screens/my_recipe_screen.dart';
-import '../../view/profile/ui/screens/profile_edit_screen.dart';
-import '../../view/recipe/ui/screens/add_recipe_screen.dart';
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
-import '../../view/recipe/ui/screens/update_recipe_screen.dart';
+import '../../view/category/category_list_screen.dart';
+import '../../view/category/category_wise_list_screen.dart';
+import '../../view/feedback/recipe_feedback_screen.dart';
+import '../../view/home/featured_recipe_list_screen.dart';
+import '../../view/home/popular_list_screen.dart';
+import '../../view/home/search_list_screen.dart';
+import '../../view/main_bottom_nav_bar.dart';
+import '../../view/profile/change_password_screen.dart';
+import '../../view/profile/my_recipe_screen.dart';
+import '../../view/profile/profile_edit_screen.dart';
+import '../../view/recipe/add_recipe_screen.dart';
+import '../../view/recipe/recipe_details_screen.dart';
+import '../../view/recipe/update_recipe_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
