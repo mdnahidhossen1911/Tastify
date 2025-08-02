@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/component/home_view_app_logo.dart';
 import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/home/ui/screens/popular_list_screen.dart';
 import 'package:tastify/view/home/ui/screens/search_list_screen.dart';
+import 'package:tastify/view_model/category_view_model.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/category_item_widget.dart';
@@ -17,7 +17,6 @@ import '../../../../view_model/carousel_image_view_model.dart';
 import '../../../../view_model/fetch_popular_view_model.dart';
 import '../../../../view_model/get_recipe_view_model.dart';
 import '../../../auth/ui/controller/auth_controller.dart';
-import '../../../category/controller/category_controller.dart';
 import '../../../category/ui/screen/category_list_screen.dart';
 import '../../../favourite/ui/controller/favourite_toggle_controller.dart';
 import '../../../recipe/add_recipe_screen.dart';
@@ -85,7 +84,7 @@ class _HomeState extends State<Home> {
         triggerMode: RefreshIndicatorTriggerMode.onEdge,
         onRefresh: () async {
           locator<CarouselImageViewModel>().getImage();
-          Get.find<CategoryController>().getCategory();
+          locator<CategoryViewModel>().getCategory();
           locator<GetRecipeViewModel>().getAllRecipes(AuthController.uid ?? '');
           locator<FetchPopularViewModel>().getAllRecipes(
             AuthController.uid ?? '',
@@ -189,21 +188,21 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildCategorySection() {
-    return GetBuilder<CategoryController>(
-      builder: (controller) {
-        return controller.isLoading
+    return Consumer<CategoryViewModel>(
+      builder: (context, value, child) {
+        return value.isLoading
             ? Center(child: circleProgress())
             : SizedBox(
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: controller.categoryList.length,
+                itemCount: value.categoryList.length,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CategoryItemWidget(
-                      category: controller.categoryList[index],
+                      category: value.categoryList[index],
                     ),
                   );
                 },

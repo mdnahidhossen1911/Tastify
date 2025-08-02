@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/component/category_item_widget.dart';
 import '../../../../res/component/circle_progress.dart';
-import '../../controller/category_controller.dart';
+import '../../../../view_model/category_view_model.dart';
 
 class CategoryListScreen extends StatefulWidget {
   const CategoryListScreen({super.key});
@@ -22,12 +22,12 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       appBar: AppBar(title: Text('Category', style: textTheme.headlineSmall)),
       body: Padding(
         padding: EdgeInsets.all(8),
-        child: GetBuilder<CategoryController>(
-          builder: (controller) {
-            return controller.isLoading
+        child: Consumer<CategoryViewModel>(
+          builder: (context, value, child) {
+            return value.isLoading
                 ? Center(child: circleProgress())
                 : GridView.builder(
-                  itemCount: controller.categoryList.length,
+                  itemCount: value.categoryList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     mainAxisSpacing: 16,
@@ -36,7 +36,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                   itemBuilder: (context, index) {
                     return FittedBox(
                       child: CategoryItemWidget(
-                        category: controller.categoryList[index],
+                        category: value.categoryList[index],
                       ),
                     );
                   },

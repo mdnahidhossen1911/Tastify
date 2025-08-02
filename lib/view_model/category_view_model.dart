@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../model/network_response.dart';
-import '../../../utils/app_logger.dart';
-import '../../../utils/supabase.dart';
-import '../../../utils/supabase_tables.dart';
+import '../model/network_response.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class CategoryController extends GetxController {
+class CategoryViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -14,7 +14,7 @@ class CategoryController extends GetxController {
 
   Future<NetworkResponse> getCategory() async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final categoryItems =
@@ -22,7 +22,7 @@ class CategoryController extends GetxController {
       appLogger.i(categoryItems);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       appLogger.i(categoryItems);
       _categoryList = List<Map<String, dynamic>>.from(categoryItems);
@@ -34,7 +34,7 @@ class CategoryController extends GetxController {
       appLogger.e(e);
 
       _isLoading = false;
-      update();
+      notifyListeners();
 
       return NetworkResponse(isSuccess: false, errorMessage: e.toString());
     }

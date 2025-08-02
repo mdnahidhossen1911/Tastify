@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/auth/ui/controller/auth_controller.dart';
-import 'package:tastify/view/category/controller/category_controller.dart';
+import 'package:tastify/view_model/category_view_model.dart';
 
 import '../../../../model/recipe_model.dart';
 import '../../../../res/app_colors.dart';
@@ -43,7 +43,6 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late RecipeViewModel _recipeViewModel;
-  final CategoryController categoryController = Get.find<CategoryController>();
 
   String? _selectedCategory;
   String? _selectedCategoryId;
@@ -66,7 +65,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
     // Initialize category
     _selectedCategoryId = widget.recipe.cid;
     _selectedCategory =
-        categoryController.categoryList.firstWhere(
+        locator<CategoryViewModel>().categoryList.firstWhere(
           (category) => category['id'] == widget.recipe.cid,
           orElse: () => {'title': ''},
         )['title'];
@@ -509,8 +508,8 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
             ),
           ),
           SizedBox(height: 5),
-          GetBuilder<CategoryController>(
-            builder: (controller) {
+          Consumer<CategoryViewModel>(
+            builder: (context, value, child) {
               return DropdownButtonFormField<String>(
                 value: _selectedCategory,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -523,7 +522,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
                   ),
                 ),
                 items:
-                    controller.categoryList.map((category) {
+                    value.categoryList.map((category) {
                       return DropdownMenuItem<String>(
                         value: category['title'],
                         child: Text(
@@ -536,7 +535,7 @@ class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
                   setState(() {
                     _selectedCategory = newValue;
                     _selectedCategoryId =
-                        controller.categoryList.firstWhere(
+                        value.categoryList.firstWhere(
                           (category) => category['title'] == newValue,
                           orElse: () => {'id': ''},
                         )['id'];

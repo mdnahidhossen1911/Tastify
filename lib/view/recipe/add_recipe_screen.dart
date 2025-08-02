@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
@@ -11,11 +10,11 @@ import '../../model/recipe_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
+import '../../view_model/category_view_model.dart';
 import '../../view_model/fetch_popular_view_model.dart';
 import '../../view_model/get_recipe_view_model.dart';
 import '../../view_model/recipe_view_model.dart';
 import '../auth/ui/controller/auth_controller.dart';
-import '../category/controller/category_controller.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
@@ -423,8 +422,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
             ),
           ),
           SizedBox(height: 5),
-          GetBuilder<CategoryController>(
-            builder: (controller) {
+          Consumer<CategoryViewModel>(
+            builder: (context, value, child) {
               return DropdownButtonFormField<String>(
                 value: _selectedCategory,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -437,7 +436,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   ),
                 ),
                 items:
-                    controller.categoryList.map((category) {
+                    value.categoryList.map((category) {
                       return DropdownMenuItem<String>(
                         value: category['title'],
                         child: Text(
@@ -450,7 +449,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   setState(() {
                     _selectedCategory = newValue;
                     _selectedCategoryId =
-                        controller.categoryList.firstWhere(
+                        value.categoryList.firstWhere(
                           (category) => category['title'] == newValue,
                           orElse: () => {'id': ''},
                         )['id'];
