@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tastify/view/feedback/ui/controller/feedback_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/add_feedback_view_model.dart';
 import 'package:tastify/view_model/auth_view_model.dart';
 
 import '../../../../res/component/circle_progress.dart';
@@ -150,50 +151,52 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             ),
           ),
           SizedBox(height: 20),
-          GetBuilder(
-            init: FeedbackController(),
-            builder: (controller) {
-              return controller.isLoading
-                  ? circleProgress(color: Colors.white)
-                  : ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        Map<String, dynamic> feedback = {
-                          'rid': widget.recipeDetails['id'],
-                          'uid': AuthViewModel.uid,
-                          'rwid': widget.recipeDetails['user_id'],
-                          'feedback': feedbackController.text,
-                        };
+          ChangeNotifierProvider(
+            create: (context) => locator<AddFeedbackViewModel>(),
+            child: Consumer<AddFeedbackViewModel>(
+              builder: (context, value, child) {
+                return value.isLoading
+                    ? circleProgress(color: Colors.white)
+                    : ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          Map<String, dynamic> feedback = {
+                            'rid': widget.recipeDetails['id'],
+                            'uid': AuthViewModel.uid,
+                            'rwid': widget.recipeDetails['user_id'],
+                            'feedback': feedbackController.text,
+                          };
 
-                        bool isSuccess = await controller.addFeedback(feedback);
-                        if (isSuccess) {
-                          Utils.showToast('Feedback submitted successfully!');
-                          feedbackController.clear();
+                          bool isSuccess = await value.addFeedback(feedback);
+                          if (isSuccess) {
+                            Utils.showToast('Feedback submitted successfully!');
+                            feedbackController.clear();
+                          }
                         }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      fixedSize: Size.fromWidth(double.maxFinite),
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        fixedSize: Size.fromWidth(double.maxFinite),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
                       ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  );
-            },
+                    );
+              },
+            ),
           ),
         ],
       ),

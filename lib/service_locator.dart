@@ -1,9 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
+import 'package:tastify/view_model/add_feedback_view_model.dart';
 import 'package:tastify/view_model/auth_view_model.dart';
 import 'package:tastify/view_model/blog_view_model.dart';
 import 'package:tastify/view_model/carousel_image_view_model.dart';
 import 'package:tastify/view_model/category_view_model.dart';
+import 'package:tastify/view_model/fatch_recipe_feedback_view_model.dart';
 import 'package:tastify/view_model/favourite_view_model.dart';
 import 'package:tastify/view_model/fetch_popular_view_model.dart';
 import 'package:tastify/view_model/forgot_password_view_model.dart';
@@ -50,4 +52,8 @@ void setupLocator() {
   locator.registerFactory<UpdateProfileViewModel>(
     () => UpdateProfileViewModel(),
   );
+  locator.registerFactory<FetchRecipeFeedbackViewModel>(
+    () => FetchRecipeFeedbackViewModel(),
+  );
+  locator.registerFactory<AddFeedbackViewModel>(() => AddFeedbackViewModel());
 }

@@ -1,10 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../view_model/auth_view_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import 'auth_view_model.dart';
 
-class FatchRecipeFeedbackController extends GetxController {
+class FetchRecipeFeedbackViewModel extends ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -17,7 +17,7 @@ class FatchRecipeFeedbackController extends GetxController {
 
   Future<void> fetchFeedbacks() async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -31,16 +31,16 @@ class FatchRecipeFeedbackController extends GetxController {
         _isLoading = false;
 
         _feedbacks = List<Map<String, dynamic>>.from(res);
-        update();
+        notifyListeners();
       } else {
         appLogger.w("No feedbacks found");
         _isLoading = false;
-        update();
+        notifyListeners();
       }
     } catch (e) {
       appLogger.e("Failed to fetch feedbacks: $e");
       _isLoading = false;
-      update();
+      notifyListeners();
     }
   }
 }

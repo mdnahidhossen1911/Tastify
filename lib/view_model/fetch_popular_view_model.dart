@@ -61,6 +61,7 @@ class FetchPopularViewModel extends ChangeNotifier {
     for (Map<String, dynamic> recipe in _recipes) {
       if (recipe['id'] == RID) {
         recipe['favourites'] = !(recipe['favourites'] == true);
+        notifyListeners();
         break;
       }
     }

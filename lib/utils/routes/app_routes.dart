@@ -11,7 +11,7 @@ import '../../view/blog/add_blog_screen.dart';
 import '../../view/blog/blog_details_screen.dart';
 import '../../view/category/category_list_screen.dart';
 import '../../view/category/category_wise_list_screen.dart';
-import '../../view/feedback/ui/screens/recipe_feedback.dart';
+import '../../view/feedback/recipe_feedback_screen.dart';
 import '../../view/home/featured_recipe_list_screen.dart';
 import '../../view/home/popular_list_screen.dart';
 import '../../view/home/search_list_screen.dart';
