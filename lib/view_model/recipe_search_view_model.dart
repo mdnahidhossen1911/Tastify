@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../../utils/app_logger.dart';
-import '../../../../utils/supabase.dart';
-import '../../../../utils/supabase_tables.dart';
-import '../../../../view_model/auth_view_model.dart';
+import '../utils/app_logger.dart';
+import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
+import 'auth_view_model.dart';
 
-class RecipeSearchController extends GetxController {
+class RecipeSearchViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -14,7 +14,7 @@ class RecipeSearchController extends GetxController {
 
   Future<bool> searchWithTitle(String search) async {
     _isLoading = true;
-    update();
+    notifyListeners();
 
     try {
       final res = await supaBase
@@ -35,12 +35,12 @@ class RecipeSearchController extends GetxController {
 
       _isLoading = false;
       _recipes = recipes;
-      update();
+      notifyListeners();
       appLogger.i("Searched ${recipes.length} recipes with keyword: $search");
       return true;
     } catch (e) {
       _isLoading = false;
-      update();
+      notifyListeners();
       appLogger.e("Search Recipes Failed: $e");
       return false;
     }
@@ -50,7 +50,7 @@ class RecipeSearchController extends GetxController {
     for (Map<String, dynamic> recipe in _recipes) {
       if (recipe['id'] == RID) {
         recipe['favourites'] = !(recipe['favourites'] == true);
-        update(['fav-$RID']);
+        notifyListeners();
         break;
       }
     }

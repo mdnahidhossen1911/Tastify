@@ -9,7 +9,7 @@ import '../../view_model/fetch_popular_view_model.dart';
 import '../../view_model/get_recipe_view_model.dart';
 import '../blog/blog_screen.dart';
 import '../favourite/favourite_screen.dart';
-import '../home/ui/screens/home_screen.dart';
+import '../home/home_screen.dart';
 import '../profile/ui/screens/profile_screen.dart';
 
 class MainBottomNavBar extends StatefulWidget {

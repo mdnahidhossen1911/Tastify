@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../res/component/food_recipe_widget.dart';
-import '../../../../view_model/auth_view_model.dart';
-import '../../../../view_model/favourite_toggle_controller.dart';
-import '../../../../view_model/get_recipe_view_model.dart';
+import '../../res/component/food_recipe_widget.dart';
+import '../../view_model/auth_view_model.dart';
+import '../../view_model/favourite_toggle_controller.dart';
+import '../../view_model/get_recipe_view_model.dart';
 
 class FeaturedRecipeListScreen extends StatefulWidget {
   const FeaturedRecipeListScreen({super.key});

@@ -12,6 +12,7 @@ import 'package:tastify/view_model/get_recipe_view_model.dart';
 import 'package:tastify/view_model/google_sign_view_model.dart';
 import 'package:tastify/view_model/login_view_model.dart';
 import 'package:tastify/view_model/my_recipe_view_model.dart';
+import 'package:tastify/view_model/recipe_search_view_model.dart';
 import 'package:tastify/view_model/recipe_view_model.dart';
 import 'package:tastify/view_model/signup_view_model.dart';
 
@@ -44,4 +45,5 @@ void setupLocator() {
   locator.registerFactory<GetRecipeByCategoryViewModel>(
     () => GetRecipeByCategoryViewModel(),
   );
+  locator.registerFactory<RecipeSearchViewModel>(() => RecipeSearchViewModel());
 }
