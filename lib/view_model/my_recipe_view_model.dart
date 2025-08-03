@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../utils/app_logger.dart';
 import '../utils/supabase.dart';
 import '../utils/supabase_tables.dart';
-import '../view/auth/ui/controller/auth_controller.dart';
+import 'auth_view_model.dart';
 
 class MyRecipeViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -25,7 +25,7 @@ class MyRecipeViewModel extends ChangeNotifier {
       final res = await supaBase
           .from(table)
           .select()
-          .eq('user_id', AuthController.uid ?? '')
+          .eq('user_id', AuthViewModel.uid ?? '')
           .order('created_at', ascending: false);
 
       _myRecipes = List<Map<String, dynamic>>.from(res);
@@ -33,7 +33,7 @@ class MyRecipeViewModel extends ChangeNotifier {
       notifyListeners();
 
       appLogger.i(
-        "Fetched ${_myRecipes.length} recipes for user ${AuthController.uid ?? ''}",
+        "Fetched ${_myRecipes.length} recipes for user ${AuthViewModel.uid ?? ''}",
       );
     } catch (e) {
       appLogger.e("Fetch My Recipes Failed: $e");

@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import '../model/network_response.dart';
 import '../utils/app_logger.dart';
 import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
 
-class GetRecipeViewModel extends ChangeNotifier {
+class FetchPopularViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -19,9 +20,10 @@ class GetRecipeViewModel extends ChangeNotifier {
 
     try {
       final res = await supaBase
-          .from(table)
-          .select('*, category(title), favourites(rid, uid)')
-          .order('created_at', ascending: false);
+          .from(SupaBaseTables.recipe)
+          .select('*, favourites(uid)')
+          .order('favourite', ascending: false)
+          .limit(10);
 
       final List<Map<String, dynamic>> recipes =
           List<Map<String, dynamic>>.from(res).map((json) {

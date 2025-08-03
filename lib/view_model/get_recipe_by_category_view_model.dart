@@ -1,57 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
-import '../model/network_response.dart';
 import '../utils/app_logger.dart';
 import '../utils/supabase.dart';
+import '../utils/supabase_tables.dart';
+import 'auth_view_model.dart';
 
-class GetRecipeViewModel extends ChangeNotifier {
+class GetRecipeByCategoryViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   List<Map<String, dynamic>> _recipes = [];
   List<Map<String, dynamic>> get recipes => _recipes;
 
-  static final String table = 'recipe';
-
-  Future<NetworkResponse> getAllRecipes(String currentUserId) async {
+  Future<void> getRecipesByCategory(String categoryName) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final res = await supaBase
-          .from(table)
-          .select('*, category(title), favourites(rid, uid)')
-          .order('created_at', ascending: false);
+      final response = await supaBase
+          .from(SupaBaseTables.recipe)
+          .select('*, favourites(rid, uid)')
+          .eq('category_name', categoryName);
 
       final List<Map<String, dynamic>> recipes =
-          List<Map<String, dynamic>>.from(res).map((json) {
+          List<Map<String, dynamic>>.from(response).map((json) {
             final favList = (json['favourites'] as List<dynamic>?) ?? [];
             final isFavourite = favList.any(
-              (fav) => fav['uid'] == currentUserId,
+              (fav) => fav['uid'] == AuthViewModel.uid,
             );
 
             return {...json, 'favourites': isFavourite};
           }).toList();
 
-      _isLoading = false;
-      notifyListeners();
-
       _recipes = recipes;
-
-      appLogger.i(
-        "Fetched ${recipes.length} recipes with favourites & category",
-      );
-      return NetworkResponse(
-        isSuccess: true,
-        responseData: {"recipes": recipes},
-      );
-    } catch (e) {
-      appLogger.e("Fetch Recipes Failed: $e");
-
       _isLoading = false;
       notifyListeners();
-
-      return NetworkResponse(isSuccess: false, errorMessage: e.toString());
+    } catch (e) {
+      appLogger.e(e.toString());
+      _isLoading = false;
+      notifyListeners();
+      rethrow; // Propagate the error
     }
   }
 

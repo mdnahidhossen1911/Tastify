@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
+import 'package:tastify/view/views.dart';
 
-import '../../view/auth/ui/controller/auth_controller.dart';
-import '../../view/favourite/ui/controller/favourite_toggle_controller.dart';
-import '../../view/recipe/ui/screens/recipe_details_screen.dart';
+import '../../view_model/auth_view_model.dart';
+import '../../view_model/favourite_toggle_controller.dart';
 
 class HomePopularWidget extends StatelessWidget {
   HomePopularWidget({super.key, required this.popularItem});
@@ -22,11 +23,7 @@ class HomePopularWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          RecipeDetailsScreen.name,
-          arguments: popularItem,
-        );
+        context.push(RecipeDetailsView.name, extra: popularItem);
       },
       child: Container(
         width: 196,
@@ -70,9 +67,9 @@ class HomePopularWidget extends StatelessWidget {
                     radius: 16,
                     child: IconButton(
                       onPressed: () {
-                        FavouriteToggleController.toggleFavourite(
+                        FavouriteToggleViewModel.toggleFavourite(
                           popularItem['id'],
-                          AuthController.uid!,
+                          AuthViewModel.uid!,
                         );
                       },
                       icon: Icon(
