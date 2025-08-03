@@ -2,25 +2,25 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/blog_view_model.dart';
 
-class AddBlogScreen extends StatefulWidget {
-  const AddBlogScreen({super.key});
+class AddBlogView extends StatefulWidget {
+  const AddBlogView({super.key});
 
   static const String name = '/add-blog';
 
   @override
-  State<AddBlogScreen> createState() => _AddBlogScreenState();
+  State<AddBlogView> createState() => _AddBlogViewState();
 }
 
-class _AddBlogScreenState extends State<AddBlogScreen> {
+class _AddBlogViewState extends State<AddBlogView> {
   XFile? _pickedImage;
   String imageString = '';
 
@@ -38,7 +38,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
         forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: Icon(Icons.arrow_back_ios_new),
         ),
@@ -233,7 +233,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
 
         if (isSuccess) {
           Utils.showToast('Blog added successfully');
-          Navigator.pop(context);
+          context.pop();
         }
       }
     } else {

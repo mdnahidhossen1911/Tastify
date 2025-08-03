@@ -1,89 +1,140 @@
-import 'package:flutter/material.dart';
-import 'package:tastify/view/auth/login_screen.dart';
-import 'package:tastify/view/auth/splash_screen.dart';
-
-import '../../model/recipe_model.dart';
-import '../../view/auth/forgot_password_screen.dart';
-import '../../view/auth/otp_verify_screen.dart';
-import '../../view/auth/set_password_screen.dart';
-import '../../view/auth/sign_up_screen.dart';
-import '../../view/blog/add_blog_screen.dart';
-import '../../view/blog/blog_details_screen.dart';
-import '../../view/category/category_list_screen.dart';
-import '../../view/category/category_wise_list_screen.dart';
-import '../../view/feedback/recipe_feedback_screen.dart';
-import '../../view/home/featured_recipe_list_screen.dart';
-import '../../view/home/popular_list_screen.dart';
-import '../../view/home/search_list_screen.dart';
-import '../../view/main_bottom_nav_bar.dart';
-import '../../view/profile/change_password_screen.dart';
-import '../../view/profile/my_recipe_screen.dart';
-import '../../view/profile/profile_edit_screen.dart';
-import '../../view/recipe/add_recipe_screen.dart';
-import '../../view/recipe/recipe_details_screen.dart';
-import '../../view/recipe/update_recipe_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tastify/model/recipe_model.dart';
+import 'package:tastify/view/views.dart';
 
 class AppRoutes {
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    debugPrint('Routes>>>>${settings.name}');
-    late Widget route;
-    if (settings.name == SplashScreen.name) {
-      route = const SplashScreen();
-    } else if (settings.name == LoginScreen.name) {
-      route = const LoginScreen();
-    } else if (settings.name == SignUpScreen.name) {
-      route = const SignUpScreen();
-    } else if (settings.name == ForgotPasswordScreen.name) {
-      route = const ForgotPasswordScreen();
-    } else if (settings.name == SetPasswordScreen.name) {
-      String email = settings.arguments as String;
-      route = SetPasswordScreen(email: email);
-    } else if (settings.name == OtpVerifyScreen.name) {
-      String email = settings.arguments as String;
-      route = OtpVerifyScreen(email: email);
-    } else if (settings.name == MainBottomNavBar.name) {
-      route = const MainBottomNavBar();
-    } else if (settings.name == CategoryListScreen.name) {
-      route = const CategoryListScreen();
-    } else if (settings.name == MyRecipeScreen.name) {
-      route = const MyRecipeScreen();
-    } else if (settings.name == FeaturedRecipeListScreen.name) {
-      route = const FeaturedRecipeListScreen();
-    } else if (settings.name == PopularListScreen.name) {
-      route = const PopularListScreen();
-    } else if (settings.name == SearchListScreen.name) {
-      route = const SearchListScreen();
-    } else if (settings.name == RecipeFeedbackScreen.name) {
-      route = const RecipeFeedbackScreen();
-    } else if (settings.name == ChangePasswordScreen.name) {
-      String email = settings.arguments as String;
-      route = ChangePasswordScreen(email: email);
-    } else if (settings.name == RecipeDetailsScreen.name) {
-      final Map<String, dynamic> args =
-          settings.arguments as Map<String, dynamic>;
-      route = RecipeDetailsScreen(recipeDetails: args);
-    } else if (settings.name == AddRecipeScreen.name) {
-      route = const AddRecipeScreen();
-    } else if (settings.name == CategoryWiseListScreen.name) {
-      final String categoryName = settings.arguments as String;
-      route = CategoryWiseListScreen(categoryName: categoryName);
-    } else if (settings.name == BlogDetailsScreen.name) {
-      final Map<String, dynamic> data =
-          settings.arguments as Map<String, dynamic>;
-      route = BlogDetailsScreen(blogDetails: data);
-    } else if (settings.name == AddBlogScreen.name) {
-      route = const AddBlogScreen();
-    } else if (settings.name == ProfileEditScreen.name) {
-      route = const ProfileEditScreen();
-    } else if (settings.name == UpdateRecipeScreen.name) {
-      final RecipeModel recipeData = settings.arguments as RecipeModel;
-      route = UpdateRecipeScreen(recipe: recipeData);
-    }
-
-    return MaterialPageRoute(
-      builder: (context) {
-        return route;
-      },
-    );
-  }
+  static final GoRouter router = GoRouter(
+    initialLocation: SplashView.name,
+    routes: [
+      GoRoute(
+        path: SplashView.name,
+        name: SplashView.name,
+        builder: (context, state) => const SplashView(),
+      ),
+      GoRoute(
+        path: LoginView.name,
+        name: LoginView.name,
+        builder: (context, state) => const LoginView(),
+      ),
+      GoRoute(
+        path: SignUpView.name,
+        name: SignUpView.name,
+        builder: (context, state) => const SignUpView(),
+      ),
+      GoRoute(
+        path: ForgotPasswordView.name,
+        name: ForgotPasswordView.name,
+        builder: (context, state) => const ForgotPasswordView(),
+      ),
+      GoRoute(
+        path: SetPasswordView.name,
+        name: SetPasswordView.name,
+        builder: (context, state) {
+          final email = state.extra as String?;
+          return SetPasswordView(email: email ?? '');
+        },
+      ),
+      GoRoute(
+        path: OtpVerifyView.name,
+        name: OtpVerifyView.name,
+        builder: (context, state) {
+          final email = state.extra as String?;
+          return OtpVerifyView(email: email ?? '');
+        },
+      ),
+      GoRoute(
+        path: MainBottomNavBarView.name,
+        name: MainBottomNavBarView.name,
+        builder: (context, state) => const MainBottomNavBarView(),
+      ),
+      GoRoute(
+        path: CategoryListView.name,
+        name: CategoryListView.name,
+        builder: (context, state) => const CategoryListView(),
+      ),
+      GoRoute(
+        path: MyRecipeView.name,
+        name: MyRecipeView.name,
+        builder: (context, state) => const MyRecipeView(),
+      ),
+      GoRoute(
+        path: FeaturedRecipeListView.name,
+        name: FeaturedRecipeListView.name,
+        builder: (context, state) => const FeaturedRecipeListView(),
+      ),
+      GoRoute(
+        path: PopularListView.name,
+        name: PopularListView.name,
+        builder: (context, state) => const PopularListView(),
+      ),
+      GoRoute(
+        path: SearchListView.name,
+        name: SearchListView.name,
+        builder: (context, state) => const SearchListView(),
+      ),
+      GoRoute(
+        path: AddRecipeView.name,
+        name: AddRecipeView.name,
+        builder: (context, state) => const AddRecipeView(),
+      ),
+      GoRoute(
+        path: CategoryWiseListView.name,
+        name: CategoryWiseListView.name,
+        builder: (context, state) {
+          final categoryName = state.extra as String?;
+          return CategoryWiseListView(categoryName: categoryName ?? '');
+        },
+      ),
+      GoRoute(
+        path: BlogDetailsView.name,
+        name: BlogDetailsView.name,
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>?;
+          return BlogDetailsView(blogDetails: data ?? {});
+        },
+      ),
+      GoRoute(
+        path: AddBlogView.name,
+        name: AddBlogView.name,
+        builder: (context, state) => const AddBlogView(),
+      ),
+      GoRoute(
+        path: ProfileEditView.name,
+        name: ProfileEditView.name,
+        builder: (context, state) => const ProfileEditView(),
+      ),
+      GoRoute(
+        path: UpdateRecipeView.name,
+        name: UpdateRecipeView.name,
+        builder: (context, state) {
+          final recipeData = state.extra as RecipeModel?;
+          return UpdateRecipeView(recipe: recipeData!);
+        },
+      ),
+      GoRoute(
+        path: RecipeDetailsView.name,
+        name: RecipeDetailsView.name,
+        builder: (context, state) {
+          final recipe = state.extra as Map<String, dynamic>?;
+          return RecipeDetailsView(recipeDetails: recipe!);
+        },
+      ),
+      GoRoute(
+        path: ChangePasswordView.name,
+        name: ChangePasswordView.name,
+        builder: (context, state) {
+          final email = state.extra as String?;
+          return ChangePasswordView(email: email);
+        },
+      ),
+      GoRoute(
+        path: RecipeFeedbackView.name,
+        name: RecipeFeedbackView.name,
+        builder: (context, state) {
+          return RecipeFeedbackView();
+        },
+      ),
+      // Add more GoRoutes as needed
+    ],
+  );
 }

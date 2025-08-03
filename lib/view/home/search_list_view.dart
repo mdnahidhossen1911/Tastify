@@ -3,23 +3,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/circle_progress.dart';
 import '../../res/component/food_recipe_widget.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/favourite_toggle_controller.dart';
-import '../../view_model/recipe_search_view_model.dart';
 
-class SearchListScreen extends StatefulWidget {
-  const SearchListScreen({super.key});
+class SearchListView extends StatefulWidget {
+  const SearchListView({super.key});
 
   static const String name = '/search-screen';
 
   @override
-  State<SearchListScreen> createState() => _SearchListScreenState();
+  State<SearchListView> createState() => _SearchListViewState();
 }
 
-class _SearchListScreenState extends State<SearchListScreen> {
+class _SearchListViewState extends State<SearchListView> {
   final TextEditingController _searchController = TextEditingController();
   final RecipeSearchViewModel _recipeSearchViewModel =
       locator<RecipeSearchViewModel>();

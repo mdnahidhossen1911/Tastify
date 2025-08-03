@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/blog_widget.dart';
 import '../../res/component/circle_progress.dart';
-import '../../view_model/blog_view_model.dart';
-import 'add_blog_screen.dart';
 
-class BlogScreen extends StatefulWidget {
-  const BlogScreen({super.key});
+class BlogListView extends StatefulWidget {
+  const BlogListView({super.key});
 
   @override
-  State<BlogScreen> createState() => _BlogScreenState();
+  State<BlogListView> createState() => _BlogListViewState();
 }
 
-class _BlogScreenState extends State<BlogScreen> {
+class _BlogListViewState extends State<BlogListView> {
   late BlogViewModel _blogViewModel;
 
   @override
@@ -37,7 +38,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddBlogScreen.name);
+          context.push(AddBlogView.name);
         },
         elevation: 4,
         child: Icon(Icons.edit, color: AppColor.themeColor),

@@ -3,28 +3,28 @@ import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view_model/update_profile_view_model.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/assets_path.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
 
-class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key});
+class ProfileEditView extends StatefulWidget {
+  const ProfileEditView({super.key});
 
   static const String name = '/profile-edit';
 
   @override
-  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
+  State<ProfileEditView> createState() => _ProfileEditViewState();
 }
 
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
+class _ProfileEditViewState extends State<ProfileEditView> {
   @override
   void initState() {
     // TODO: implement initState
@@ -55,7 +55,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     CircleAvatar(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         icon: Icon(Icons.arrow_back_ios_new),
                       ),

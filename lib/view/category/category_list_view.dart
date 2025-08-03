@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/category_item_widget.dart';
 import '../../res/component/circle_progress.dart';
-import '../../view_model/category_view_model.dart';
 
-class CategoryListScreen extends StatefulWidget {
-  const CategoryListScreen({super.key});
+class CategoryListView extends StatefulWidget {
+  const CategoryListView({super.key});
 
   static const String name = '/category';
 
   @override
-  State<CategoryListScreen> createState() => _CategoryListScreenState();
+  State<CategoryListView> createState() => _CategoryListViewState();
 }
 
-class _CategoryListScreenState extends State<CategoryListScreen> {
+class _CategoryListViewState extends State<CategoryListView> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
@@ -18,7 +17,6 @@ import 'package:tastify/view_model/recipe_view_model.dart';
 import '../res/theme/dark_theme.dart';
 import '../res/theme/light_theme.dart';
 import '../utils/routes/app_routes.dart';
-import '../view/auth/splash_screen.dart';
 
 class TastifyApp extends StatelessWidget {
   const TastifyApp({super.key});
@@ -44,17 +42,15 @@ class TastifyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => locator<CarouselImageViewModel>(),
         ),
-        // Add other providers here if needed
       ],
       child: Builder(
         builder: (context) {
-          return GetMaterialApp(
+          return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: lightThemeData,
             darkTheme: darkThemeData,
             themeMode: Provider.of<ThemeChanger>(context).mode,
-            onGenerateRoute: AppRoutes.onGenerateRoute,
-            initialRoute: SplashScreen.name,
+            routerConfig: AppRoutes.router,
           );
         },
       ),

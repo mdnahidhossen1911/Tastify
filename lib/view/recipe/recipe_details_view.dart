@@ -3,25 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view_model/add_feedback_view_model.dart';
-import 'package:tastify/view_model/auth_view_model.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/app_logger.dart';
 import '../../../../utils/utils.dart';
 
-class RecipeDetailsScreen extends StatefulWidget {
-  const RecipeDetailsScreen({super.key, required this.recipeDetails});
+class RecipeDetailsView extends StatefulWidget {
+  const RecipeDetailsView({super.key, required this.recipeDetails});
 
   final Map<String, dynamic> recipeDetails;
 
   static const String name = '/recipe-details-screen';
 
   @override
-  State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
+  State<RecipeDetailsView> createState() => _RecipeDetailsViewState();
 }
 
-class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+class _RecipeDetailsViewState extends State<RecipeDetailsView> {
   late List<String> ingredients;
   late List<String> instructions;
   late Map<String, dynamic> nutritionInfo;

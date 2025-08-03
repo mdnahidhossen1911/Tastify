@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../model/auth_user_model.dart';
 import '../../../../model/network_response.dart';
@@ -10,23 +13,17 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../../../../view_model/auth_view_model.dart';
-import '../../../../view_model/google_sign_view_model.dart';
-import '../../../../view_model/login_view_model.dart';
-import '../main_bottom_nav_bar.dart';
-import 'forgot_password_screen.dart';
-import 'sign_up_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
-  static String name = 'loginScreen';
+  static String name = '/loginScreen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _SignInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -157,10 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ForgotPasswordScreen.name,
-                          );
+                          context.push(ForgotPasswordView.name);
                         },
                         child: Text(
                           "Forgot password?",
@@ -184,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, SignUpScreen.name);
+                            context.push(SignUpView.name);
                           },
                           child: Text(
                             "Sign Up",
@@ -301,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
-      Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+      context.pushReplacement(MainBottomNavBarView.name);
     } else {
       print("Google Sign-In Error: ${response.errorMessage}");
       Utils.showFlushBar(context, response.errorMessage);
@@ -320,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );
-        Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+        context.pushReplacement(MainBottomNavBarView.name);
       } else {
         print("Login Error: ${response.errorMessage}");
         Utils.showFlushBar(context, response.errorMessage);

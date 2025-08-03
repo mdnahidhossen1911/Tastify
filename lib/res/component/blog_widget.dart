@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tastify/view/views.dart';
 
 import '../../utils/utc_to_local_date.dart';
-import '../../view/blog/blog_details_screen.dart';
 import '../assets_path.dart';
 
 class BlogWidget extends StatelessWidget {
@@ -21,11 +22,7 @@ class BlogWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            BlogDetailsScreen.name,
-            arguments: blogData,
-          );
+          context.push(BlogDetailsView.name, extra: blogData);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

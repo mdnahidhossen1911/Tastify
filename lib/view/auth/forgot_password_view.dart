@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
-import '../../view_model/forgot_password_view_model.dart';
-import 'otp_verify_screen.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView({super.key});
 
-  static String name = 'forgotPasswordScreen';
+  static String name = '/forgotPasswordScreen';
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<ForgotPasswordView> createState() => _ForgotPasswordViewState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   late ForgotPasswordViewModel _forgotPasswordViewModel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -117,7 +118,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         child: Text(
                           "Login",
@@ -144,10 +145,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         email: emailController.text,
       );
       if (response.isSuccess) {
-        Navigator.pushReplacementNamed(
-          context,
-          OtpVerifyScreen.name,
-          arguments: emailController.text.trim(),
+        context.pushReplacement(
+          OtpVerifyView.name,
+          extra: emailController.text.trim(),
         );
       } else {
         Utils.showFlushBar(context, response.errorMessage);

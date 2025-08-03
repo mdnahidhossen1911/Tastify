@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/circle_progress.dart';
 import '../../res/component/my_recipe_widget.dart';
-import '../../view_model/my_recipe_view_model.dart';
 
-class MyRecipeScreen extends StatefulWidget {
-  const MyRecipeScreen({super.key});
+class MyRecipeView extends StatefulWidget {
+  const MyRecipeView({super.key});
 
   static const String name = '/my-recipe-screen';
 
   @override
-  State<MyRecipeScreen> createState() => _MyRecipeScreenState();
+  State<MyRecipeView> createState() => _MyRecipeViewState();
 }
 
-class _MyRecipeScreenState extends State<MyRecipeScreen> {
+class _MyRecipeViewState extends State<MyRecipeView> {
   late MyRecipeViewModel _myRecipeViewModel;
 
   @override

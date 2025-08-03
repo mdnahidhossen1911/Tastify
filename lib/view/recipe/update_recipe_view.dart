@@ -2,31 +2,31 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
-import '../../model/recipe_model.dart';
-import '../../res/app_colors.dart';
-import '../../res/component/circle_progress.dart';
-import '../../utils/utils.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/category_view_model.dart';
-import '../../view_model/fetch_popular_view_model.dart';
-import '../../view_model/get_recipe_view_model.dart';
-import '../../view_model/recipe_view_model.dart';
+import '../../../../model/recipe_model.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/component/circle_progress.dart';
+import '../../../../utils/utils.dart';
 
-class AddRecipeScreen extends StatefulWidget {
-  const AddRecipeScreen({super.key});
+class UpdateRecipeView extends StatefulWidget {
+  final RecipeModel recipe;
 
-  static const String name = '/add-recipe-screen';
+  const UpdateRecipeView({super.key, required this.recipe});
+
+  static const String name = '/update-recipe-screen';
 
   @override
-  State<AddRecipeScreen> createState() => _AddRecipeScreenState();
+  State<UpdateRecipeView> createState() => _UpdateRecipeViewState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> {
+class _UpdateRecipeViewState extends State<UpdateRecipeView> {
   XFile? _pickedImage;
+  bool _isImageUpdated = false;
 
   final TextEditingController _recipeNameTEController = TextEditingController();
   final TextEditingController _recipeDescriptionTEController =
@@ -36,8 +36,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final TextEditingController _recipeCookTimeTEController =
       TextEditingController();
 
-  final List<TextEditingController> ingredients = [TextEditingController()];
-  final List<TextEditingController> instructions = [TextEditingController()];
+  final List<TextEditingController> ingredients = [];
+  final List<TextEditingController> instructions = [];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -46,9 +46,80 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   String? _selectedCategory;
   String? _selectedCategoryId;
 
-  List<Map<String, TextEditingController>> nutritionControllers = [
-    {"key": TextEditingController(), "value": TextEditingController()},
-  ];
+  List<Map<String, TextEditingController>> nutritionControllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeForm();
+  }
+
+  void _initializeForm() {
+    // Initialize basic fields
+    _recipeNameTEController.text = widget.recipe.title;
+    _recipeDescriptionTEController.text = widget.recipe.description!;
+    _recipePrepTimeTEController.text = widget.recipe.prepTime!;
+    _recipeCookTimeTEController.text = widget.recipe.cookTime!;
+
+    // Initialize category
+    _selectedCategoryId = widget.recipe.cid;
+    _selectedCategory =
+        locator<CategoryViewModel>().categoryList.firstWhere(
+          (category) => category['id'] == widget.recipe.cid,
+          orElse: () => {'title': ''},
+        )['title'];
+
+    // Initialize ingredients
+    try {
+      List<dynamic> ingredientList = jsonDecode(
+        widget.recipe.ingredients ?? '[]',
+      );
+      for (var ingredient in ingredientList) {
+        ingredients.add(TextEditingController(text: ingredient));
+      }
+    } catch (e) {
+      ingredients.add(TextEditingController(text: widget.recipe.ingredients));
+    }
+
+    // Initialize instructions
+    try {
+      List<dynamic> instructionList = jsonDecode(
+        widget.recipe.instructions ?? '[]',
+      );
+      for (var instruction in instructionList) {
+        instructions.add(TextEditingController(text: instruction));
+      }
+    } catch (e) {
+      instructions.add(TextEditingController(text: widget.recipe.instructions));
+    }
+
+    try {
+      Map<String, dynamic> nutritionMap = jsonDecode(
+        widget.recipe.nutritionInfo ?? '{}',
+      );
+      nutritionMap.forEach((key, value) {
+        nutritionControllers.add({
+          "key": TextEditingController(text: key),
+          "value": TextEditingController(text: value.toString()),
+        });
+      });
+    } catch (e) {
+      nutritionControllers.add({
+        "key": TextEditingController(text: "Nutrition"),
+        "value": TextEditingController(text: widget.recipe.nutritionInfo),
+      });
+    }
+
+    // Ensure at least one field exists for ingredients, instructions, and nutrition
+    if (ingredients.isEmpty) ingredients.add(TextEditingController());
+    if (instructions.isEmpty) instructions.add(TextEditingController());
+    if (nutritionControllers.isEmpty) {
+      nutritionControllers.add({
+        "key": TextEditingController(),
+        "value": TextEditingController(),
+      });
+    }
+  }
 
   void addNutritionField() {
     setState(() {
@@ -74,7 +145,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: Icon(Icons.arrow_back_ios_new),
         ),
@@ -82,7 +153,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Add Recipe',
+              'Update Recipe',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Consumer<RecipeViewModel>(
@@ -93,7 +164,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        _uploadRecipe();
+                        _updateRecipe();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -101,7 +172,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       elevation: 0,
                     ),
                     child: Text(
-                      'Add',
+                      'Update',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -306,9 +377,16 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () {
-                        setState(() {
-                          instructions.removeAt(index);
-                        });
+                        if (instructions.length > 1) {
+                          setState(() {
+                            instructions.removeAt(index);
+                          });
+                        } else {
+                          Utils.showFlushBar(
+                            context,
+                            "At least one instruction is required",
+                          );
+                        }
                       },
                     ),
                   ],
@@ -380,9 +458,16 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () {
-                        setState(() {
-                          ingredients.removeAt(index);
-                        });
+                        if (ingredients.length > 1) {
+                          setState(() {
+                            ingredients.removeAt(index);
+                          });
+                        } else {
+                          Utils.showFlushBar(
+                            context,
+                            "At least one ingredient is required",
+                          );
+                        }
                       },
                     ),
                   ],
@@ -602,8 +687,27 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         ),
         alignment: Alignment.center,
         child:
-            _pickedImage == null
-                ? Row(
+            _pickedImage != null
+                ? ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.file(
+                    File(_pickedImage!.path),
+                    width: double.infinity,
+                    height: 190,
+                    fit: BoxFit.cover,
+                  ),
+                )
+                : widget.recipe.photo!.isNotEmpty
+                ? ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.memory(
+                    base64Decode(widget.recipe.photo!),
+                    width: double.infinity,
+                    height: 190,
+                    fit: BoxFit.cover,
+                  ),
+                )
+                : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
@@ -621,15 +725,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       ),
                     ),
                   ],
-                )
-                : ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.file(
-                    File(_pickedImage!.path),
-                    width: double.infinity,
-                    height: 190,
-                    fit: BoxFit.cover,
-                  ),
                 ),
       ),
     );
@@ -644,17 +739,18 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     );
     if (image != null) {
       _pickedImage = image;
+      _isImageUpdated = true;
       setState(() {});
     }
   }
 
-  _uploadRecipe() async {
+  Future<void> _updateRecipe() async {
     String recipeName = _recipeNameTEController.text;
     String recipeDescription = _recipeDescriptionTEController.text;
     String prepTime = _recipePrepTimeTEController.text;
     String cookTime = _recipeCookTimeTEController.text;
     String uid = AuthViewModel.uid!;
-    late String imageString;
+    String imageString = widget.recipe.photo!;
 
     final ingredientList =
         ingredients
@@ -679,12 +775,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       }
     }
 
-    if (_pickedImage != null) {
+    if (_isImageUpdated && _pickedImage != null) {
       final bytes = await _pickedImage?.readAsBytes();
       imageString = base64Encode(bytes!);
-    } else {
-      Utils.showFlushBar(context, "Please select an image");
-      return;
     }
 
     if (instructionList.isEmpty ||
@@ -695,6 +788,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     }
 
     RecipeModel model = RecipeModel(
+      id: widget.recipe.id,
       userId: uid,
       title: recipeName,
       description: recipeDescription,
@@ -702,21 +796,19 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       cookTime: cookTime,
       photo: imageString,
       cid: _selectedCategoryId ?? '',
-      category_name: _selectedCategory ?? '',
+      category_name: _selectedCategory,
       ingredients: ingredientList.toString(),
       instructions: instructionList.toString(),
       nutritionInfo: nutritionInfo.toString(),
     );
 
-    final response = await _recipeViewModel.addRecipe(model);
+    final response = await _recipeViewModel.updateRecipe(
+      widget.recipe.id!,
+      model,
+    );
     if (response.isSuccess) {
-      Utils.showToast("Recipe added successfully");
-
-      Provider.of<GetRecipeViewModel>(
-        context,
-      ).getAllRecipes(AuthViewModel.uid!);
-      locator<FetchPopularViewModel>().getAllRecipes(AuthViewModel.uid!);
-      Navigator.pop(context);
+      Utils.showToast("Recipe updated successfully");
+      context.pop();
     } else {
       Utils.showFlushBar(context, response.errorMessage);
     }

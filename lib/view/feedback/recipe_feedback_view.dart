@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/component/circle_progress.dart';
 import '../../res/component/recipe_feedback_widget.dart';
-import '../../view_model/fatch_recipe_feedback_view_model.dart';
 
-class RecipeFeedbackScreen extends StatefulWidget {
-  const RecipeFeedbackScreen({super.key});
+class RecipeFeedbackView extends StatefulWidget {
+  const RecipeFeedbackView({super.key});
 
   static const String name = '/recipe-feedback';
 
   @override
-  State<RecipeFeedbackScreen> createState() => _RecipeFeedbackScreenState();
+  State<RecipeFeedbackView> createState() => _RecipeFeedbackViewState();
 }
 
-class _RecipeFeedbackScreenState extends State<RecipeFeedbackScreen> {
+class _RecipeFeedbackViewState extends State<RecipeFeedbackView> {
   final FetchRecipeFeedbackViewModel _fetchRecipeFeedbackViewModel =
       locator<FetchRecipeFeedbackViewModel>();
 

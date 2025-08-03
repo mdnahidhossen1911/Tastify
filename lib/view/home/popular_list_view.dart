@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
-import '../../res/component/food_recipe_widget.dart';
-import '../../view_model/auth_view_model.dart';
-import '../../view_model/favourite_toggle_controller.dart';
-import '../../view_model/get_recipe_view_model.dart';
+import '../../../../res/component/food_recipe_widget.dart';
 
-class FeaturedRecipeListScreen extends StatefulWidget {
-  const FeaturedRecipeListScreen({super.key});
+class PopularListView extends StatefulWidget {
+  const PopularListView({super.key});
 
-  static const String name = '/featured-recipe-screen';
+  static const String name = '/popular-list-screen';
 
   @override
-  State<FeaturedRecipeListScreen> createState() =>
-      _FeaturedRecipeListScreenState();
+  State<PopularListView> createState() => _PopularListViewState();
 }
 
-class _FeaturedRecipeListScreenState extends State<FeaturedRecipeListScreen> {
+class _PopularListViewState extends State<PopularListView> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        title: Text('Featured Recipe', style: textTheme.headlineSmall),
+        title: Text('Popular', style: textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: Consumer<GetRecipeViewModel>(

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view_model/view_models.dart';
 
-import '../../../../res/app_colors.dart';
-import '../../../../res/component/circle_progress.dart';
-import '../../../../res/component/screen_background.dart';
-import '../../../../utils/utils.dart';
-import '../../../../view_model/forgot_password_view_model.dart';
-import 'login_screen.dart';
+import '../../res/app_colors.dart';
+import '../../res/component/circle_progress.dart';
+import '../../res/component/screen_background.dart';
+import '../../utils/utils.dart';
 
-class SetPasswordScreen extends StatefulWidget {
-  SetPasswordScreen({super.key, required this.email});
+class ChangePasswordView extends StatefulWidget {
+  ChangePasswordView({super.key, required this.email});
 
-  static String name = 'setPasswordScreen';
+  static String name = '/change-password';
   String? email;
 
   @override
-  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
+  State<ChangePasswordView> createState() => _SetPasswordScreenState();
 }
 
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
+class _SetPasswordScreenState extends State<ChangePasswordView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -40,9 +40,18 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 120),
+                    SizedBox(height: 16),
+                    CircleAvatar(
+                      child: IconButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: Icon(Icons.arrow_back_ios_new),
+                      ),
+                    ),
+                    SizedBox(height: 90),
                     Text(
-                      "Set password",
+                      "Change password",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 36,
@@ -142,29 +151,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                         );
                       },
                     ),
-
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?  ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, LoginScreen.name);
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: AppColor.themeColor,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -186,11 +172,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
       if (isSuccess) {
         Utils.showToast("Password set successfully");
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          LoginScreen.name,
-          (route) => false,
-        );
+        context.pop();
       } else {
         Utils.showToast("Failed to set password. Please try again.");
         return;

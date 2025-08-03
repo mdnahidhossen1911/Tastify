@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import '../../view/recipe/recipe_details_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tastify/view/views.dart';
 
 class FoodRecipeWidget extends StatelessWidget {
   const FoodRecipeWidget({
@@ -23,11 +23,7 @@ class FoodRecipeWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          RecipeDetailsScreen.name,
-          arguments: recipeDetails,
-        );
+        context.push(RecipeDetailsView.name, extra: recipeDetails);
       },
       child: Container(
         height: 110,
