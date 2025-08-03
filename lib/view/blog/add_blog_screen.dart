@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/view_model/view_models.dart';
@@ -37,7 +38,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
         forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: Icon(Icons.arrow_back_ios_new),
         ),
@@ -232,7 +233,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
 
         if (isSuccess) {
           Utils.showToast('Blog added successfully');
-          Navigator.pop(context);
+          context.pop();
         }
       }
     } else {

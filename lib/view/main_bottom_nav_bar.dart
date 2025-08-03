@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
-
-import 'blog/blog_screen.dart';
-import 'favourite/favourite_screen.dart';
-import 'home/home_screen.dart';
-import 'profile/profile_screen.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   const MainBottomNavBar({super.key});

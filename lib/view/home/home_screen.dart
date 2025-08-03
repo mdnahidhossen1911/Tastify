@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/component/home_view_app_logo.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view/home/popular_list_screen.dart';
-import 'package:tastify/view/home/search_list_screen.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
@@ -13,9 +13,6 @@ import '../../res/component/food_recipe_widget.dart';
 import '../../res/component/home_carousel_slider.dart';
 import '../../res/component/home_popular_widget.dart';
 import '../../res/component/section_header.dart';
-import '../category/category_list_screen.dart';
-import '../recipe/add_recipe_screen.dart';
-import 'featured_recipe_list_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -46,7 +43,7 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, AddRecipeScreen.name);
+                      context.push(AddRecipeScreen.name);
                     },
                     icon: Icon(Icons.add, size: 24, color: AppColor.themeColor),
                   ),
@@ -57,7 +54,7 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, SearchListScreen.name);
+                      context.push(SearchListScreen.name);
                     },
                     icon: Icon(
                       Icons.search,
@@ -100,7 +97,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Category',
                 seeAll: () {
-                  Navigator.pushNamed(context, CategoryListScreen.name);
+                  context.push(CategoryListScreen.name);
                 },
               ),
               _buildCategorySection(),
@@ -108,7 +105,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Popular',
                 seeAll: () {
-                  Navigator.pushNamed(context, PopularListScreen.name);
+                  context.push(PopularListScreen.name);
                 },
               ),
               _buildPopularSection(),
@@ -116,7 +113,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Featured Recipe',
                 seeAll: () {
-                  Navigator.pushNamed(context, FeaturedRecipeListScreen.name);
+                  context.push(FeaturedRecipeListScreen.name);
                 },
               ),
               SizedBox(height: 4),

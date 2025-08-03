@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/view_model/view_models.dart';
 
@@ -10,7 +11,7 @@ import '../../utils/utils.dart';
 class ChangePasswordScreen extends StatefulWidget {
   ChangePasswordScreen({super.key, required this.email});
 
-  static String name = 'change-password';
+  static String name = '/change-password';
   String? email;
 
   @override
@@ -43,7 +44,7 @@ class _SetPasswordScreenState extends State<ChangePasswordScreen> {
                     CircleAvatar(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         icon: Icon(Icons.arrow_back_ios_new),
                       ),
@@ -171,7 +172,7 @@ class _SetPasswordScreenState extends State<ChangePasswordScreen> {
 
       if (isSuccess) {
         Utils.showToast("Password set successfully");
-        Navigator.pop(context);
+        context.pop();
       } else {
         Utils.showToast("Failed to set password. Please try again.");
         return;

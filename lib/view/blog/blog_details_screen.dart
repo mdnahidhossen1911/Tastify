@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../res/assets_path.dart';
 import '../../../../utils/utc_to_local_date.dart';
@@ -39,7 +40,7 @@ class BlogDetailsScreen extends StatelessWidget {
                       child: CircleAvatar(
                         child: IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           icon: Icon(
                             Icons.arrow_back_ios_new,

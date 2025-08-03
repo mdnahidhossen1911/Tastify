@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
 
 import '../../model/recipe_model.dart';
 import '../../utils/utc_to_local_date.dart';
-import '../../view/recipe/recipe_details_screen.dart';
-import '../../view/recipe/update_recipe_screen.dart';
 import '../../view_model/my_recipe_view_model.dart';
 import '../app_colors.dart';
 import 'circle_progress.dart';
@@ -33,11 +33,7 @@ class MyRecipeWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                RecipeDetailsScreen.name,
-                arguments: recipe,
-              );
+              context.push(RecipeDetailsScreen.name, extra: recipe);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -72,10 +68,9 @@ class MyRecipeWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
+                        context.push(
                           UpdateRecipeScreen.name,
-                          arguments: RecipeModel.fromJson(recipe),
+                          extra: RecipeModel.fromJson(recipe),
                         );
                       },
                       borderRadius: BorderRadius.circular(12),

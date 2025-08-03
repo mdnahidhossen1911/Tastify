@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.2
   provider:
   get_it:
+  go_router: ^16.0.0
 
 
 

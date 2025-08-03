@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../model/auth_user_model.dart';
@@ -11,14 +13,11 @@ import '../../../../res/assets_path.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import '../main_bottom_nav_bar.dart';
-import 'forgot_password_screen.dart';
-import 'sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  static String name = 'loginScreen';
+  static String name = '/loginScreen';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -155,10 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ForgotPasswordScreen.name,
-                          );
+                          context.push(ForgotPasswordScreen.name);
                         },
                         child: Text(
                           "Forgot password?",
@@ -182,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, SignUpScreen.name);
+                            context.push(SignUpScreen.name);
                           },
                           child: Text(
                             "Sign Up",
@@ -299,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
-      Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+      context.pushReplacement(MainBottomNavBar.name);
     } else {
       print("Google Sign-In Error: ${response.errorMessage}");
       Utils.showFlushBar(context, response.errorMessage);
@@ -318,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );
-        Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+        context.pushReplacement(MainBottomNavBar.name);
       } else {
         print("Login Error: ${response.errorMessage}");
         Utils.showFlushBar(context, response.errorMessage);

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/blog_widget.dart';
 import '../../res/component/circle_progress.dart';
-import 'add_blog_screen.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -37,7 +38,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddBlogScreen.name);
+          context.push(AddBlogScreen.name);
         },
         elevation: 4,
         child: Icon(Icons.edit, color: AppColor.themeColor),

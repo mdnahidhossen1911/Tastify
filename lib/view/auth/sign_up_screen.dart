@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../model/auth_user_model.dart';
@@ -11,12 +13,11 @@ import '../../res/assets_path.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
-import '../main_bottom_nav_bar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
-  static String name = 'signUpScreen';
+  static String name = '/signUpScreen';
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -182,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           child: Text(
                             "Login",
@@ -312,11 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Utils.showToast(
           "Sign Up ${response.responseData!['email']} successfully",
         );
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          MainBottomNavBar.name,
-          (route) => false,
-        );
+        if (mounted) context.go(MainBottomNavBar.name);
       } else {
         Utils.showFlushBar(context, response.errorMessage);
       }
@@ -331,7 +328,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
-      Navigator.pushReplacementNamed(context, MainBottomNavBar.name);
+      if (mounted) context.go(MainBottomNavBar.name);
     } else {
       print("Google Sign-In Error: ${response.errorMessage}");
       Utils.showFlushBar(context, response.errorMessage);

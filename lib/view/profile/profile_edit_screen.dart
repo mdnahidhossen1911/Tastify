@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
@@ -54,7 +55,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     CircleAvatar(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         icon: Icon(Icons.arrow_back_ios_new),
                       ),

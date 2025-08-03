@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/service_locator.dart';
@@ -70,7 +71,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: Icon(Icons.arrow_back_ios_new),
         ),
@@ -712,7 +713,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         context,
       ).getAllRecipes(AuthViewModel.uid!);
       locator<FetchPopularViewModel>().getAllRecipes(AuthViewModel.uid!);
-      Navigator.pop(context);
+      context.pop();
     } else {
       Utils.showFlushBar(context, response.errorMessage);
     }

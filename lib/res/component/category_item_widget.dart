@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../view/category/category_wise_list_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tastify/view/views.dart';
 
 class CategoryItemWidget extends StatelessWidget {
   CategoryItemWidget({super.key, this.category});
@@ -11,11 +11,7 @@ class CategoryItemWidget extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          CategoryWiseListScreen.name,
-          arguments: category!['title'],
-        );
+        context.push(CategoryWiseListScreen.name, extra: category!['title']);
       },
       child: Container(
         width: 81,

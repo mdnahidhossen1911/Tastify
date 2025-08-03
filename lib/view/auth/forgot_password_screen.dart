@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
-import 'otp_verify_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
-  static String name = 'forgotPasswordScreen';
+  static String name = '/forgotPasswordScreen';
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -117,7 +118,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         child: Text(
                           "Login",
@@ -144,10 +145,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         email: emailController.text,
       );
       if (response.isSuccess) {
-        Navigator.pushReplacementNamed(
-          context,
+        context.pushReplacement(
           OtpVerifyScreen.name,
-          arguments: emailController.text.trim(),
+          extra: emailController.text.trim(),
         );
       } else {
         Utils.showFlushBar(context, response.errorMessage);

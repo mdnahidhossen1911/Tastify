@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
-import 'login_screen.dart';
 
 class SetPasswordScreen extends StatefulWidget {
   SetPasswordScreen({super.key, required this.email});
 
-  static String name = 'setPasswordScreen';
+  static String name = '/setPasswordScreen';
   String? email;
 
   @override
@@ -153,7 +154,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, LoginScreen.name);
+                            context.push(LoginScreen.name);
                           },
                           child: Text(
                             "Login",
@@ -186,11 +187,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
       if (isSuccess) {
         Utils.showToast("Password set successfully");
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          LoginScreen.name,
-          (route) => false,
-        );
+        if (mounted) context.go(LoginScreen.name);
       } else {
         Utils.showToast("Failed to set password. Please try again.");
         return;

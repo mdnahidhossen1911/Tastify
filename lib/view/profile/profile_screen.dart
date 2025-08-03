@@ -2,20 +2,17 @@ import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tastify/res/theme/theme_changer.dart';
 import 'package:tastify/service_locator.dart';
-import 'package:tastify/view/profile/profile_edit_screen.dart';
+import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/assets_path.dart';
 import '../../view_model/auth_view_model.dart';
-import '../auth/login_screen.dart';
-import '../feedback/recipe_feedback_screen.dart';
-import 'change_password_screen.dart';
-import 'my_recipe_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -75,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: Icon(Icons.person_outline, size: 28),
             title: Text('Profile edit'),
             onTap: () {
-              Navigator.pushNamed(context, ProfileEditScreen.name);
+              context.push(ProfileEditScreen.name);
             },
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
@@ -87,10 +84,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             onTap: () {
-              Navigator.pushNamed(
-                context,
+              context.push(
                 ChangePasswordScreen.name,
-                arguments: _authViewModel.getGmail,
+                extra: _authViewModel.getGmail,
               );
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
@@ -101,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             onTap: () {
-              Navigator.pushNamed(context, MyRecipeScreen.name);
+              context.push(MyRecipeScreen.name);
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
           ),
@@ -111,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             onTap: () {
-              Navigator.pushNamed(context, RecipeFeedbackScreen.name);
+              context.push(RecipeFeedbackScreen.name);
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
           ),
@@ -123,11 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () async {
               // Handle logout action
               await _authViewModel.logOut();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LoginScreen.name,
-                (route) => false,
-              );
+              if (mounted) context.go(LoginScreen.name);
             },
           ),
           SizedBox(height: 4),

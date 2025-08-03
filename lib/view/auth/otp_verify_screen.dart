@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:tastify/view/auth/set_password_screen.dart';
+import 'package:tastify/view/views.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/screen_background.dart';
@@ -8,7 +9,7 @@ import '../../../../res/component/screen_background.dart';
 class OtpVerifyScreen extends StatefulWidget {
   OtpVerifyScreen({super.key, required this.email});
 
-  static String name = 'otpVerifyScreen';
+  static String name = '/otpVerifyScreen';
   String? email;
 
   @override
@@ -74,10 +75,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                       height: 55,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                            context,
+                          context.push(
                             SetPasswordScreen.name,
-                            arguments: widget.email,
+                            extra: widget.email,
                           );
                         },
                         style: ElevatedButton.styleFrom(
