@@ -11,7 +11,7 @@ class CategoryItemWidget extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        context.push(CategoryWiseListScreen.name, extra: category!['title']);
+        context.push(CategoryWiseListView.name, extra: category!['title']);
       },
       child: Container(
         width: 81,

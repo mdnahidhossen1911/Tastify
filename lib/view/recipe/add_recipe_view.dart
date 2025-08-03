@@ -13,16 +13,16 @@ import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
 
-class AddRecipeScreen extends StatefulWidget {
-  const AddRecipeScreen({super.key});
+class AddRecipeView extends StatefulWidget {
+  const AddRecipeView({super.key});
 
   static const String name = '/add-recipe-screen';
 
   @override
-  State<AddRecipeScreen> createState() => _AddRecipeScreenState();
+  State<AddRecipeView> createState() => _AddRecipeViewState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> {
+class _AddRecipeViewState extends State<AddRecipeView> {
   XFile? _pickedImage;
 
   final TextEditingController _recipeNameTEController = TextEditingController();

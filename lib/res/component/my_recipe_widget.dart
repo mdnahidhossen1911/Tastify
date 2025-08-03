@@ -33,7 +33,7 @@ class MyRecipeWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              context.push(RecipeDetailsScreen.name, extra: recipe);
+              context.push(RecipeDetailsView.name, extra: recipe);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -69,7 +69,7 @@ class MyRecipeWidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         context.push(
-                          UpdateRecipeScreen.name,
+                          UpdateRecipeView.name,
                           extra: RecipeModel.fromJson(recipe),
                         );
                       },

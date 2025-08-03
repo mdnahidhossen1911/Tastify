@@ -4,134 +4,134 @@ import 'package:tastify/view/views.dart';
 
 class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: SplashScreen.name,
+    initialLocation: SplashView.name,
     routes: [
       GoRoute(
-        path: SplashScreen.name,
-        name: SplashScreen.name,
-        builder: (context, state) => const SplashScreen(),
+        path: SplashView.name,
+        name: SplashView.name,
+        builder: (context, state) => const SplashView(),
       ),
       GoRoute(
-        path: LoginScreen.name,
-        name: LoginScreen.name,
-        builder: (context, state) => const LoginScreen(),
+        path: LoginView.name,
+        name: LoginView.name,
+        builder: (context, state) => const LoginView(),
       ),
       GoRoute(
-        path: SignUpScreen.name,
-        name: SignUpScreen.name,
-        builder: (context, state) => const SignUpScreen(),
+        path: SignUpView.name,
+        name: SignUpView.name,
+        builder: (context, state) => const SignUpView(),
       ),
       GoRoute(
-        path: ForgotPasswordScreen.name,
-        name: ForgotPasswordScreen.name,
-        builder: (context, state) => const ForgotPasswordScreen(),
+        path: ForgotPasswordView.name,
+        name: ForgotPasswordView.name,
+        builder: (context, state) => const ForgotPasswordView(),
       ),
       GoRoute(
-        path: SetPasswordScreen.name,
-        name: SetPasswordScreen.name,
+        path: SetPasswordView.name,
+        name: SetPasswordView.name,
         builder: (context, state) {
           final email = state.extra as String?;
-          return SetPasswordScreen(email: email ?? '');
+          return SetPasswordView(email: email ?? '');
         },
       ),
       GoRoute(
-        path: OtpVerifyScreen.name,
-        name: OtpVerifyScreen.name,
+        path: OtpVerifyView.name,
+        name: OtpVerifyView.name,
         builder: (context, state) {
           final email = state.extra as String?;
-          return OtpVerifyScreen(email: email ?? '');
+          return OtpVerifyView(email: email ?? '');
         },
       ),
       GoRoute(
-        path: MainBottomNavBar.name,
-        name: MainBottomNavBar.name,
-        builder: (context, state) => const MainBottomNavBar(),
+        path: MainBottomNavBarView.name,
+        name: MainBottomNavBarView.name,
+        builder: (context, state) => const MainBottomNavBarView(),
       ),
       GoRoute(
-        path: CategoryListScreen.name,
-        name: CategoryListScreen.name,
-        builder: (context, state) => const CategoryListScreen(),
+        path: CategoryListView.name,
+        name: CategoryListView.name,
+        builder: (context, state) => const CategoryListView(),
       ),
       GoRoute(
-        path: MyRecipeScreen.name,
-        name: MyRecipeScreen.name,
-        builder: (context, state) => const MyRecipeScreen(),
+        path: MyRecipeView.name,
+        name: MyRecipeView.name,
+        builder: (context, state) => const MyRecipeView(),
       ),
       GoRoute(
-        path: FeaturedRecipeListScreen.name,
-        name: FeaturedRecipeListScreen.name,
-        builder: (context, state) => const FeaturedRecipeListScreen(),
+        path: FeaturedRecipeListView.name,
+        name: FeaturedRecipeListView.name,
+        builder: (context, state) => const FeaturedRecipeListView(),
       ),
       GoRoute(
-        path: PopularListScreen.name,
-        name: PopularListScreen.name,
-        builder: (context, state) => const PopularListScreen(),
+        path: PopularListView.name,
+        name: PopularListView.name,
+        builder: (context, state) => const PopularListView(),
       ),
       GoRoute(
-        path: SearchListScreen.name,
-        name: SearchListScreen.name,
-        builder: (context, state) => const SearchListScreen(),
+        path: SearchListView.name,
+        name: SearchListView.name,
+        builder: (context, state) => const SearchListView(),
       ),
       GoRoute(
-        path: AddRecipeScreen.name,
-        name: AddRecipeScreen.name,
-        builder: (context, state) => const AddRecipeScreen(),
+        path: AddRecipeView.name,
+        name: AddRecipeView.name,
+        builder: (context, state) => const AddRecipeView(),
       ),
       GoRoute(
-        path: CategoryWiseListScreen.name,
-        name: CategoryWiseListScreen.name,
+        path: CategoryWiseListView.name,
+        name: CategoryWiseListView.name,
         builder: (context, state) {
           final categoryName = state.extra as String?;
-          return CategoryWiseListScreen(categoryName: categoryName ?? '');
+          return CategoryWiseListView(categoryName: categoryName ?? '');
         },
       ),
       GoRoute(
-        path: BlogDetailsScreen.name,
-        name: BlogDetailsScreen.name,
+        path: BlogDetailsView.name,
+        name: BlogDetailsView.name,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>?;
-          return BlogDetailsScreen(blogDetails: data ?? {});
+          return BlogDetailsView(blogDetails: data ?? {});
         },
       ),
       GoRoute(
-        path: AddBlogScreen.name,
-        name: AddBlogScreen.name,
-        builder: (context, state) => const AddBlogScreen(),
+        path: AddBlogView.name,
+        name: AddBlogView.name,
+        builder: (context, state) => const AddBlogView(),
       ),
       GoRoute(
-        path: ProfileEditScreen.name,
-        name: ProfileEditScreen.name,
-        builder: (context, state) => const ProfileEditScreen(),
+        path: ProfileEditView.name,
+        name: ProfileEditView.name,
+        builder: (context, state) => const ProfileEditView(),
       ),
       GoRoute(
-        path: UpdateRecipeScreen.name,
-        name: UpdateRecipeScreen.name,
+        path: UpdateRecipeView.name,
+        name: UpdateRecipeView.name,
         builder: (context, state) {
           final recipeData = state.extra as RecipeModel?;
-          return UpdateRecipeScreen(recipe: recipeData!);
+          return UpdateRecipeView(recipe: recipeData!);
         },
       ),
       GoRoute(
-        path: RecipeDetailsScreen.name,
-        name: RecipeDetailsScreen.name,
+        path: RecipeDetailsView.name,
+        name: RecipeDetailsView.name,
         builder: (context, state) {
           final recipe = state.extra as Map<String, dynamic>?;
-          return RecipeDetailsScreen(recipeDetails: recipe!);
+          return RecipeDetailsView(recipeDetails: recipe!);
         },
       ),
       GoRoute(
-        path: ChangePasswordScreen.name,
-        name: ChangePasswordScreen.name,
+        path: ChangePasswordView.name,
+        name: ChangePasswordView.name,
         builder: (context, state) {
           final email = state.extra as String?;
-          return ChangePasswordScreen(email: email);
+          return ChangePasswordView(email: email);
         },
       ),
       GoRoute(
-        path: RecipeFeedbackScreen.name,
-        name: RecipeFeedbackScreen.name,
+        path: RecipeFeedbackView.name,
+        name: RecipeFeedbackView.name,
         builder: (context, state) {
-          return RecipeFeedbackScreen();
+          return RecipeFeedbackView();
         },
       ),
       // Add more GoRoutes as needed

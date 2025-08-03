@@ -14,14 +14,14 @@ import '../../res/app_colors.dart';
 import '../../res/assets_path.dart';
 import '../../view_model/auth_view_model.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileView extends StatefulWidget {
+  const ProfileView({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileViewState extends State<ProfileView> {
   final AuthViewModel _authViewModel = locator<AuthViewModel>();
 
   @override
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: Icon(Icons.person_outline, size: 28),
             title: Text('Profile edit'),
             onTap: () {
-              context.push(ProfileEditScreen.name);
+              context.push(ProfileEditView.name);
             },
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             titleTextStyle: _buildTextStyle(),
             onTap: () {
               context.push(
-                ChangePasswordScreen.name,
+                ChangePasswordView.name,
                 extra: _authViewModel.getGmail,
               );
             },
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             onTap: () {
-              context.push(MyRecipeScreen.name);
+              context.push(MyRecipeView.name);
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
           ),
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconColor: Colors.grey.shade700,
             titleTextStyle: _buildTextStyle(),
             onTap: () {
-              context.push(RecipeFeedbackScreen.name);
+              context.push(RecipeFeedbackView.name);
             },
             trailing: Icon(Icons.arrow_forward_ios_sharp),
           ),
@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () async {
               // Handle logout action
               await _authViewModel.logOut();
-              if (mounted) context.go(LoginScreen.name);
+              if (mounted) context.go(LoginView.name);
             },
           ),
           SizedBox(height: 4),

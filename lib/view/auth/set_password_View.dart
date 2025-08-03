@@ -9,17 +9,17 @@ import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
 
-class SetPasswordScreen extends StatefulWidget {
-  SetPasswordScreen({super.key, required this.email});
+class SetPasswordView extends StatefulWidget {
+  SetPasswordView({super.key, required this.email});
 
   static String name = '/setPasswordScreen';
   String? email;
 
   @override
-  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
+  State<SetPasswordView> createState() => _SetPasswordViewState();
 }
 
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
+class _SetPasswordViewState extends State<SetPasswordView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -154,7 +154,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push(LoginScreen.name);
+                            context.push(LoginView.name);
                           },
                           child: Text(
                             "Login",
@@ -187,7 +187,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
       if (isSuccess) {
         Utils.showToast("Password set successfully");
-        if (mounted) context.go(LoginScreen.name);
+        if (mounted) context.go(LoginView.name);
       } else {
         Utils.showToast("Failed to set password. Please try again.");
         return;

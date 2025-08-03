@@ -13,18 +13,18 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/component/circle_progress.dart';
 import '../../../../utils/utils.dart';
 
-class UpdateRecipeScreen extends StatefulWidget {
+class UpdateRecipeView extends StatefulWidget {
   final RecipeModel recipe;
 
-  const UpdateRecipeScreen({super.key, required this.recipe});
+  const UpdateRecipeView({super.key, required this.recipe});
 
   static const String name = '/update-recipe-screen';
 
   @override
-  State<UpdateRecipeScreen> createState() => _UpdateRecipeScreenState();
+  State<UpdateRecipeView> createState() => _UpdateRecipeViewState();
 }
 
-class _UpdateRecipeScreenState extends State<UpdateRecipeScreen> {
+class _UpdateRecipeViewState extends State<UpdateRecipeView> {
   XFile? _pickedImage;
   bool _isImageUpdated = false;
 

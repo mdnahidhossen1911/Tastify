@@ -8,17 +8,17 @@ import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen({super.key, required this.email});
+class ChangePasswordView extends StatefulWidget {
+  ChangePasswordView({super.key, required this.email});
 
   static String name = '/change-password';
   String? email;
 
   @override
-  State<ChangePasswordScreen> createState() => _SetPasswordScreenState();
+  State<ChangePasswordView> createState() => _SetPasswordScreenState();
 }
 
-class _SetPasswordScreenState extends State<ChangePasswordScreen> {
+class _SetPasswordScreenState extends State<ChangePasswordView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();

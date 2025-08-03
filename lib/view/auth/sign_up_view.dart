@@ -14,16 +14,16 @@ import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpView extends StatefulWidget {
+  const SignUpView({super.key});
 
   static String name = '/signUpScreen';
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpViewState extends State<SignUpView> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -313,7 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Utils.showToast(
           "Sign Up ${response.responseData!['email']} successfully",
         );
-        if (mounted) context.go(MainBottomNavBar.name);
+        if (mounted) context.go(MainBottomNavBarView.name);
       } else {
         Utils.showFlushBar(context, response.errorMessage);
       }
@@ -328,7 +328,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
-      if (mounted) context.go(MainBottomNavBar.name);
+      if (mounted) context.go(MainBottomNavBarView.name);
     } else {
       print("Google Sign-In Error: ${response.errorMessage}");
       Utils.showFlushBar(context, response.errorMessage);

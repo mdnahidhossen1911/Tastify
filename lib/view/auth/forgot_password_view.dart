@@ -9,16 +9,16 @@ import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView({super.key});
 
   static String name = '/forgotPasswordScreen';
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<ForgotPasswordView> createState() => _ForgotPasswordViewState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   late ForgotPasswordViewModel _forgotPasswordViewModel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -146,7 +146,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       );
       if (response.isSuccess) {
         context.pushReplacement(
-          OtpVerifyScreen.name,
+          OtpVerifyView.name,
           extra: emailController.text.trim(),
         );
       } else {

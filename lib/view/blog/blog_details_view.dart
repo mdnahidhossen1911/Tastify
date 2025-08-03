@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../res/assets_path.dart';
 import '../../../../utils/utc_to_local_date.dart';
 
-class BlogDetailsScreen extends StatelessWidget {
-  const BlogDetailsScreen({super.key, required this.blogDetails});
+class BlogDetailsView extends StatelessWidget {
+  const BlogDetailsView({super.key, required this.blogDetails});
 
   final Map<String, dynamic> blogDetails;
 

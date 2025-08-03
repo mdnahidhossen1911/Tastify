@@ -6,17 +6,17 @@ import 'package:tastify/view/views.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/component/screen_background.dart';
 
-class OtpVerifyScreen extends StatefulWidget {
-  OtpVerifyScreen({super.key, required this.email});
+class OtpVerifyView extends StatefulWidget {
+  OtpVerifyView({super.key, required this.email});
 
   static String name = '/otpVerifyScreen';
   String? email;
 
   @override
-  State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
+  State<OtpVerifyView> createState() => _OtpVerifyViewState();
 }
 
-class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
+class _OtpVerifyViewState extends State<OtpVerifyView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           context.push(
-                            SetPasswordScreen.name,
+                            SetPasswordView.name,
                             extra: widget.email,
                           );
                         },

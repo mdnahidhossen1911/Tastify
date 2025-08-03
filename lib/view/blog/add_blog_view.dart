@@ -11,16 +11,16 @@ import '../../res/app_colors.dart';
 import '../../res/component/circle_progress.dart';
 import '../../utils/utils.dart';
 
-class AddBlogScreen extends StatefulWidget {
-  const AddBlogScreen({super.key});
+class AddBlogView extends StatefulWidget {
+  const AddBlogView({super.key});
 
   static const String name = '/add-blog';
 
   @override
-  State<AddBlogScreen> createState() => _AddBlogScreenState();
+  State<AddBlogView> createState() => _AddBlogViewState();
 }
 
-class _AddBlogScreenState extends State<AddBlogScreen> {
+class _AddBlogViewState extends State<AddBlogView> {
   XFile? _pickedImage;
   String imageString = '';
 

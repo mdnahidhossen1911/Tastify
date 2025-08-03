@@ -8,14 +8,14 @@ import '../../res/app_colors.dart';
 import '../../res/component/blog_widget.dart';
 import '../../res/component/circle_progress.dart';
 
-class BlogScreen extends StatefulWidget {
-  const BlogScreen({super.key});
+class BlogListView extends StatefulWidget {
+  const BlogListView({super.key});
 
   @override
-  State<BlogScreen> createState() => _BlogScreenState();
+  State<BlogListView> createState() => _BlogListViewState();
 }
 
-class _BlogScreenState extends State<BlogScreen> {
+class _BlogListViewState extends State<BlogListView> {
   late BlogViewModel _blogViewModel;
 
   @override
@@ -38,7 +38,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.push(AddBlogScreen.name);
+          context.push(AddBlogView.name);
         },
         elevation: 4,
         child: Icon(Icons.edit, color: AppColor.themeColor),

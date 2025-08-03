@@ -23,7 +23,7 @@ class FoodRecipeWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push(RecipeDetailsScreen.name, extra: recipeDetails);
+        context.push(RecipeDetailsView.name, extra: recipeDetails);
       },
       child: Container(
         height: 110,

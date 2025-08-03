@@ -4,25 +4,25 @@ import 'package:tastify/service_locator.dart';
 import 'package:tastify/view/views.dart';
 import 'package:tastify/view_model/view_models.dart';
 
-class MainBottomNavBar extends StatefulWidget {
-  const MainBottomNavBar({super.key});
+class MainBottomNavBarView extends StatefulWidget {
+  const MainBottomNavBarView({super.key});
 
   static const String name = '/main-bottom-nav-bar';
 
   @override
-  State<MainBottomNavBar> createState() => _MainBottomNavBarState();
+  State<MainBottomNavBarView> createState() => _MainBottomNavBarViewState();
 }
 
-class _MainBottomNavBarState extends State<MainBottomNavBar> {
+class _MainBottomNavBarViewState extends State<MainBottomNavBarView> {
   int _selectedIndex = 0;
 
   late GetRecipeViewModel _getRecipeViewModel;
 
   final List<Widget> _screens = [
-    Home(),
-    BlogScreen(),
-    FavouriteScreen(),
-    ProfileScreen(),
+    HomeView(),
+    BlogListView(),
+    FavouriteView(),
+    ProfileView(),
   ];
 
   @override

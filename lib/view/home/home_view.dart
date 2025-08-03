@@ -14,16 +14,16 @@ import '../../res/component/home_carousel_slider.dart';
 import '../../res/component/home_popular_widget.dart';
 import '../../res/component/section_header.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   static const String name = '/home';
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: () {
-                      context.push(AddRecipeScreen.name);
+                      context.push(AddRecipeView.name);
                     },
                     icon: Icon(Icons.add, size: 24, color: AppColor.themeColor),
                   ),
@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.orange.withOpacity(0.15),
                   child: IconButton(
                     onPressed: () {
-                      context.push(SearchListScreen.name);
+                      context.push(SearchListView.name);
                     },
                     icon: Icon(
                       Icons.search,
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Category',
                 seeAll: () {
-                  context.push(CategoryListScreen.name);
+                  context.push(CategoryListView.name);
                 },
               ),
               _buildCategorySection(),
@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Popular',
                 seeAll: () {
-                  context.push(PopularListScreen.name);
+                  context.push(PopularListView.name);
                 },
               ),
               _buildPopularSection(),
@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
               SectionHeader(
                 title: 'Featured Recipe',
                 seeAll: () {
-                  context.push(FeaturedRecipeListScreen.name);
+                  context.push(FeaturedRecipeListView.name);
                 },
               ),
               SizedBox(height: 4),

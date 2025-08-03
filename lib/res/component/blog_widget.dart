@@ -22,7 +22,7 @@ class BlogWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () {
-          context.push(BlogDetailsScreen.name, extra: blogData);
+          context.push(BlogDetailsView.name, extra: blogData);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

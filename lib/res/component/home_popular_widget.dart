@@ -23,7 +23,7 @@ class HomePopularWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push(RecipeDetailsScreen.name, extra: popularItem);
+        context.push(RecipeDetailsView.name, extra: popularItem);
       },
       child: Container(
         width: 196,

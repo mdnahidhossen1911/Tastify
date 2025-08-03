@@ -6,16 +6,16 @@ import 'package:tastify/view_model/view_models.dart';
 import '../../res/component/app_logo.dart';
 import '../../res/component/screen_background.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashView extends StatefulWidget {
+  const SplashView({super.key});
 
   static String name = '/';
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
@@ -26,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(Duration(seconds: 3));
     bool isLogin = await AuthViewModel().isLogIn();
     if (isLogin) {
-      if (mounted) context.go(MainBottomNavBar.name);
+      if (mounted) context.go(MainBottomNavBarView.name);
     } else {
-      if (mounted) context.go(LoginScreen.name);
+      if (mounted) context.go(LoginView.name);
     }
   }
 

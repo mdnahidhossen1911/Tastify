@@ -15,16 +15,16 @@ import '../../res/component/circle_progress.dart';
 import '../../res/component/screen_background.dart';
 import '../../utils/utils.dart';
 
-class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key});
+class ProfileEditView extends StatefulWidget {
+  const ProfileEditView({super.key});
 
   static const String name = '/profile-edit';
 
   @override
-  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
+  State<ProfileEditView> createState() => _ProfileEditViewState();
 }
 
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
+class _ProfileEditViewState extends State<ProfileEditView> {
   @override
   void initState() {
     // TODO: implement initState

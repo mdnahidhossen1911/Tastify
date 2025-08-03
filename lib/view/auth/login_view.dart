@@ -14,16 +14,16 @@ import '../../../../res/component/circle_progress.dart';
 import '../../../../res/component/screen_background.dart';
 import '../../../../utils/utils.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   static String name = '/loginScreen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _SignInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          context.push(ForgotPasswordScreen.name);
+                          context.push(ForgotPasswordView.name);
                         },
                         child: Text(
                           "Forgot password?",
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push(SignUpScreen.name);
+                            context.push(SignUpView.name);
                           },
                           child: Text(
                             "Sign Up",
@@ -295,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
         response.responseData!['id'],
         AuthUserModel.fromJson(response.responseData!),
       );
-      context.pushReplacement(MainBottomNavBar.name);
+      context.pushReplacement(MainBottomNavBarView.name);
     } else {
       print("Google Sign-In Error: ${response.errorMessage}");
       Utils.showFlushBar(context, response.errorMessage);
@@ -314,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
           response.responseData!['id'],
           AuthUserModel.fromJson(response.responseData!),
         );
-        context.pushReplacement(MainBottomNavBar.name);
+        context.pushReplacement(MainBottomNavBarView.name);
       } else {
         print("Login Error: ${response.errorMessage}");
         Utils.showFlushBar(context, response.errorMessage);

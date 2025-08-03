@@ -6,14 +6,14 @@ import 'package:tastify/view_model/view_models.dart';
 import '../../res/component/circle_progress.dart';
 import '../../res/component/food_recipe_widget.dart';
 
-class FavouriteScreen extends StatefulWidget {
-  const FavouriteScreen({super.key});
+class FavouriteView extends StatefulWidget {
+  const FavouriteView({super.key});
 
   @override
-  State<FavouriteScreen> createState() => _FavouriteScreenState();
+  State<FavouriteView> createState() => _FavouriteViewState();
 }
 
-class _FavouriteScreenState extends State<FavouriteScreen> {
+class _FavouriteViewState extends State<FavouriteView> {
   final GetFavouriteViewModel _getFavouriteViewModel =
       locator<GetFavouriteViewModel>();
 
