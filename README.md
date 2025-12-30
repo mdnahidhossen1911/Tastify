@@ -13,10 +13,10 @@ We believe in teamwork and shared responsibility. Here's a breakdown of our role
 * **Nahid Hossen**
     * **Role:** App UI Design, Figma Design, Backend Design & Implementation
     * **GitHub:** [mdnahidhossen1911](https://github.com/mdnahidhossen1911)
-* **Jahangir Alam**
+* **Nuria Jahan**
     * **Role:** App UI Design
     * **GitHub:** [jahangirsim](https://github.com/jahangirsim)
-* **Mahfuz Ahmed**
+* **Asia akter mim**
     * **Role:** App UI Design
     * **GitHub:** [MahfuzAhmed28](https://github.com/MahfuzAhmed28)
 
